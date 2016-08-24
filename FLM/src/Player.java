@@ -24,6 +24,26 @@ public class Player {
 
     //<editor-fold desc="Methods">
 
+
+    public Player(int playerID, int teamID, boolean startLineUp, String PName, String PSurname, double PAvgRating, int PAttRating, int PDefRating, String PPos, String PSkill, int PFatigue, double PSalary, double PValue, int PContract, boolean PInjury, int PFatigueLvl) {
+        PlayerID = playerID;
+        TeamID = teamID;
+        StartLineUp = startLineUp;
+        this.PName = PName;
+        this.PSurname = PSurname;
+        this.PAvgRating = PAvgRating;
+        this.PAttRating = PAttRating;
+        this.PDefRating = PDefRating;
+        this.PPos = PPos;
+        this.PSkill = PSkill;
+        this.PFatigue = PFatigue;
+        this.PSalary = PSalary;
+        this.PValue = PValue;
+        this.PContract = PContract;
+        this.PInjury = PInjury;
+        this.PFatigueLvl = PFatigueLvl;
+    }
+
     /**
      * Set the current player's team to the market
      * TeamID = 0 is the ID of the Market
@@ -241,6 +261,11 @@ public class Player {
 //</editor-fold>
 
     //<editor-fold desc="views (such as display)">
+    public String toString()
+    {
+        return PName +", " +PSurname + ": " + PAvgRating;
+    }
+
     //</editor-fold>
 
 

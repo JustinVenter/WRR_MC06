@@ -7,9 +7,6 @@ public class Fixture {
 
     //Methods
 
-    //Hello
-    //How are you
-
     //getters and setters
 
     //views (such as display)

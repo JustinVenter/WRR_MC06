@@ -1,3 +1,4 @@
+import javax.xml.crypto.Data;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 
@@ -9,6 +10,7 @@ public class MyTeam extends Team{
     ArrayList<Player> MySquad;
     Player[] StartingLineUp;
 
+    Database db;
 
     //Attributes found in Database
     int Confidence;
@@ -24,6 +26,7 @@ public class MyTeam extends Team{
     public void loadSquad()
     {
         //method from DB
+        MySquad = db.loadTeam();
     }
 
     public void StartingLineup(Player[] T)
