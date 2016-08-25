@@ -12,7 +12,18 @@ public class Team {
     int TRank;
     int TWins;
     int TLosses;
-    int TDraw;
+
+    public Team(int teamID, String TName, double TRating, int TAttRating, int TDefRating, String TCity, int TRank, int TWins, int TLosses) {
+        TeamID = teamID;
+        this.TName = TName;
+        this.TRating = TRating;
+        this.TAttRating = TAttRating;
+        this.TDefRating = TDefRating;
+        this.TCity = TCity;
+        this.TRank = TRank;
+        this.TWins = TWins;
+        this.TLosses = TLosses;
+    }
 
 
     //<editor-fold desc="getters and setters">
@@ -46,14 +57,6 @@ public class Team {
 
     public void setTLosses(int TLosses) {
         this.TLosses = TLosses;
-    }
-
-    public int getTDraw() {
-        return TDraw;
-    }
-
-    public void setTDraw(int TDraw) {
-        this.TDraw = TDraw;
     }
 
     public String getTCity() {

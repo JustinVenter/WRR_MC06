@@ -1,6 +1,4 @@
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
@@ -16,6 +14,7 @@ import javax.xml.crypto.Data;
 
 public class Database {
 
+    Calculate calculate = new Calculate();
     // fields needed to access database
     // actual connection to db
     static private Connection con = null;
@@ -24,8 +23,8 @@ public class Database {
 
     public Database(){
         connectToDB();
+        UpdatePAverage();
         //updatePlayerAvg();
-
     }
 
     //Methods
@@ -63,16 +62,33 @@ public class Database {
         }
     }
 
-    public ArrayList loadTeam()
+    /**
+    Load your team's squad
+    */
+    public ArrayList loadMyTeam()
     {
+        ArrayList<Player> AllPlayers = LoadAllPlayers();
+        ArrayList<Player> MyTeam = new ArrayList<>();
 
+        for(int i = 0; i < AllPlayers.size(); i++)
+        {
+            if(AllPlayers.get(i).getTeamID()==1)
+            {
+                MyTeam.add(AllPlayers.get(i));
+            }
+        }
+        return MyTeam;
+    }
+
+    public ArrayList<Player> LoadAllPlayers()
+    {
         System.out.println("Using database...");
 
         ArrayList<Player> Lineup = new ArrayList<>();
         try {
             // perform query on database and retrieve results
-            String sql = "SELECT * FROM Player WHERE TeamID = 1";
-                System.out.println("  Loading starting lineup = " + sql);
+            String sql = "SELECT * FROM Player";
+            System.out.println("  Loading starting lineup = " + sql);
             ResultSet result = stmt.executeQuery(sql);
 
             System.out.println();
@@ -103,11 +119,6 @@ public class Database {
                 Lineup.add(newOne);
             }
             System.out.println("Load successful");
-            for (int i = 0; i < Lineup.size(); i++)
-            {
-                System.out.println(Lineup.get(i).toString());
-            }
-
 
             return Lineup;
         } catch (Exception e) {
@@ -116,7 +127,77 @@ public class Database {
         return null;
     }
 
-    public void disconnectDB() {
+    public void UpdatePAverage()
+    {
+        ArrayList<Player> AllPlayers = LoadAllPlayers();
+
+        ArrayList<Player> Lineup = new ArrayList<>();
+        try {
+            // perform query on database and retrieve results
+            for (int i = 0; i < AllPlayers.size(); i++) {
+                Player cur = AllPlayers.get(i);
+                double PAverage = Math.floor(calculate.CalcPlayerAvg(AllPlayers.get(i)));
+                String sql = "UPDATE Player SET PAvgRating = " + PAverage + " WHERE PlayerID =" + cur.getPlayerID();
+                stmt.execute(sql);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList LoadPlayerMarket()
+    {
+            ArrayList<Player> AllPlayers = LoadAllPlayers();
+            ArrayList<Player> Market = new ArrayList<>();
+
+            for(int i = 0; i < AllPlayers.size(); i++)
+            {
+                if(AllPlayers.get(i).getTeamID()== 0)
+                    Market.add(AllPlayers.get(i));
+            }
+            return Market;
+    }
+
+    public ArrayList<Team> loadTeams()
+    {
+        System.out.println("Using database...");
+
+        ArrayList<Team> Teams = new ArrayList<>();
+        try {
+            // perform query on database and retrieve results
+            String sql = "SELECT * FROM Team";
+            System.out.println("  Loading teams = " + sql);
+            ResultSet result = stmt.executeQuery(sql);
+
+            // while there are tuples in the result set, display them
+            while (result.next() ) {
+                // get values from current tuple
+                int TeamID = result.getInt("TeamID");
+                String TName = result.getString("TName");
+                double TRating = result.getDouble("TRating");
+                int TAttRating = result.getInt("TAtRating");
+                int TDefRating = result.getInt("PDefRating");;
+                String TCity = result.getString("TCity");
+                int TRank = result.getInt("TRank");
+                int TWins = result.getInt("TWins");
+                int TLosses = result.getInt("TLosses");
+                int TStaffLevel = result.getInt("TLosses");
+                int TConfidence = result.getInt("TConfidence");
+
+                Team newOne = new Team(TeamID,TName,TRating,TAttRating,TDefRating,TCity,TRank,TWins,TLosses);
+                Teams.add(newOne);
+            }
+            System.out.println("Load successful");
+
+            return Teams;
+        } catch (Exception e) {
+            System.out.println("   Was not able to query database...");
+        }
+        return null;
+    }
+
+    public void disconnectDB()
+    {
         System.out.println("Disconnecting from database...");
 
         try {
@@ -128,13 +209,61 @@ public class Database {
         }
     }
 
-    //add team, remove team
+    public void UpdateStaff(int i)
+    {
+        try {
+            // perform query on database and retrieve results
+                String sql = "UPDATE Team SET TStaffLevel = " + i + " WHERE TeamID = " + 1;
+                stmt.execute(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-    //update player team
+    /**
+     *
+     * @param player whose team has changed
+     * @param i:  if i = 1 then player will be added to your team.  If i = 0 then player will be removed from your team
+     *
+     *         This method will be applied when player is bought, sold or when contract is terminated.
+     */
+    public void UpdatePlayerTeam(Player player, int i)
+    {
+        try {
+            // perform query on database and retrieve results
+            String sql = "UPDATE Team SET TeamID = " + i + " WHERE PlayerID = " + player.getPlayerID();
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void CreateGame(String TeamName, String TeamCity, String ManagerName)
+    {
+        try {
+            String sql = "UPDATE Team SET TName = " + TeamName + ", TCity = " + TeamCity + " WHERE TeamID =" + 1;
+            stmt.execute(sql);
+            } catch (SQLException e1) {
+            e1.printStackTrace();
+
+            //insert manager name code
+        }
+    }
+
+    public void UpdateContract(Player player, int Contract)//contract in weeks
+    {
+        int playerID = player.getPlayerID();
+
+        try {
+            String sql = "UPDATE Player SET PContract = " + Contract + " WHERE PlayerID = " + playerID;
+            stmt.execute(sql);
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+            //insert manager name code
+        }
+    }
 
     //update contract
-
-    //update team ratings
 
     //update rankings
 

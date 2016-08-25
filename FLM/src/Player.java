@@ -3,6 +3,7 @@
  */
 public class Player {
 
+    Database db = new Database();
     //<editor-fold desc="Attributes found in Database">
     int PlayerID;
     int TeamID;
@@ -64,30 +65,30 @@ public class Player {
 
             case 2:
                 if (this.PFatigue < 100) {
-                    PFatigue = this.PFatigue + 15;
+                    this.setPFatigue(PFatigue + 15);
                     if (PFatigue > 100)
-                        PFatigue = 100;
+                        this.setPFatigue(100);
                 }
                 break;
             case 3:
                 if (this.PFatigue < 100) {
-                    PFatigue = this.PFatigue + 20;
+                    this.setPFatigue(PFatigue + 20);
                     if (PFatigue > 100)
-                        PFatigue = 100;
+                        this.setPFatigue(100);
                 }
                 break;
             case 4:
                 if (this.PFatigue < 100) {
-                    PFatigue = this.PFatigue + 25;
+                    this.setPFatigue(PFatigue+25);
                     if (PFatigue > 100)
-                        PFatigue = 100;
+                        this.setPFatigue(100);
                 }
                 break;
             default:
                 if (this.PFatigue < 100) {
-                    PFatigue = this.PFatigue + 10;
+                    this.setPFatigue(PFatigue + 10);
                     if (PFatigue > 100)
-                        PFatigue = 100;
+                        this.setPFatigue(100);
                 }
                 break;
         }
@@ -108,7 +109,7 @@ public class Player {
         double payment = PayPlayer(MyAccount);
         if (payment != -1)
         {
-            PContract = this.PContract + Weeks;
+            this.setPContract(this.PContract + Weeks);
             return MyAccount + payment;
         }
         else
@@ -127,27 +128,26 @@ public class Player {
         if(PSalary > MyAccount)//cannot afford
             return -1;
         else {
-            this.PContract = this.PContract -1;
+            this.setPContract(PContract -1);
             return MyAccount - PSalary;
-
         }
     }
 
     public void DecrFatigue()
     {
         if (this.PFatigue > 0) {
-            PFatigue = this.PFatigue - 10;
+            this.setPFatigue(PFatigue - 10);
         }
         else
         {
             this.setPInjury(true);
-            this.PFatigue = 0;
+            this.setPFatigue(0);
         }
     }
 
     public void TerminateContract()
     {
-        this.PContract = 0;
+        this.setPContract(0);
         this.setTeamID(0);
     }
 
@@ -165,6 +165,7 @@ public class Player {
 
     public void setTeamID(int teamID) {
         TeamID = teamID;
+        db.UpdatePlayerTeam(this, teamID);
     }
 
     public boolean isStartLineUp() {
@@ -235,12 +236,14 @@ public class Player {
         if(PContract == 0)
         {
             this.setTeamID(0);
+
         }
         return PContract;
     }
 
     public void setPContract(int PContract) {
         this.PContract = PContract;
+        db.UpdateContract(this, PContract);
     }
 
     public boolean isPInjury() {
