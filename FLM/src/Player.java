@@ -24,8 +24,6 @@ public class Player {
     //</editor-fold>
 
     //<editor-fold desc="Methods">
-
-
     public Player(int playerID, int teamID, boolean startLineUp, String PName, String PSurname, double PAvgRating, int PAttRating, int PDefRating, String PPos, String PSkill, int PFatigue, double PSalary, double PValue, int PContract, boolean PInjury, int PFatigueLvl) {
         PlayerID = playerID;
         TeamID = teamID;
@@ -236,7 +234,6 @@ public class Player {
         if(PContract == 0)
         {
             this.setTeamID(0);
-
         }
         return PContract;
     }

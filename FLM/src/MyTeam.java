@@ -8,6 +8,8 @@ import java.util.ArrayList;
 public class MyTeam extends Team{
     //Custom attributes, data structures
     ArrayList<Player> MySquad;
+
+    //Order of players are extremely important
     Player[] StartingLineUp;
 
     Database db;
