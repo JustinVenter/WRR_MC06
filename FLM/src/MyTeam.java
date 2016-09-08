@@ -1,4 +1,4 @@
-import javax.xml.crypto.Data;
+
 import java.math.RoundingMode;
 import java.util.ArrayList;
 
@@ -9,10 +9,12 @@ public class MyTeam extends Team{
     //Custom attributes, data structures
     ArrayList<Player> MySquad;
 
+
+
     //Order of players are extremely important
     Player[] StartingLineUp;
 
-    Database db;
+    Database db = new Database();
 
     //Attributes found in Database
     int Confidence;
@@ -24,6 +26,7 @@ public class MyTeam extends Team{
     public MyTeam(int teamID, String TName, double TRating, int TAttRating, int TDefRating, String TCity, int TRank, int TWins, int TLosses) {
         super(teamID, TName, TRating, TAttRating, TDefRating, TCity, TRank, TWins, TLosses);
     }
+
     //Methods
 
     /**
@@ -32,7 +35,7 @@ public class MyTeam extends Team{
     public void loadSquad()
     {
         //method from DB
-        MySquad = db.loadMyTeam();
+        MySquad = db.loadMyTeamSquad();
     }
 
     public void StartingLineup(Player[] T)
@@ -162,11 +165,11 @@ public class MyTeam extends Team{
         if(StartingLineUp.length == 11)//full lineup
         {
             for(int i = 0; i <=2; i++)
-                attacktotal = StartingLineUp[i].getPAttRating();
+                attacktotal = attacktotal + StartingLineUp[i].getPAttRating();
             for(int i = 3; i <=5; i++)
-                midfieldtotal = StartingLineUp[i].getPAttRating();
+                midfieldtotal = midfieldtotal + StartingLineUp[i].getPAttRating();
             for(int i = 6; i <=9; i++)
-                defencetotal = StartingLineUp[i].getPAttRating();
+                defencetotal = defencetotal + StartingLineUp[i].getPAttRating();
         }
 
         double averageAttack = ((attacktotal*1.9) + (midfieldtotal) + (defencetotal * 0.1))/10;
@@ -183,19 +186,19 @@ public class MyTeam extends Team{
         if(StartingLineUp.length == 11)//full lineup
         {
             for(int i = 0; i <=2; i++)
-                attacktotal = StartingLineUp[i].getPDefRating();
+                attacktotal = attacktotal + StartingLineUp[i].getPDefRating();
             for(int i = 3; i <=5; i++)
-                midfieldtotal = StartingLineUp[i].getPDefRating();
+                midfieldtotal = midfieldtotal + StartingLineUp[i].getPDefRating();
             for(int i = 6; i <=9; i++)
-                defencetotal = StartingLineUp[i].getPDefRating();
+                defencetotal = defencetotal + StartingLineUp[i].getPDefRating();
             goalie = StartingLineUp[10].getPDefRating();
         }
         else
         {
             return;
         }
-        double averageDefence = ((attacktotal*0.1) + (midfieldtotal) + (defencetotal * 1.9)) + goalie/10;
-        this.setTAttRating((int)(Math.floor(averageDefence))); //might cause issues because it is an int and a double
+        double averageDefence = (((attacktotal*0.1) + (midfieldtotal) + (defencetotal * 1.9)) + goalie)/11;
+        this.setTDefRating((int)(Math.floor(averageDefence))); //might cause issues because it is an int and a double
     }
 
     public void CalculateAvgRating()//remember to use use the starting lineup ratings
@@ -203,13 +206,24 @@ public class MyTeam extends Team{
         if(StartingLineUp.length == 11)//full lineup
         {
             double total = 0;
-            for(int i = 0; i <=10; i++)
-                total = StartingLineUp[i].getPAvgRating();
-            this.setTRating(total/11);
+                total = this.getTDefRating() + this.getTAttRating();
+            this.setTRating(total/2);
         }
         else
             return;
     }
 
+    public Player[] getStartingLineUp()
+    {
+        return StartingLineUp;
+    }
 
+    public ArrayList<Player> getMySquad()
+    {
+        return MySquad;
+    }
+
+    public void setStartingLineUp(Player[] startingLineUp) {
+        StartingLineUp = startingLineUp;
+    }
 }

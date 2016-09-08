@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /**
  * Created by Michael on 09/08/2016.
  */
@@ -12,6 +14,8 @@ public class Team {
     int TRank;
     int TWins;
     int TLosses;
+
+    Player[] StartingLineup = new Player[11];
 
     public Team(int teamID, String TName, double TRating, int TAttRating, int TDefRating, String TCity, int TRank, int TWins, int TLosses) {
         TeamID = teamID;
@@ -97,6 +101,46 @@ public class Team {
 
     public void setTeamID(int teamID) {
         TeamID = teamID;
+    }
+
+    /**
+     * structure of the array:
+     *      pos[0-2] = attack,      90% attack, 10% defence
+     *      pos[3-5] = midfield.    50% attack, 50% defence
+     *      pos[6-9] = defence      10% attack, 90% defence
+     *      pos[10]  = goalie.      0%  attack, 100% defence.
+     *
+     */
+    public Player[] generateTeamPlayers()
+    {
+
+        Random random =  new Random();
+        Player[] botTeam = new Player[11];
+
+        for(int i = 0; i < 11; i++)
+        {
+            if(i < 3) {
+                int AttR = this.getTAttRating() + random.nextInt(10);
+                int DefR = (int)(Math.floor(this.getTDefRating()*.4));
+                botTeam[i] = new Player((((AttR * 1.9)+(DefR * 0.1))/2), AttR, DefR);
+            }
+            if(3<=i && i<6)
+            {
+                int AttR = (int)(Math.floor(this.getTRating()));
+                int DefR = (int)(Math.floor(this.getTRating()));
+                botTeam[i] = new Player(this.getTRating(), AttR, DefR);
+            }
+            if(6<=i && i<=9)
+            {
+                int DefR = this.getTDefRating() + random.nextInt(10);
+                int AttR = (int)(Math.floor(this.getTAttRating()*.4));
+                botTeam[i] = new Player((((DefR * 1.9)+(AttR * 0.1))/2), AttR, DefR);
+            }
+            if(i == 10) {
+                botTeam[i] = new Player(this.getTRating(), (int)(Math.floor(this.getTRating())), (int)(Math.floor(this.getTRating())));
+            }
+        }
+        return botTeam;
     }
 
 

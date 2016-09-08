@@ -43,6 +43,14 @@ public class Player {
         this.PFatigueLvl = PFatigueLvl;
     }
 
+    public Player(double PAvgRating, int PAttRating, int PDefRating)//used for bots
+    {
+        this.PAvgRating = PAvgRating;
+        this.PAttRating = PAttRating;
+        this.PDefRating = PDefRating;
+    }
+
+
     /**
      * Set the current player's team to the market
      * TeamID = 0 is the ID of the Market

@@ -20,24 +20,25 @@ public class TeamTree {
 
     PlayerNode Shoot;
 
-    public TeamTree(MyTeam myTeam)
+    public TeamTree(MyTeam myTeam, MyTeam defTeam)
     {
         Player[] StartingLineup = myTeam.StartingLineUp;
+        Player[] DefStartingLineup = defTeam.StartingLineUp;
 
-        Goalie = new PlayerNode(StartingLineup[10]);
+        Goalie = new PlayerNode(StartingLineup[10], new Player(0, 0, 0));
 
-        FB = new PlayerNode(StartingLineup[9]);
-        CB = new PlayerNode(StartingLineup[8]);
-        LB = new PlayerNode(StartingLineup[7]);
-        RB = new PlayerNode(StartingLineup[6]);
+        FB = new PlayerNode(StartingLineup[9], DefStartingLineup[8]);
+        CB = new PlayerNode(StartingLineup[8], DefStartingLineup[1]);
+        LB = new PlayerNode(StartingLineup[7], DefStartingLineup[0]);
+        RB = new PlayerNode(StartingLineup[6], DefStartingLineup[2]);
 
-        LM = new PlayerNode(StartingLineup[5]);
-        CM = new PlayerNode(StartingLineup[4]);
-        RM = new PlayerNode(StartingLineup[3]);
+        LM = new PlayerNode(StartingLineup[5], DefStartingLineup[3]);
+        CM = new PlayerNode(StartingLineup[4], DefStartingLineup[4]);
+        RM = new PlayerNode(StartingLineup[3], DefStartingLineup[5]);
 
-        LF = new PlayerNode(StartingLineup[2]);
-        CF = new PlayerNode(StartingLineup[1]);
-        RF = new PlayerNode(StartingLineup[0]);
+        LF = new PlayerNode(StartingLineup[2], DefStartingLineup[6]);
+        CF = new PlayerNode(StartingLineup[1], DefStartingLineup[8]);
+        RF = new PlayerNode(StartingLineup[0], DefStartingLineup[7]);
 
         Shoot = new PlayerNode(null);
 
@@ -57,6 +58,10 @@ public class TeamTree {
         RF.setChildren(CF, Shoot, null);
 
         Shoot.setChildren(null, null, null);
+    }
+
+    public PlayerNode getRoot(){
+        return Goalie;
     }
 
 }

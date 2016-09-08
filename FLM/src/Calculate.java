@@ -1,5 +1,3 @@
-import org.w3c.dom.Node;
-
 import java.util.Random;
 
 /**
@@ -43,29 +41,57 @@ public class Calculate {
         return  playerAvgRating;
     }
 
-    public Fixture LMAlogrithm(Team home, Team away){
+    public Fixture LMAlogrithm(MyTeam home, MyTeam away){
 
-        //if it is the user's team participating
 
-        if(home instanceof MyTeam) {
-            return MyGameHome((MyTeam) home, away);
-        }
-        if(away instanceof MyTeam){
-            return MyGameAway(home, (MyTeam)away);
-        }
-
-        //save to assume that it is not your team participating
-        return BotGame(home, away);
+        return MyGameHome(home, away);
 
     }
 
-    public Fixture MyGameHome(MyTeam myTeam, Team opposition){
+    public Fixture MyGameHome(MyTeam AttackTeam, MyTeam DefendTeam){
 
-        TeamTree myTeamTree = new TeamTree(myTeam);
+        int MyScore = 0;
+        int OppositionScore = 0;
 
-        //myTeamTree.
+        TeamTree teamTree = new TeamTree(AttackTeam, DefendTeam);
 
-        return new Fixture(myTeam, opposition, "Winner");
+        int MaxTime = 90;//Game done when 90
+        int Time = 0;//current time
+
+
+        while(Time < MaxTime)
+        {
+            PlayerNode curNode = teamTree.getRoot();
+
+
+            while((curNode.hasnext() != false)&&(Time < MaxTime))
+            {
+                Random Decisionpass = new Random();
+                Player curPlayer = curNode.getValue();
+                double prob = (double) Decisionpass.nextInt(100);
+                if(curNode.getMiddle().getValue()==null)//shoot
+                {
+                    boolean goal = curNode.shoot(curNode.getDefendervalue());
+
+                    if(goal)
+                        MyScore = MyScore + 1;
+                    curNode = teamTree.getRoot();
+                }
+                else
+                if( prob < (curPlayer.getPAvgRating() - (curNode.getDefendervalue().getPDefRating()/3)))
+                {
+                    if(Decisionpass.nextInt(100) < (curPlayer.getPAvgRating()/2))
+                        curNode = curNode.bestPass();
+                    else
+                        curNode.RandomPass();
+                }
+                Time = Time + 1;
+            }
+        }
+
+        //teamTree.
+
+        return new Fixture(AttackTeam, DefendTeam, String.valueOf(MyScore));
     }
 
     public Fixture MyGameAway(Team opposition, MyTeam myTeam){

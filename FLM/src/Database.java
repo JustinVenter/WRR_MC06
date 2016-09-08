@@ -2,10 +2,6 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
-import javax.sound.sampled.Line;
-import javax.xml.crypto.Data;
 
 /**
  * Created by Michael on 09/08/2016.
@@ -22,8 +18,8 @@ public class Database {
     static private Statement stmt = null;
 
     public Database(){
-        connectToDB();
-        UpdatePAverage();
+        //connectToDB();
+        //UpdatePAverage();
         //updatePlayerAvg();
     }
 
@@ -34,6 +30,7 @@ public class Database {
         System.out.println("   Loading JDBC driver for MS SQL Server database...");
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            System.out.println("Class.forName(\"com.microsoft.sqlserver.jdbc.SQLServerDriver\")");
         } catch (Exception e) {
             System.out.printf("   Unable to load JDBC driver... '%s'\n", e.getMessage());
             return;
@@ -57,6 +54,7 @@ public class Database {
             stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
             System.out.println("connection successful");
+            return;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,7 +63,63 @@ public class Database {
     /**
     Load your team's squad
     */
-    public ArrayList loadMyTeam()
+    public MyTeam loadMyTeam()
+     {
+        System.out.println("Using database...");
+        MyTeam myTeam = null;
+
+        try {
+            String sql = "SELECT * FROM Team WHERE TeamID = 1";
+            ResultSet result = stmt.executeQuery(sql);
+            if (result.next() ) {
+                // perform query on database and retrieve results
+
+                String TeamName = result.getString("TName");
+                int TeamID = result.getInt("TeamID");
+                String TCity = result.getString("TCity");
+                double TRating = result.getDouble("TRating");
+                int TAttRating = result.getInt("TAttRating");
+                int TDefRating = result.getInt("TDefRating");
+
+                myTeam = new MyTeam(TeamID, TeamName, TRating, TAttRating, TDefRating, TCity, 0, 0, 0);
+
+                myTeam.loadSquad();
+                //Delete when squads are working!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                Player[] strt = new Player[11];
+                for(int i = 0; i < 11; i++)
+                {
+                    strt[i] = myTeam.getMySquad().get(i);
+                }
+
+                myTeam.setStartingLineUp(strt);
+                myTeam.CalculateAvgDefence();
+                myTeam.CalculateAvgDefence();
+                myTeam.CalculateAvgAttack();
+
+
+                //update avg stuff
+                try {
+                    // perform query on database and retrieve results
+                    String sql2 = "UPDATE Team SET TAttRating = " + myTeam.getTAttRating() + ", TDefRating = " + myTeam.getTDefRating() + " WHERE TeamID = 1";
+                    stmt.execute(sql2);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+         disconnectDB();
+        return myTeam;
+    }
+
+    /**
+     Load your team's squad
+     */
+    public ArrayList loadMyTeamSquad()
     {
         ArrayList<Player> AllPlayers = LoadAllPlayers();
         ArrayList<Player> MyTeam = new ArrayList<>();
@@ -80,7 +134,7 @@ public class Database {
         return MyTeam;
     }
 
-    public ArrayList<Player> LoadAllPlayers()
+    public ArrayList<Player>  LoadAllPlayers()
     {
         System.out.println("Using database...");
 
@@ -92,11 +146,12 @@ public class Database {
             ResultSet result = stmt.executeQuery(sql);
 
             System.out.println();
-            System.out.println("   Displaying Query Result");
+            System.out.println("   LoadAllPlayers (Comment)");
             System.out.println("----------------------------------------------------------------------");
 
             // while there are tuples in the result set, display them
             while (result.next() ) {
+                System.out.println("   LoadAllPlayers (Comment 2)");
                 // get values from current tuple
                 int PlayerID = result.getInt("PlayerID");
                 int TeamID = result.getInt("TeamID");
@@ -115,15 +170,18 @@ public class Database {
                 boolean PInjury = result.getBoolean("PInjury");
                 int PFatigueLvl = result.getInt("PFatigueLevel"); //1 being wost and 4 being max*/
 
+                System.out.println("   LoadAllPlayers (Comment 3)");
+
                 Player newOne = new Player(PlayerID, TeamID, StartLineUp, name, surname, PAvgRating, PAttRating, PDefRating, PPos, PSkill, PFatigue, PSalary, PValue, PContract, PInjury, PFatigueLvl);
                 Lineup.add(newOne);
             }
             System.out.println("Load successful");
-
+            System.out.println("   LoadAllPlayers (Comment 4)");
             return Lineup;
         } catch (Exception e) {
             System.out.println("   Was not able to query database...");
         }
+        System.out.println("   LoadAllPlayers (Comment 5 error)");
         return null;
     }
 
@@ -262,6 +320,8 @@ public class Database {
             //insert manager name code
         }
     }
+
+
 
     //update contract
 
