@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane fx:id="PaneGame" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="594.0" prefWidth="734.0" style="-fx-background-color: #262626;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FLMfiles.PlayController">
+   <children>
+      <Button fx:id="btnOK" layoutX="41.0" layoutY="518.0" mnemonicParsing="false" onMouseClicked="#onOKFinishedGame" prefHeight="43.0" prefWidth="652.0" style="-fx-background-color: linear-gradient(#00bfff,#1a8cff);" text="OK" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="19.0" />
+         </font>
+      </Button>
+      <Pane layoutX="41.0" layoutY="117.0" prefHeight="111.0" prefWidth="464.0" style="-fx-background-color: #1a1a1a;">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" text="Score" textFill="#3c3c3c">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblScore" layoutX="177.0" layoutY="41.0" text="Score" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="25.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <ProgressBar fx:id="Progressbar" layoutX="41.0" layoutY="243.0" prefHeight="33.0" prefWidth="652.0" progress="0.0" />
+      <Pane layoutX="516.0" layoutY="117.0" prefHeight="111.0" prefWidth="180.0" style="-fx-background-color: #1a1a1a;">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" text="Time" textFill="#3c3c3c">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblTime" layoutX="61.0" layoutY="41.0" text="Time" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="25.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="41.0" layoutY="28.0" prefHeight="75.0" prefWidth="318.0" style="-fx-background-color: #1a1a1a;">
+         <children>
+            <Label layoutX="13.0" layoutY="9.0" text="Home" textFill="#3c3c3c">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblHomeTeam" layoutX="112.0" layoutY="23.0" text="Home" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="25.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="378.0" layoutY="28.0" prefHeight="75.0" prefWidth="318.0" style="-fx-background-color: #1a1a1a;">
+         <children>
+            <Label layoutX="13.0" layoutY="9.0" text="Away" textFill="#3c3c3c">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblAwayTeam" layoutX="112.0" layoutY="23.0" text="Away" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="25.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="41.0" layoutY="289.0" prefHeight="216.0" prefWidth="652.0" style="-fx-background-color: #1a1a1a;">
+         <children>
+            <ListView fx:id="listLivefeed" layoutX="16.0" layoutY="44.0" prefHeight="150.0" prefWidth="617.0" />
+            <Label layoutX="14.0" layoutY="8.0" text="Livefeed" textFill="#434343">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+   <padding>
+      <Insets top="10.0" />
+   </padding>
+</Pane>
