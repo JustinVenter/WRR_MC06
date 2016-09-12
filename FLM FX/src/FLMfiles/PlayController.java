@@ -60,7 +60,6 @@ public class PlayController implements Initializable{
         {
             PlayerNode curNode = teamTree.getRoot();
 
-
             while((curNode.hasnext() != false)&&(Time < MaxTime))
             {
                 Random Decisionpass = new Random();
@@ -89,7 +88,6 @@ public class PlayController implements Initializable{
         }
 
         //teamTree.
-
         return new PostFixture(AttackTeam, DefendTeam, String.valueOf(MyScore));
     }
 

@@ -130,7 +130,7 @@
                                     <Font name="System Bold" size="22.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="btnEdtLineup" layoutX="417.0" layoutY="515.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="368.0" style="-fx-background-color: linear-gradient(#00bfff,#1a8cff);" text="LINE UP" textFill="WHITE">
+                              <Button fx:id="btnEdtLineup" layoutX="417.0" layoutY="515.0" mnemonicParsing="false" onMouseClicked="#onLineupClicked" prefHeight="48.0" prefWidth="368.0" style="-fx-background-color: linear-gradient(#00bfff,#1a8cff);" text="LINE UP" textFill="WHITE">
                                  <font>
                                     <Font name="Arial Bold" size="19.0" />
                                  </font>

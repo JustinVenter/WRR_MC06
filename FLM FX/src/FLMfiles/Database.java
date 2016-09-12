@@ -98,9 +98,8 @@ public class Database {
 
                 myTeam.setStartingLineUp(strt);
                 myTeam.CalculateAvgDefence();
-                myTeam.CalculateAvgDefence();
                 myTeam.CalculateAvgAttack();
-
+                myTeam.CalculateAvgRating();
 
                 //update avg stuff
                 try {
@@ -238,7 +237,7 @@ public class Database {
                 int TeamID = result.getInt("TeamID");
                 String TName = result.getString("TName");
                 double TRating = result.getDouble("TRating");
-                int TAttRating = result.getInt("TAtRating");
+                int TAttRating = result.getInt("TAttRating");
                 int TDefRating = result.getInt("PDefRating");;
                 String TCity = result.getString("TCity");
                 int TRank = result.getInt("TRank");

@@ -6,7 +6,7 @@ import java.util.Stack;
  * Created by Michael on 09/08/2016.
  */
 public class League {
-    //Attributes found in Database
+    Stack<PreFixture> myfixtures = new Stack<>();
     Stack<PreFixture> fixtures = new Stack<>();
 
     public void loadGames()

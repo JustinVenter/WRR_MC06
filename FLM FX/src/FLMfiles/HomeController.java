@@ -3,20 +3,25 @@ package FLMfiles;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collection;
 import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
     //<editor-fold desc="Editor tab">
     public League league = new League();
     public Button btnPlayMatch;
+    public Button btnEdtLineup;
     public Label lblHomeTeam;
     public Label lblHomeAvgRating;
     public Label lblAwayTeam;
@@ -39,7 +44,6 @@ public class HomeController implements Initializable {
         Parent root = null;
         Stage secondaryStage = new Stage();
         try {
-
             root = FXMLLoader.load(getClass().getResource("PlayScreen.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
@@ -74,6 +78,18 @@ public class HomeController implements Initializable {
 
         return oneGame;
     }
+
+    public void onLineupClicked(Event event) throws IOException {
+        AnchorPane curPane = (AnchorPane) ((Node)event.getSource()).getParent().getParent();
+
+        // these two of them return the same stage
+        // Swap screen
+
+        curPane.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("Lineup.fxml")));
+    }
+
+
+
 
     //</editor-fold>
 

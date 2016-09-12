@@ -106,7 +106,7 @@ public class Team {
     }
 
     /**
-     * structure of the array:
+     * structure of the array (Starting Lineup):
      *      pos[0-2] = attack,      90% attack, 10% defence
      *      pos[3-5] = midfield.    50% attack, 50% defence
      *      pos[6-9] = defence      10% attack, 90% defence

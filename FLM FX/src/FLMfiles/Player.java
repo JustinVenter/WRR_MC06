@@ -118,7 +118,7 @@ public class Player {
         if (payment != -1)
         {
             this.setPContract(this.PContract + Weeks);
-            return MyAccount + payment;
+            return payment;
         }
         else
             return -1;
