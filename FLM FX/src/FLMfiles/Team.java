@@ -1,11 +1,12 @@
 package FLMfiles;
 
+import java.io.Serializable;
 import java.util.Random;
 
 /**
  * Created by Michael on 09/08/2016.
  */
-public class Team {
+public class Team implements Serializable {
     //Attributes found in Database
     int TeamID;
     String TName;
@@ -30,6 +31,8 @@ public class Team {
         this.TWins = TWins;
         this.TLosses = TLosses;
     }
+    // Keep this empty constructor. It is need to load and save objects in the League class !!
+    public Team(){}
 
 
     //<editor-fold desc="getters and setters">
@@ -106,7 +109,7 @@ public class Team {
     }
 
     /**
-     * structure of the array (Starting Lineup):
+     * structure of the starting lineup array:
      *      pos[0-2] = attack,      90% attack, 10% defence
      *      pos[3-5] = midfield.    50% attack, 50% defence
      *      pos[6-9] = defence      10% attack, 90% defence
@@ -151,4 +154,20 @@ public class Team {
     //Methods
 
     //views (such as display)
+
+
+    @Override
+    public String toString() {
+        return "Team{" +
+                "TeamID=" + TeamID +
+                ", TName='" + TName + '\'' +
+                ", TRating=" + TRating +
+                ", TAttRating=" + TAttRating +
+                ", TDefRating=" + TDefRating +
+                ", TCity='" + TCity + '\'' +
+                ", TRank=" + TRank +
+                ", TWins=" + TWins +
+                ", TLosses=" + TLosses +
+                '}';
+    }
 }

@@ -1,9 +1,11 @@
 package FLMfiles;
 
+import java.io.Serializable;
+
 /**
  * Created by Michael on 09/08/2016.
  */
-public class Player {
+public class Player implements Serializable{
 
     Database db = new Database();
     //<editor-fold desc="Attributes found in Database">
@@ -118,7 +120,7 @@ public class Player {
         if (payment != -1)
         {
             this.setPContract(this.PContract + Weeks);
-            return payment;
+            return MyAccount + payment;
         }
         else
             return -1;

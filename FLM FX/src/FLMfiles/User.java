@@ -1,9 +1,14 @@
 package FLMfiles;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+
 /**
  * Created by Michael on 10/08/2016.
  */
 public class User {
+
     int UserID;
     int TeamID;
     String UserName; // Managers name
@@ -60,5 +65,30 @@ public class User {
         City = city;
     }
 
-    // Load And Save to Xml.
+    // Save to a text file .
+
+    public  void saveUserDetails() throws FileNotFoundException {
+
+        File outFile= new File("userDetails.txt");
+        PrintWriter out = new PrintWriter(outFile);
+
+        out.println(UserID);
+        out.println(TeamID);
+        out.println(UserName);
+        out.println(TeamName);
+        out.println(City);
+
+        out.close();
+
+
+    }
+    public boolean DoesUserAccountExist(){
+
+        File file= new File("userDetails.txt");
+        if(file.exists())
+            return  true;
+        return false;
+    }
+
+
 }

@@ -2,6 +2,7 @@ package FLMfiles;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
  */
 
 
-public class Database {
+public class Database implements Serializable{
 
     Calculate calculate = new Calculate();
     // fields needed to access database
@@ -220,11 +221,11 @@ public class Database {
             return Market;
     }
 
-    public ArrayList<Team> loadTeams()
+    public ArrayList<MyTeam> loadTeams()
     {
         System.out.println("Using database...");
 
-        ArrayList<Team> Teams = new ArrayList<>();
+        ArrayList<MyTeam> Teams = new ArrayList<>();
         try {
             // perform query on database and retrieve results
             String sql = "SELECT * FROM Team";
@@ -238,7 +239,7 @@ public class Database {
                 String TName = result.getString("TName");
                 double TRating = result.getDouble("TRating");
                 int TAttRating = result.getInt("TAttRating");
-                int TDefRating = result.getInt("PDefRating");;
+                int TDefRating = result.getInt("TDefRating");;
                 String TCity = result.getString("TCity");
                 int TRank = result.getInt("TRank");
                 int TWins = result.getInt("TWins");
@@ -246,7 +247,7 @@ public class Database {
                 int TStaffLevel = result.getInt("TLosses");
                 int TConfidence = result.getInt("TConfidence");
 
-                Team newOne = new Team(TeamID,TName,TRating,TAttRating,TDefRating,TCity,TRank,TWins,TLosses);
+                MyTeam newOne = new MyTeam(TeamID,TName,TRating,TAttRating,TDefRating,TCity,TRank,TWins,TLosses);
                 Teams.add(newOne);
             }
             System.out.println("Load successful");
@@ -254,6 +255,7 @@ public class Database {
             return Teams;
         } catch (Exception e) {
             System.out.println("   Was not able to query database...");
+            System.out.println(e.getMessage());
         }
         return null;
     }

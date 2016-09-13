@@ -1,12 +1,13 @@
 package FLMfiles;
 
+import java.io.Serializable;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Michael on 09/08/2016.
  */
-public class Calculate {
+public class Calculate implements Serializable{
     //Attributes found in Database
 
     //Methods
