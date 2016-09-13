@@ -1,9 +1,11 @@
 package FLMfiles;
 
+import java.io.Serializable;
+
 /**
  * Created by Michael on 10/09/2016.
  */
-public class PreFixture {
+public class PreFixture implements Serializable {
 
     private MyTeam homeTeam;
     private MyTeam awayTeam;
@@ -27,5 +29,12 @@ public class PreFixture {
 
     public void setAwayTeam(MyTeam awayTeam) {
         this.awayTeam = awayTeam;
+    }
+
+    @Override
+    public String toString() {
+        return "homeTeam=" + homeTeam + " V"+ '\'' +
+                ", awayTeam=" + awayTeam +
+                '}';
     }
 }

@@ -1,15 +1,14 @@
 package FLMfiles;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Michael on 09/08/2016.
  */
-public class MyTeam extends Team{
+public class MyTeam extends Team implements Serializable{
     //Custom attributes, data structures
     ArrayList<Player> MySquad;
-
-
 
     //Order of players are extremely important
     Player[] StartingLineUp;
@@ -25,6 +24,11 @@ public class MyTeam extends Team{
 
     public MyTeam(int teamID, String TName, double TRating, int TAttRating, int TDefRating, String TCity, int TRank, int TWins, int TLosses) {
         super(teamID, TName, TRating, TAttRating, TDefRating, TCity, TRank, TWins, TLosses);
+    }
+
+    // Keep this empty constructor. It is need to load and save objects in the League class !!
+    public MyTeam() {
+
     }
 
     //Methods
