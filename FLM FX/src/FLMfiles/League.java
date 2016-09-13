@@ -38,7 +38,7 @@ public class League implements Serializable {
         myteam.CalculateAvgAttack();
         myteam.CalculateAvgRating();
 
-        MyTeam Dummy = new MyTeam(99, "Dummy", 55, 60, 50, "DumCity", 5, 0, 0);
+        MyTeam Dummy = new MyTeam(99, "Dummy", 60, 70,50, "DumCity", 5, 0, 0);
         Player[] botTeam = Dummy.generateTeamPlayers();
 
 

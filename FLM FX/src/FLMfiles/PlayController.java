@@ -98,7 +98,7 @@ public class PlayController implements Initializable{
         lblHomeTeam.setText(preFixture.getHomeTeam().getTName());
         lblAwayTeam.setText(preFixture.getAwayTeam().getTName());
         PostFixture result = LMAlogrithm(preFixture);
-        PostFixture result2 = LMAlogrithm(preFixture);
+        PostFixture result2 = LMAlogrithm(new PreFixture(preFixture.getAwayTeam(), preFixture.getHomeTeam()));
         lblScore.setText(result.getResult() + " : " + result2.getResult());
         Progressbar.progressProperty().bind(TimeProperty);
     }

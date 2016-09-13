@@ -180,6 +180,13 @@ public class MyTeam extends Team implements Serializable{
         this.setTAttRating((int)(Math.floor(averageAttack))); //might cause issues
     }
 
+    public void CalculateAll()//remember to use use the starting lineup ratings
+    {
+        this.CalculateAvgAttack();
+        this.CalculateAvgDefence();
+        this.CalculateAvgRating();
+    }
+
     public void CalculateAvgDefence()//remember to use use the starting lineup ratings
     {
         double attacktotal = 0;

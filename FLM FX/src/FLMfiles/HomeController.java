@@ -59,6 +59,11 @@ public class HomeController implements Initializable {
 
         PreFixture curGame = getLeagueGame(league);
 
+        MyTeam AwayT =  curGame.getAwayTeam();
+        MyTeam HomeT = curGame.getHomeTeam();
+
+        HomeT.CalculateAll();
+        AwayT.CalculateAll();
 
         lblHomeTeam.setText(curGame.getHomeTeam().getTName());
         lblHomeAvgRating.setText(String.valueOf((int)Math.floor(curGame.getHomeTeam().getTRating())));
