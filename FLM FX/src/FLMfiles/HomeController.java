@@ -30,7 +30,6 @@ public class HomeController implements Initializable {
     public Label lblHomeDef;
     public Label lblAwayAtt;
     public Label lblAwayDef;
-    public AnchorPane AccountAnchor;
 
     public HomeController()
     {}
@@ -75,14 +74,6 @@ public class HomeController implements Initializable {
         lblHomeDef.setText(String.valueOf(curGame.getHomeTeam().getTDefRating()));
         lblAwayAtt.setText(String.valueOf(curGame.getAwayTeam().getTAttRating()));;
         lblAwayDef.setText(String.valueOf(curGame.getAwayTeam().getTDefRating()));;
-
-
-            AnchorPane curPane = (AccountAnchor);
-        try {
-            curPane.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("AccountScreen.fxml")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public PreFixture getLeagueGame(League league)
@@ -98,6 +89,7 @@ public class HomeController implements Initializable {
 
         // these two of them return the same stage
         // Swap screen
+
         curPane.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("Lineup.fxml")));
     }
 

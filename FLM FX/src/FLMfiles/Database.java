@@ -23,6 +23,8 @@ public class Database implements Serializable{
     // object used to issue SQL commands
     static private Statement stmt = null;
 
+    ArrayList<Player> MyStartingLineUp = new ArrayList<>();
+
     public Database(){
         //connectToDB();
         //UpdatePAverage();
@@ -90,12 +92,17 @@ public class Database implements Serializable{
                 myTeam = new MyTeam(TeamID, TeamName, TRating, TAttRating, TDefRating, TCity, 0, 0, 0);
 
                 myTeam.loadSquad();
+
+                myTeam.loadSquad();
                 //Delete when squads are working!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 Player[] strt = new Player[11];
-                for(int i = 0; i < 11; i++)
-                {
-                    strt[i] = myTeam.getMySquad().get(i);
-                }
+
+                for(Player p : myTeam.getMySquad())
+                    if(p.StartLineUp == true)
+                        MyStartingLineUp.add(p);
+
+                strt = loadStartingLineUp(MyStartingLineUp);
+
 
                 myTeam.setStartingLineUp(strt);
                 myTeam.CalculateAvgDefence();
@@ -121,6 +128,46 @@ public class Database implements Serializable{
         return myTeam;
     }
 
+    public Player[] loadStartingLineUp(ArrayList<Player> myStartingLineUp) {
+        Player[] startlineup = new Player[11];
+
+        for(int i = 0; i < myStartingLineUp.size(); i++)
+        {
+            Player cur = myStartingLineUp.get(i);
+
+            switch(cur.getPPos())
+            {
+                case "LF": startlineup[0] = cur;
+                    break;
+                case "CF": startlineup[1] = cur;
+                    break;
+                case "RF": startlineup[2] = cur;
+                    break;
+
+                case "LM": startlineup[3] = cur;
+                    break;
+                case "CM": startlineup[4] = cur;
+                    break;
+                case "RM": startlineup[5] = cur;
+                    break;
+
+                case "LB": startlineup[6] = cur;
+                    break;
+                case "LMB": startlineup[7] = cur;
+                    break;
+                case "RMB": startlineup[8] = cur;
+                    break;
+                case "RB": startlineup[9] = cur;
+                    break;
+
+                case "GK": startlineup[10] = cur;
+                    break;
+
+            }
+        }
+        return startlineup;
+    }
+
     /**
      Load your team's squad
      */
@@ -141,13 +188,14 @@ public class Database implements Serializable{
 
     public ArrayList<Player> LoadAllPlayers()
     {
+
         System.out.println("Using database...");
 
         ArrayList<Player> Lineup = new ArrayList<>();
         try {
             // perform query on database and retrieve results
             String sql = "SELECT * FROM Player";
-            System.out.println("  Loading starting lineup = " + sql);
+            System.out.println("  Loading all players = " + sql);
             ResultSet result = stmt.executeQuery(sql);
 
             System.out.println();
@@ -178,8 +226,11 @@ public class Database implements Serializable{
                 System.out.println("   LoadAllPlayers (Comment 3)");
 
                 Player newOne = new Player(PlayerID, TeamID, StartLineUp, name, surname, PAvgRating, PAttRating, PDefRating, PPos, PSkill, PFatigue, PSalary, PValue, PContract, PInjury, PFatigueLvl);
+
                 Lineup.add(newOne);
             }
+
+            //loadStartingLineUp(MyStartingLineUp);
             System.out.println("Load successful");
             System.out.println("   LoadAllPlayers (Comment 4)");
             return Lineup;
@@ -284,6 +335,21 @@ public class Database implements Serializable{
         }
     }
 
+
+    public void UpdateStartingLineUp(ArrayList<Player> Squad, Player[] players) throws SQLException {
+        //set all other players to false
+        connectToDB();
+        String sql = "UPDATE Player SET StartLineUp = " + 0 + " WHERE TeamID = " + 1;
+        stmt.execute(sql);
+
+
+        for(Player p : players)
+        {
+            String sql2 = "UPDATE Player SET StartLineUp = " + 1 + " WHERE TeamID = " + 1 + " AND PlayerID = " + p.getPlayerID();
+            stmt.execute(sql2);
+        }
+    }
+
     /**
      *
      * @param player whose team has changed
@@ -293,6 +359,7 @@ public class Database implements Serializable{
      */
     public void UpdatePlayerTeam(Player player, int i)
     {
+
         try {
             // perform query on database and retrieve results
             String sql = "UPDATE Team SET TeamID = " + i + " WHERE PlayerID = " + player.getPlayerID();

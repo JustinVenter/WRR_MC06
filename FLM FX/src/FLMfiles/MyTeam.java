@@ -1,6 +1,7 @@
 package FLMfiles;
 
 import java.io.Serializable;
+import java.sql.Array;
 import java.util.ArrayList;
 
 /**
@@ -236,5 +237,19 @@ public class MyTeam extends Team implements Serializable{
 
     public void setStartingLineUp(Player[] startingLineUp) {
         StartingLineUp = startingLineUp;
+    }
+
+    public ArrayList<Player> getPosPlayers(String pos)
+    {
+        ArrayList<Player> PosPlayers = new ArrayList<>();
+
+        for(int i = 0; i < MySquad.size(); i++)
+        {
+            Player curPlayer = MySquad.get(i);
+
+            if(curPlayer.getPPos().equals(pos))
+                PosPlayers.add(curPlayer);
+        }
+        return PosPlayers;
     }
 }
