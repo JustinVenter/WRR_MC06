@@ -3,12 +3,16 @@ package FLMfiles;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -32,7 +36,7 @@ public class MarketController implements Initializable{
     public TableColumn playerPrice;
     public TableColumn playerSalary;
     public Button btnPurchase;
-
+    public Button btnBack;
     // database
     Database db= new Database();
     // ArrayList of players
@@ -112,5 +116,10 @@ public class MarketController implements Initializable{
         } );
 
 
+    }
+
+    public void onBackClicked(Event event) throws IOException {
+        AnchorPane mainAnchor = (AnchorPane) ((Node)event.getSource()).getParent().getParent();
+        mainAnchor.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("ManageScreen.fxml")));
     }
 }

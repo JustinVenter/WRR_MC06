@@ -189,7 +189,7 @@
                                     <Font name="Arial Bold" size="18.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="558.0" layoutY="279.0" mnemonicParsing="false" prefHeight="138.0" prefWidth="537.0" style="-fx-background-color: linear-gradient(#bfbfbf,#d9d9d9);" text="MARKET" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3">
+                              <Button fx:id="btnMarket" layoutX="558.0" layoutY="279.0" mnemonicParsing="false" onAction="#onMarketClick" prefHeight="138.0" prefWidth="537.0" style="-fx-background-color: linear-gradient(#bfbfbf,#d9d9d9);" text="MARKET" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3">
                                  <GridPane.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </GridPane.margin>

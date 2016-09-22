@@ -7,7 +7,7 @@
 
 <Pane prefHeight="691.0" prefWidth="1202.0" style="-fx-background-color: #262626;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FLMfiles.MarketController">
    <children>
-      <TableView fx:id="tblPlayers" layoutX="175.0" layoutY="108.0" prefHeight="472.0" prefWidth="853.0">
+      <TableView fx:id="tblPlayers" layoutX="175.0" layoutY="99.0" prefHeight="472.0" prefWidth="853.0">
          <columns>
             <TableColumn id="SurnameId" fx:id="playerSur" prefWidth="107.0" text="Surname" />
             <TableColumn id="NameID" fx:id="playerName" prefWidth="89.0" text="Name" />
@@ -24,7 +24,12 @@
             <Font name="Arial Bold" size="29.0" />
          </font>
       </Label>
-      <Button id="btnPurchasePlayer" fx:id="btnPurchase" layoutX="175.0" layoutY="603.0" mnemonicParsing="false" onMouseClicked="#onPurchaseClicked" prefHeight="48.0" prefWidth="266.0" style="-fx-background-color: linear-gradient(#00bfff,#1a8cff);" text="PURCHASE" textFill="WHITE">
+      <Button id="btnPurchasePlayer" fx:id="btnPurchase" layoutX="175.0" layoutY="592.0" mnemonicParsing="false" onMouseClicked="#onPurchaseClicked" prefHeight="48.0" prefWidth="266.0" style="-fx-background-color: linear-gradient(#00bfff,#1a8cff);" text="PURCHASE" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="19.0" />
+         </font>
+      </Button>
+      <Button id="btnPurchasePlayer" fx:id="btnPurchase1" layoutX="449.0" layoutY="592.0" mnemonicParsing="false" onMouseClicked="#onBackClicked" prefHeight="48.0" prefWidth="266.0" style="-fx-background-color: linear-gradient(#00bfff,#1a8cff);" text="BACK" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="19.0" />
          </font>

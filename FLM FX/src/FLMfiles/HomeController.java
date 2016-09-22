@@ -1,5 +1,6 @@
 package FLMfiles;
 
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -31,6 +32,9 @@ public class HomeController implements Initializable {
     public Label lblAwayAtt;
     public Label lblAwayDef;
 
+    AnchorPane mainAnchor;
+
+
     public HomeController()
     {}
 
@@ -57,6 +61,7 @@ public class HomeController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         League league = new League();
 
+
         PreFixture curGame = getLeagueGame(league);
 
         MyTeam AwayT =  curGame.getAwayTeam();
@@ -72,8 +77,8 @@ public class HomeController implements Initializable {
 
         lblHomeAtt.setText(String.valueOf(curGame.getHomeTeam().getTAttRating()));
         lblHomeDef.setText(String.valueOf(curGame.getHomeTeam().getTDefRating()));
-        lblAwayAtt.setText(String.valueOf(curGame.getAwayTeam().getTAttRating()));;
-        lblAwayDef.setText(String.valueOf(curGame.getAwayTeam().getTDefRating()));;
+        lblAwayAtt.setText(String.valueOf(curGame.getAwayTeam().getTAttRating()));
+        lblAwayDef.setText(String.valueOf(curGame.getAwayTeam().getTDefRating()));
     }
 
     public PreFixture getLeagueGame(League league)
@@ -93,7 +98,10 @@ public class HomeController implements Initializable {
         curPane.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("Lineup.fxml")));
     }
 
-
+    public void onMarketClick(ActionEvent actionEvent) throws IOException {
+        mainAnchor = (AnchorPane) ((Node)actionEvent.getSource()).getParent().getParent();
+        mainAnchor.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("MarketScreen.fxml")));
+    }
 
 
     //</editor-fold>

@@ -10,7 +10,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("MarketScreen.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
         primaryStage.setTitle("Football League Manager");
         primaryStage.setScene(new Scene(root, 1200, 750));
         primaryStage.show();
