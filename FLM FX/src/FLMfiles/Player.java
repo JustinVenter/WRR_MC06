@@ -1,11 +1,109 @@
 package FLMfiles;
 
+import javafx.beans.property.*;
+
 import java.io.Serializable;
 
 /**
  * Created by Michael on 09/08/2016.
  */
 public class Player implements Serializable{
+
+    // The following is the String and int properties needed to display information in a table
+    IntegerProperty playerNum= new SimpleIntegerProperty();
+    StringProperty Surname = new SimpleStringProperty();
+    StringProperty Name= new SimpleStringProperty();
+    StringProperty playerPos= new SimpleStringProperty();
+    IntegerProperty playerAtt= new SimpleIntegerProperty();
+    IntegerProperty playerDef= new SimpleIntegerProperty();
+    DoubleProperty playerAverage= new SimpleDoubleProperty();
+    DoubleProperty playerPrice = new SimpleDoubleProperty();
+    DoubleProperty playerSalary= new SimpleDoubleProperty();
+
+    // for MarketController, this is needed
+    public Player(int playerNum, String surname, String name, String playerPos, int playerAtt, int playerDef, double playerAverage, double playerPrice, double playerSalary) {
+        this.playerNum.set(playerNum) ;
+        Surname.set(surname);
+        Name.set(name);
+        this.playerPos.set(playerPos);
+        this.playerAtt.set(playerAtt);
+        this.playerDef.set(playerDef);
+        this.playerAverage.set(playerAverage);
+        this.playerPrice.set(playerPrice);
+        this.playerSalary.set(playerSalary);
+    }
+    // getters for marketController do not remove !!! (used through reflection when adding the data to the table)
+    public int getPlayerNum() {
+        return playerNum.get();
+    }
+
+    public IntegerProperty playerNumProperty() {
+        return playerNum;
+    }
+
+    public String getSurname() {
+        return Surname.get();
+    }
+
+    public StringProperty surnameProperty() {
+        return Surname;
+    }
+
+    public String getName() {
+        return Name.get();
+    }
+
+    public StringProperty nameProperty() {
+        return Name;
+    }
+
+    public String getPlayerPos() {
+        return playerPos.get();
+    }
+
+    public StringProperty playerPosProperty() {
+        return playerPos;
+    }
+
+    public int getPlayerAtt() {
+        return playerAtt.get();
+    }
+
+    public IntegerProperty playerAttProperty() {
+        return playerAtt;
+    }
+
+    public int getPlayerDef() {
+        return playerDef.get();
+    }
+
+    public IntegerProperty playerDefProperty() {
+        return playerDef;
+    }
+
+    public double getPlayerAverage() {
+        return playerAverage.get();
+    }
+
+    public DoubleProperty playerAverageProperty() {
+        return playerAverage;
+    }
+
+    public double getPlayerPrice() {
+        return playerPrice.get();
+    }
+
+    public DoubleProperty playerPriceProperty() {
+        return playerPrice;
+    }
+
+    public double getPlayerSalary() {
+        return playerSalary.get();
+    }
+
+    public DoubleProperty playerSalaryProperty() {
+        return playerSalary;
+    }
 
     Database db = new Database();
     //<editor-fold desc="Attributes found in Database">
@@ -275,7 +373,7 @@ public class Player implements Serializable{
     //<editor-fold desc="views (such as display)">
     public String toString()
     {
-        return PName +", " +PSurname + ": " + PAvgRating;
+        return playerNum+": "  + Name +", " +Surname + ": " + playerAverage;
     }
 
     //</editor-fold>
