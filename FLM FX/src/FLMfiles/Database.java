@@ -362,7 +362,7 @@ public class Database implements Serializable{
 
         try {
             // perform query on database and retrieve results
-            String sql = "UPDATE Team SET TeamID = " + i + " WHERE PlayerID = " + player.getPlayerID();
+            String sql = "UPDATE Player SET TeamID = " + i + " WHERE PlayerID = " + player.getPlayerNum();
             stmt.execute(sql);
         } catch (SQLException e) {
             e.printStackTrace();

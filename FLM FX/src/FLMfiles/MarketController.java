@@ -106,7 +106,7 @@ public class MarketController implements Initializable{
             db.UpdatePlayerTeam(observablePlayers.get(tblPlayers.getSelectionModel().getSelectedIndex()),1);
             //refresh the list after the player has been purchased :)
             observablePlayers.remove(observablePlayers.get(tblPlayers.getSelectionModel().getSelectedIndex()));
-            tblPlayers.refresh();
+            //tblPlayers.refresh();
 
 
         } );

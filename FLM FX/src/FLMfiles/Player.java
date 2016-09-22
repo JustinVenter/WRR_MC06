@@ -373,7 +373,7 @@ public class Player implements Serializable{
     //<editor-fold desc="views (such as display)">
     public String toString()
     {
-        return playerNum+": "  + Name +", " +Surname + ": " + playerAverage;
+        return PName +", " +PSurname + ": " + PAvgRating;
     }
 
     //</editor-fold>
