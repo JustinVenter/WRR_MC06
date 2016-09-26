@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
@@ -12,7 +15,80 @@
    <children>
       <Pane prefHeight="688.0" prefWidth="1209.0" style="-fx-background-color: #262626;">
          <children>
-            <Label layoutX="518.0" layoutY="41.0" text="Account" textFill="WHITE" />
+            <Label id="ScreenTitle" alignment="TOP_LEFT" layoutX="14.0" layoutY="14.0" text="Account Details" textFill="#ff9292">
+               <font>
+                  <Font name="Constantia Bold" size="34.0" />
+               </font></Label>
+            <Label id="CurBankBalanceLabel" layoutX="44.0" layoutY="88.0" text="Current Bank Balance:" textFill="WHITE">
+               <font>
+                  <Font name="Constantia" size="25.0" />
+               </font>
+            </Label>
+            <Label id="ExpenditureLabel" layoutX="44.0" layoutY="160.0" text="Expenditure for the week:" textFill="WHITE">
+               <font>
+                  <Font name="Constantia" size="20.0" />
+               </font>
+            </Label>
+            <Label id="Week label" alignment="TOP_RIGHT" layoutX="650.0" layoutY="23.0" text="Week: " textFill="WHITE">
+               <font>
+                  <Font name="Constantia" size="20.0" />
+               </font>
+            </Label>
+            <Label id="SalariesLabel" layoutX="131.0" layoutY="192.0" text="Salaries to be paid for this week: " textFill="WHITE">
+               <font>
+                  <Font name="Constantia" size="18.0" />
+               </font>
+            </Label>
+            <Label id="DebtLabel" layoutX="134.0" layoutY="224.0" text="Debt:" textFill="WHITE">
+               <font>
+                  <Font name="Constantia" size="18.0" />
+               </font>
+            </Label>
+            <Label id="TransactionsLabel" layoutX="43.0" layoutY="398.0" text="Transactions for the past 4 weeks:" textFill="#ffc6c6">
+               <font>
+                  <Font name="Constantia" size="20.0" />
+               </font>
+            </Label>
+            <Button id="TransactionsButton" fx:id="ViewTransactions" layoutX="517.0" layoutY="581.0" mnemonicParsing="false" onAction="#onTransactionsClick" text="View all past transactions">
+               <font>
+                  <Font name="Constantia" size="17.0" />
+               </font>
+            </Button>
+            <Circle fill="WHITE" layoutX="120.0" layoutY="204.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="WHITE" layoutX="120.0" layoutY="236.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+            <Label id="DebtNote" layoutX="174.0" layoutY="249.0" text="(This amount reflects the total of all salaries that have not been paid in the past)" textFill="WHITE">
+               <font>
+                  <Font name="Constantia" size="16.0" />
+               </font>
+            </Label>
+            <Label id="Salaries" fx:id="Salaries" layoutX="393.0" layoutY="192.0" text="\$0.00" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label id="CurBankBalance" fx:id="CurBankBalance" layoutX="302.0" layoutY="86.0" text="\$0.00" textFill="WHITE">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Label id="Debt" fx:id="Debt" layoutX="190.0" layoutY="224.0" text="\$0.00" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label id="Week" fx:id="CurWeek" layoutX="710.0" layoutY="21.0" text="0" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TableView fx:id="tblTransactions" layoutX="44.0" layoutY="422.0" prefHeight="200.0" prefWidth="447.0">
+              <columns>
+                <TableColumn fx:id="transactionWeek" prefWidth="75.0" text="Week" />
+                <TableColumn fx:id="transactionType" prefWidth="75.0" text="I/E" />
+                  <TableColumn fx:id="transactionAmount" prefWidth="75.0" text="Amount" />
+                  <TableColumn fx:id="transactionDescription" prefWidth="221.0" text="Description" />
+              </columns>
+            </TableView>
          </children></Pane>
    </children>
    <columnConstraints>

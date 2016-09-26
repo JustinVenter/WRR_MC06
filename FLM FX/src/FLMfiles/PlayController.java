@@ -34,6 +34,7 @@ public class PlayController implements Initializable{
     public void onOKFinishedGame(Event event) {
         Stage stage = (Stage) btnOK.getScene().getWindow();
         stage.close();
+        League.AddWeek();
     }
     //</editor-fold>
 
