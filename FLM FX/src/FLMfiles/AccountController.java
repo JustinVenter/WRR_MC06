@@ -39,9 +39,11 @@ public class AccountController implements Initializable {
     public TableColumn transactionAmount;
     public TableColumn transactionDescription;
 
+    Database db = new Database();
+
     public Button ViewTransactions;
 
-    private MyAccount account;
+
 
     // ArrayList of transactions
     private ArrayList<Transaction> transactions1;
@@ -49,20 +51,23 @@ public class AccountController implements Initializable {
     private ObservableList<Transaction> observableTransactions1;
 
     public AccountController(){
-        account = AccountTest.account;
-        transactions1 = account.GetTransactions1();
 
-        observableTransactions1 =  FXCollections.observableArrayList(transactions1);
 
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        AccountTest AT = new AccountTest();
+        MyAccount account = new MyAccount(db.loadMyTeam());
+        transactions1 = account.GetTransactions1();
+
+        observableTransactions1 =  FXCollections.observableArrayList(transactions1);
 
         CurBankBalance.setText("$" +String.valueOf(account.GetBankBalance()));
+
         CurWeek.setText(String.valueOf(League.Week));
-        //Salaries.setText("$" +String.valueOf(account.GetWeeklyExpenditure()));
-        //Debt.setText("$" +String.valueOf(account.CalculateDebt()));
+        Salaries.setText("$" +String.valueOf(account.GetWeeklyExpenditure()));
+        Debt.setText("$" +String.valueOf(account.CalculateDebt()));
 
         tableSetup();
         tblTransactions.setItems(observableTransactions1);

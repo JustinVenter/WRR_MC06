@@ -2,18 +2,22 @@ package FLMfiles;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 /**
  * Created by Justin on 2016/09/25.
  */
-public class AccountTest extends Application {
+public class AccountTest {
 
     public static MyAccount account;
 
-    public static void main(String[] args) {
+    public AccountTest() {
         MyTeam T = new MyTeam();
         account = new MyAccount(T);
         //AccountController Controller = new AccountController(Account);
@@ -34,19 +38,5 @@ public class AccountTest extends Application {
         account.UpdateBank(T6);
         account.UpdateBank(T7);
         account.UpdateBank(T8);
-
-
-
-        launch(args);
-
-
-    }
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("AccountScreen.fxml"));
-        primaryStage.setTitle("Football League Manager");
-        primaryStage.setScene(new Scene(root, 1200, 750));
-        primaryStage.show();
     }
 }

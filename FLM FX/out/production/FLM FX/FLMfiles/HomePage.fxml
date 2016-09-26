@@ -46,7 +46,7 @@
         <tabs>
           <Tab text="PLAY">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane fx:id="PlayAnchor" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <Pane prefHeight="690.0" prefWidth="1202.0" style="-fx-background-color: #262626;">
                            <children>
@@ -256,7 +256,7 @@
             </Tab>
             <Tab text="ACCOUNT">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <AnchorPane fx:id="AccountAnchor" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <Pane prefHeight="688.0" prefWidth="1209.0" style="-fx-background-color: #262626;" />
                      </children></AnchorPane>

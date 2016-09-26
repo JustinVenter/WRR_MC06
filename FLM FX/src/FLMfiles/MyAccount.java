@@ -1,11 +1,16 @@
 package FLMfiles;
 
+import javafx.fxml.Initializable;
+
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 /**
  * Created by Michael on 10/08/2016.
  */
-public class MyAccount {//money related
+public class MyAccount implements Initializable{//money related
+
 
     private double BankBalance;
     private ArrayList<Transaction> transactions;
@@ -14,6 +19,9 @@ public class MyAccount {//money related
     private int InDebt; //Keep track of how many weeks the user is in debt for
     //In debt for 8 weeks, user is fired!
     private ArrayList<Player> StillOwe; //ArrayList containing the players that the user still owes salaries for
+
+    Database db = new Database();
+
 
     public MyAccount(MyTeam T){
         transactions = new ArrayList<>();
@@ -43,8 +51,8 @@ public class MyAccount {//money related
     //Get the weekly salaries
     public double GetWeeklyExpenditure(){
         WeeklySalaries = 0;
-
-        ArrayList<Player> cur = myTeam.getMySquad();
+        MyTeam curteam = db.loadMyTeam();
+        ArrayList<Player> cur = curteam.getMySquad();
 
         for(Player P: cur){
             double Salary = P.getPSalary();
@@ -135,5 +143,9 @@ public class MyAccount {//money related
     public ArrayList<Transaction> GetTransactions2(){
 
         return transactions;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
     }
 }

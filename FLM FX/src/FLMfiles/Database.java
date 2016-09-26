@@ -73,6 +73,7 @@ public class Database implements Serializable{
     */
     public MyTeam loadMyTeam()
      {
+         this.connectToDB();
         System.out.println("Using database...");
         MyTeam myTeam = null;
 

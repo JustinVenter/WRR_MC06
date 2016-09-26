@@ -32,9 +32,10 @@ public class HomeController implements Initializable {
     public Label lblAwayAtt;
     public Label lblAwayDef;
 
-    AnchorPane mainAnchor;
-
-
+    public AnchorPane mainAnchor;
+    public AnchorPane PlayAnchor;
+    public AnchorPane AccountAnchor;
+    public Pane curPane1;
     public HomeController()
     {}
 
@@ -70,7 +71,14 @@ public class HomeController implements Initializable {
         HomeT.CalculateAll();
         AwayT.CalculateAll();
 
-        lblHomeTeam.setText(curGame.getHomeTeam().getTName());
+        try {
+            //PlayAnchor.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("PrePlay.fxml"));
+            AccountAnchor.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("AccountScreen.fxml")));
+
+            lblHomeTeam.setText(curGame.getHomeTeam().getTName());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         lblHomeAvgRating.setText(String.valueOf((int)Math.floor(curGame.getHomeTeam().getTRating())));
         lblAwayTeam.setText(curGame.getAwayTeam().getTName());
         lblAwayAvgRating.setText(String.valueOf((int)Math.floor(curGame.getAwayTeam().getTRating())));
@@ -79,6 +87,8 @@ public class HomeController implements Initializable {
         lblHomeDef.setText(String.valueOf(curGame.getHomeTeam().getTDefRating()));
         lblAwayAtt.setText(String.valueOf(curGame.getAwayTeam().getTAttRating()));
         lblAwayDef.setText(String.valueOf(curGame.getAwayTeam().getTDefRating()));
+
+
     }
 
     public PreFixture getLeagueGame(League league)
@@ -90,8 +100,8 @@ public class HomeController implements Initializable {
     }
 
     public void onLineupClicked(Event event) throws IOException {
+        curPane1 = (Pane) ((Node)event.getSource()).getParent();
         AnchorPane curPane = (AnchorPane) ((Node)event.getSource()).getParent().getParent();
-
         // these two of them return the same stage
         // Swap screen
 
