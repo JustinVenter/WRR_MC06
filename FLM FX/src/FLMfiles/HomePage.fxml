@@ -48,101 +48,13 @@
             <content>
               <AnchorPane fx:id="PlayAnchor" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Pane prefHeight="690.0" prefWidth="1202.0" style="-fx-background-color: #262626;">
-                           <children>
-                              <Button id="btnPlayMatch" fx:id="btnPlayMatch" layoutX="418.0" layoutY="443.0" mnemonicParsing="false" onMouseClicked="#onPlayClick" prefHeight="48.0" prefWidth="366.0" style="-fx-background-color: linear-gradient(#00bfff,#1a8cff);" text="PLAY MATCH" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial Bold" size="19.0" />
-                                 </font>
-                              </Button>
-                              <Label id="lblHomeTeam" fx:id="lblHomeTeam" alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="100.0" layoutY="111.0" prefHeight="49.0" prefWidth="357.0" text="MyTeam1" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
-                                 <font>
-                                    <Font name="Arial Bold" size="43.0" />
-                                 </font>
-                              </Label>
-                              <Label id="lblAwayTeam" fx:id="lblAwayTeam" layoutX="756.0" layoutY="113.0" text="MyTeam2" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial Bold" size="43.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="528.0" layoutY="96.0" text="VS" textFill="#ff3030">
-                                 <font>
-                                    <Font name="Arial Bold" size="110.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="332.0" layoutY="170.0" text="OVR" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial Bold" size="17.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="287.0" layoutY="273.0" text="Attack" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial" size="21.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="287.0" layoutY="298.0" text="Defence" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial" size="21.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="757.0" layoutY="301.0" text="Defence" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial" size="21.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="757.0" layoutY="276.0" text="Attack" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial" size="21.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="756.0" layoutY="172.0" text="OVR" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial Bold" size="17.0" />
-                                 </font>
-                              </Label>
-                              <Label id="lblAwayAvgRating" fx:id="lblAwayAvgRating" layoutX="802.0" layoutY="161.0" text="80" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial Bold" size="65.0" />
-                                 </font>
-                              </Label>
-                              <Label id="lblHomeAvgRating" fx:id="lblHomeAvgRating" layoutX="382.0" layoutY="159.0" text="80" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial Bold" size="65.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lblHomeAtt" layoutX="431.0" layoutY="270.0" text="80" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="22.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lblHomeDef" layoutX="431.0" layoutY="296.0" text="80" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="22.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lblAwayDef" layoutX="902.0" layoutY="297.0" text="80" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="22.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lblAwayAtt" layoutX="902.0" layoutY="271.0" text="80" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="22.0" />
-                                 </font>
-                              </Label>
-                              <Button fx:id="btnEdtLineup" layoutX="417.0" layoutY="515.0" mnemonicParsing="false" onMouseClicked="#onLineupClicked" prefHeight="48.0" prefWidth="368.0" style="-fx-background-color: linear-gradient(#00bfff,#1a8cff);" text="LINE UP" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial Bold" size="19.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </Pane>
+                        <Pane prefHeight="690.0" prefWidth="1202.0" style="-fx-background-color: #262626;" />
                      </children></AnchorPane>
             </content>
           </Tab>
           <Tab closable="false" text="MANAGE">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="707.0" prefWidth="1202.0" style="-fx-background-color: #262626;">
+              <AnchorPane fx:id="manageAnchor" minHeight="0.0" minWidth="0.0" prefHeight="707.0" prefWidth="1202.0" style="-fx-background-color: #262626;">
                      <children>
                         <GridPane layoutX="80.0" layoutY="61.0" prefHeight="534.0" prefWidth="1024.0">
                           <columnConstraints>
@@ -156,72 +68,6 @@
                             <RowConstraints maxHeight="173.0" minHeight="10.0" prefHeight="129.0" vgrow="SOMETIMES" />
                             <RowConstraints maxHeight="147.0" minHeight="10.0" prefHeight="138.0" vgrow="SOMETIMES" />
                           </rowConstraints>
-                           <children>
-                              <Button mnemonicParsing="false" prefHeight="282.0" prefWidth="548.0" style="-fx-background-color: linear-gradient(#00bfff,#1a8cff);;" text="SQUAD" GridPane.rowSpan="2">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                                 <font>
-                                    <Font name="Arial Bold" size="28.0" />
-                                 </font>
-                              </Button>
-                              <Button layoutX="10.0" layoutY="14.0" mnemonicParsing="false" prefHeight="280.0" prefWidth="548.0" style="-fx-background-color: linear-gradient(#4dff4d, #66ff33);;" text="LEAGUE" GridPane.rowIndex="2" GridPane.rowSpan="2">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                                 <font>
-                                    <Font name="Arial Bold" size="28.0" />
-                                 </font>
-                              </Button>
-                              <Button mnemonicParsing="false" prefHeight="138.0" prefWidth="537.0" style="-fx-background-color: linear-gradient(#bfbfbf,#d9d9d9);" text="STAFF" GridPane.columnIndex="1" GridPane.columnSpan="2">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                                 <font>
-                                    <Font name="Arial Bold" size="22.0" />
-                                 </font>
-                              </Button>
-                              <Button layoutX="563.0" layoutY="15.0" mnemonicParsing="false" prefHeight="138.0" prefWidth="537.0" style="-fx-background-color: linear-gradient(#bfbfbf,#d9d9d9);" text="BUDGET" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                                 <font>
-                                    <Font name="Arial Bold" size="18.0" />
-                                 </font>
-                              </Button>
-                              <Button fx:id="btnMarket" layoutX="558.0" layoutY="279.0" mnemonicParsing="false" onAction="#onMarketClick" prefHeight="138.0" prefWidth="537.0" style="-fx-background-color: linear-gradient(#bfbfbf,#d9d9d9);" text="MARKET" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3">
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                                 <font>
-                                    <Font name="Arial Bold" size="18.0" />
-                                 </font>
-                              </Button>
-                              <Button layoutX="563.0" layoutY="145.0" mnemonicParsing="false" prefHeight="138.0" prefWidth="537.0" style="-fx-background-color: linear-gradient(#bfbfbf,#d9d9d9);" text="RESULTS" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font name="Arial Bold" size="18.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </Button>
-                              <Button layoutX="806.0" layoutY="145.0" mnemonicParsing="false" prefHeight="138.0" prefWidth="537.0" style="-fx-background-color: linear-gradient(#bfbfbf,#d9d9d9);" text="CALENDAR" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                 <font>
-                                    <Font name="Arial Bold" size="18.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </Button>
-                              <Button layoutX="558.0" layoutY="277.0" mnemonicParsing="false" prefHeight="138.0" prefWidth="537.0" style="-fx-background-color: linear-gradient(#bfbfbf,#d9d9d9);" text="TOURNAMENT" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                 <font>
-                                    <Font name="Arial Bold" size="18.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </GridPane.margin>
-                              </Button>
-                           </children>
                         </GridPane>
                      </children>
                   </AnchorPane>

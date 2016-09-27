@@ -20,6 +20,7 @@ import java.util.ResourceBundle;
 public class PlayController implements Initializable{
 
     HomeController homeController = new HomeController();
+    PrePlayController prePlayController = new PrePlayController();
 
     public Label lblHomeTeam;
     public Label lblAwayTeam;
@@ -94,8 +95,8 @@ public class PlayController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        League league = homeController.league;
-        PreFixture preFixture =  homeController.getLeagueGame(league);
+        League league = prePlayController.league;
+        PreFixture preFixture =  prePlayController.getLeagueGame(league);
         lblHomeTeam.setText(preFixture.getHomeTeam().getTName());
         lblAwayTeam.setText(preFixture.getAwayTeam().getTName());
         PostFixture result = LMAlogrithm(preFixture);

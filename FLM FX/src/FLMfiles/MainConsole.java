@@ -9,6 +9,7 @@ public class MainConsole {
 
         Calculate calculate = new Calculate();
         HomeController homeController = new HomeController();
+        PrePlayController prePlayController = new PrePlayController();
         PlayController playController = new PlayController();
 
         database.connectToDB();
@@ -33,7 +34,7 @@ public class MainConsole {
         System.out.println("Att: " + String.valueOf(myteam.getTAttRating()));
         System.out.println("Ovr: " + String.valueOf(myteam.getTRating()));
 
-        PreFixture preFixture = homeController.getLeagueGame(homeController.league);
+        PreFixture preFixture = prePlayController.getLeagueGame(prePlayController.league);
 
         for(int i = 0; i < 300; i++) {
             PostFixture result = playController.LMAlogrithm(preFixture);

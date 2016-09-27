@@ -20,98 +20,32 @@ import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
     //<editor-fold desc="Editor tab">
-    public League league = new League();
-    public Button btnPlayMatch;
-    public Button btnEdtLineup;
-    public Label lblHomeTeam;
-    public Label lblHomeAvgRating;
-    public Label lblAwayTeam;
-    public Label lblAwayAvgRating;
-    public Label lblHomeAtt;
-    public Label lblHomeDef;
-    public Label lblAwayAtt;
-    public Label lblAwayDef;
-
-    public AnchorPane mainAnchor;
+    public AnchorPane manageAnchor;
     public AnchorPane PlayAnchor;
     public AnchorPane AccountAnchor;
     public Pane curPane1;
     public HomeController()
     {}
 
-    public void onPlayClick(Event event) throws InterruptedException {
-        //play game
-        OpenSimulationWindow();
-    }
-
-    public void OpenSimulationWindow()
-    {
-        Parent root = null;
-        Stage secondaryStage = new Stage();
-        try {
-            root = FXMLLoader.load(getClass().getResource("PlayScreen.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        secondaryStage.setTitle("Football League Manager");
-        secondaryStage.setScene(new Scene(root, 750, 600));
-        secondaryStage.show();
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        League league = new League();
-
-
-        PreFixture curGame = getLeagueGame(league);
-
-        MyTeam AwayT =  curGame.getAwayTeam();
-        MyTeam HomeT = curGame.getHomeTeam();
-
-        HomeT.CalculateAll();
-        AwayT.CalculateAll();
-
         try {
-            //PlayAnchor.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("PrePlay.fxml"));
+            PlayAnchor.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("PrePlay.fxml")));
+            manageAnchor.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("ManageScreen.fxml")));
             AccountAnchor.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("AccountScreen.fxml")));
-
-            lblHomeTeam.setText(curGame.getHomeTeam().getTName());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        lblHomeAvgRating.setText(String.valueOf((int)Math.floor(curGame.getHomeTeam().getTRating())));
-        lblAwayTeam.setText(curGame.getAwayTeam().getTName());
-        lblAwayAvgRating.setText(String.valueOf((int)Math.floor(curGame.getAwayTeam().getTRating())));
-
-        lblHomeAtt.setText(String.valueOf(curGame.getHomeTeam().getTAttRating()));
-        lblHomeDef.setText(String.valueOf(curGame.getHomeTeam().getTDefRating()));
-        lblAwayAtt.setText(String.valueOf(curGame.getAwayTeam().getTAttRating()));
-        lblAwayDef.setText(String.valueOf(curGame.getAwayTeam().getTDefRating()));
 
 
     }
 
-    public PreFixture getLeagueGame(League league)
-    {
-        league.loadGames();
-        PreFixture oneGame = league.fixtures.pop();
 
-        return oneGame;
-    }
-
-    public void onLineupClicked(Event event) throws IOException {
-        curPane1 = (Pane) ((Node)event.getSource()).getParent();
-        AnchorPane curPane = (AnchorPane) ((Node)event.getSource()).getParent().getParent();
-        // these two of them return the same stage
-        // Swap screen
-
-        curPane.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("Lineup.fxml")));
-    }
-
-    public void onMarketClick(ActionEvent actionEvent) throws IOException {
+   /* public void onMarketClick(ActionEvent actionEvent) throws IOException {
         mainAnchor = (AnchorPane) ((Node)actionEvent.getSource()).getParent().getParent();
         mainAnchor.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("MarketScreen.fxml")));
-    }
+    }*/
 
 
     //</editor-fold>

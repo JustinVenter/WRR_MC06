@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane prefHeight="690.0" prefWidth="1202.0" style="-fx-background-color: #262626;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FLMfiles.HomeController">
+<Pane prefHeight="690.0" prefWidth="1202.0" style="-fx-background-color: #262626;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FLMfiles.PrePlayController">
    <children>
       <Button id="btnPlayMatch" fx:id="btnPlayMatch" layoutX="418.0" layoutY="443.0" mnemonicParsing="false" onMouseClicked="#onPlayClick" prefHeight="48.0" prefWidth="366.0" style="-fx-background-color: linear-gradient(#00bfff,#1a8cff);" text="PLAY MATCH" textFill="WHITE" >
          <font>
