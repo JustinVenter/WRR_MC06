@@ -14,9 +14,9 @@ public class League implements Serializable {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
-        BotTeamPreFixture();
-        SaveBotPreFixtures();
-        LoadBotPreFixtures();
+        MyTeamPreFixture();
+        SaveMyPreFixtures();
+        LoadMyPreFixtures();
     }
 
     static Stack<PreFixture> fixtures = new Stack<>(); // All the AI games.
