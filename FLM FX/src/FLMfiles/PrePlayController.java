@@ -59,7 +59,14 @@ public class PrePlayController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         League league = new League();
-        PreFixture curGame = getLeagueGame(league);
+        PreFixture curGame = null;
+        try {
+            curGame = getLeagueGame(league);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         MyTeam AwayT =  curGame.getAwayTeam();
         MyTeam HomeT = curGame.getHomeTeam();
         HomeT.CalculateAll();
@@ -77,8 +84,7 @@ public class PrePlayController implements Initializable{
 
     }
 
-    public PreFixture getLeagueGame(League league)
-    {
+    public PreFixture getLeagueGame(League league) throws IOException, ClassNotFoundException {
         league.loadGames();
         PreFixture oneGame = league.fixtures.pop();
 

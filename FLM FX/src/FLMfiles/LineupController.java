@@ -126,7 +126,13 @@ public class LineupController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         db.connectToDB();
-        myteam = db.loadMyTeam();
+        try {
+            myteam = db.loadMyTeam();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         setupComboboxes();
 
         oldLineup = myteam.StartingLineup;

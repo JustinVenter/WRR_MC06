@@ -58,7 +58,14 @@ public class AccountController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         AccountTest AT = new AccountTest();
-        MyAccount account = new MyAccount(db.loadMyTeam());
+        MyAccount account = null;
+        try {
+            account = new MyAccount(db.loadMyTeam());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         transactions1 = account.GetTransactions1();
 
         observableTransactions1 =  FXCollections.observableArrayList(transactions1);
@@ -66,7 +73,13 @@ public class AccountController implements Initializable {
         CurBankBalance.setText("$" +String.valueOf(account.GetBankBalance()));
 
         CurWeek.setText(String.valueOf(League.Week));
-        Salaries.setText("$" +String.valueOf(account.GetWeeklyExpenditure()));
+        try {
+            Salaries.setText("$" +String.valueOf(account.GetWeeklyExpenditure()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         Debt.setText("$" +String.valueOf(account.CalculateDebt()));
 
         tableSetup();

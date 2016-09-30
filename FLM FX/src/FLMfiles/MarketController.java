@@ -111,11 +111,7 @@ public class MarketController implements Initializable{
             //refresh the list after the player has been purchased :)
             observablePlayers.remove(observablePlayers.get(tblPlayers.getSelectionModel().getSelectedIndex()));
             //tblPlayers.refresh();
-
-
         } );
-
-
     }
 
     public void onBackClicked(Event event) throws IOException {

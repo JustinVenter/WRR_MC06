@@ -14,9 +14,9 @@ public class League implements Serializable {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
-        BotTeamPreFixture();
-        SaveBotPreFixtures();
-        LoadBotPreFixtures();
+        MyTeamPreFixture();
+        SaveMyPreFixtures();
+        LoadMyPreFixtures();
     }
 
     static Stack<PreFixture> fixtures = new Stack<>(); // All the AI games.
@@ -24,7 +24,7 @@ public class League implements Serializable {
     static int Week = 6;
 
 
-    public void loadGames() {
+    public void loadGames() throws IOException, ClassNotFoundException {
         //dummy details for demo
         Database database = new Database();
         // database.UpdatePAverage();
@@ -70,7 +70,14 @@ public class League implements Serializable {
 
         // load all the teams
         ArrayList<MyTeam> AllTeams = db.loadTeams();
-        MyTeam myTeam = db.loadMyTeam();
+        MyTeam myTeam = null;
+        try {
+            myTeam = db.loadMyTeam();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         // take out 'MyTeam' which is team ID =1, position 0
         // AllTeams.remove(0);
         for (int i = 0; i < AllTeams.size(); i++) {
@@ -122,7 +129,14 @@ public class League implements Serializable {
 
         // load all the teams
         ArrayList<MyTeam> AllTeams = db.loadTeams(); // for this to work, I had to change the loadTeams method in the database class to type MyTeam
-        MyTeam myTeam = db.loadMyTeam();
+        MyTeam myTeam = null;
+        try {
+            myTeam = db.loadMyTeam();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         // take out 'MyTeam' which is team ID =1, position 0
         // AllTeams.remove(0);
         for (int i = 0; i < AllTeams.size(); i++) {

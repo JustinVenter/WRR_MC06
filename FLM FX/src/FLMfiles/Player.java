@@ -10,15 +10,15 @@ import java.io.Serializable;
 public class Player implements Serializable{
 
     // The following is the String and int properties needed to display information in a table
-    IntegerProperty playerNum= new SimpleIntegerProperty();
-    StringProperty Surname = new SimpleStringProperty();
-    StringProperty Name= new SimpleStringProperty();
-    StringProperty playerPos= new SimpleStringProperty();
-    IntegerProperty playerAtt= new SimpleIntegerProperty();
-    IntegerProperty playerDef= new SimpleIntegerProperty();
-    DoubleProperty playerAverage= new SimpleDoubleProperty();
-    DoubleProperty playerPrice = new SimpleDoubleProperty();
-    DoubleProperty playerSalary= new SimpleDoubleProperty();
+    transient IntegerProperty playerNum= new SimpleIntegerProperty();
+    transient StringProperty Surname = new SimpleStringProperty();
+    transient StringProperty Name= new SimpleStringProperty();
+    transient StringProperty playerPos= new SimpleStringProperty();
+    transient IntegerProperty playerAtt= new SimpleIntegerProperty();
+    transient  IntegerProperty playerDef= new SimpleIntegerProperty();
+    transient DoubleProperty playerAverage= new SimpleDoubleProperty();
+    transient DoubleProperty playerPrice = new SimpleDoubleProperty();
+    transient DoubleProperty playerSalary= new SimpleDoubleProperty();
 
     // for MarketController, this is needed
     public Player(int playerNum, String surname, String name, String playerPos, int playerAtt, int playerDef, double playerAverage, double playerPrice, double playerSalary) {

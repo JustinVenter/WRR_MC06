@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -89,14 +90,21 @@ public class PlayController implements Initializable{
             }
         }
 
-        //teamTree.
+        //teamTree
         return new PostFixture(AttackTeam, DefendTeam, String.valueOf(MyScore));
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         League league = prePlayController.league;
-        PreFixture preFixture =  prePlayController.getLeagueGame(league);
+        PreFixture preFixture = null;
+        try {
+            preFixture = prePlayController.getLeagueGame(league);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         lblHomeTeam.setText(preFixture.getHomeTeam().getTName());
         lblAwayTeam.setText(preFixture.getAwayTeam().getTName());
         PostFixture result = LMAlogrithm(preFixture);

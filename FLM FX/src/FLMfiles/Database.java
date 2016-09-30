@@ -2,6 +2,7 @@ package FLMfiles;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 
 
 public class Database implements Serializable{
+    User user = new User();
 
     Calculate calculate = new Calculate();
     // fields needed to access database
@@ -71,11 +73,11 @@ public class Database implements Serializable{
     /**
     Load your team's squad
     */
-    public MyTeam loadMyTeam()
-     {
-         this.connectToDB();
+    public MyTeam loadMyTeam() throws IOException, ClassNotFoundException {
+        this.connectToDB();
         System.out.println("Using database...");
         MyTeam myTeam = null;
+        user = user.readUser();
 
         try {
             String sql = "SELECT * FROM Team WHERE TeamID = 1";
@@ -83,7 +85,7 @@ public class Database implements Serializable{
             if (result.next() ) {
                 // perform query on database and retrieve results
 
-                String TeamName = result.getString("TName");
+                String TeamName = user.getTeamName();
                 int TeamID = result.getInt("TeamID");
                 String TCity = result.getString("TCity");
                 double TRating = result.getDouble("TRating");

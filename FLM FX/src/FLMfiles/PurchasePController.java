@@ -55,7 +55,7 @@ public class PurchasePController implements Initializable {
 
 
     }
-    public void onPurchaseClick(Event event) throws InterruptedException {
+    public void onPurchaseClick(Event event) throws InterruptedException, IOException, ClassNotFoundException {
 
         double SalOffer = Double.parseDouble(Salary.getText());
         double BonusOffer = Double.parseDouble(PerformanceBonus.getText());

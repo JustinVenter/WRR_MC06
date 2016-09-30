@@ -23,6 +23,10 @@ public class HomeController implements Initializable {
     public AnchorPane manageAnchor;
     public AnchorPane PlayAnchor;
     public AnchorPane AccountAnchor;
+
+    public Label lblWeek;
+    public Label lblManager;
+
     public Pane curPane1;
     public HomeController()
     {}
@@ -31,10 +35,19 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+            //set up Username/week etc.
+            User user = new User();
+            user = user.readUser();
+
+            lblManager.setText("Mr. " + user.getUserName());
+            lblWeek.setText(String.valueOf(user.Week));
+
             PlayAnchor.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("PrePlay.fxml")));
             manageAnchor.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("ManageScreen.fxml")));
             AccountAnchor.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("AccountScreen.fxml")));
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 

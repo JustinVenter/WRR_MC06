@@ -10,10 +10,25 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
-        primaryStage.setTitle("Football League Manager");
-        primaryStage.setScene(new Scene(root, 1200, 750));
-        primaryStage.show();
+        //
+        User user = new User();
+        if(user.DoesUserAccountExist()==true)
+        {
+            //load existing User
+            Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
+            primaryStage.setTitle("Football League Manager");
+            primaryStage.setScene(new Scene(root, 1200, 750));
+            primaryStage.show();
+        }
+        else
+        {
+            Parent root = FXMLLoader.load(getClass().getResource("StartScreen.fxml"));
+            primaryStage.setTitle("Football League Manager");
+            primaryStage.setScene(new Scene(root, 448, 483));
+            primaryStage.show();
+            //user.saveUserDetails();
+        }
+            //user.saveUserDetails();
     }
 
 

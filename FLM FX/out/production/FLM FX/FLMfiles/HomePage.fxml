@@ -20,7 +20,7 @@
                   <Image url="@../Images/f3.png" />
                </image>
             </ImageView>
-            <Label alignment="CENTER" prefHeight="57.0" prefWidth="146.0" text="Mr.Manager">
+            <Label fx:id="lblManager" prefHeight="57.0" prefWidth="146.0" text="Mr.Manager">
                <font>
                   <Font name="Arial Nova Light" size="14.0" />
                </font>
@@ -30,12 +30,12 @@
                   <Font name="Calibri Bold" size="24.0" />
                </font>
             </Label>
-            <Label prefHeight="63.0" prefWidth="48.0" text="Week:">
+            <Label prefHeight="57.0" prefWidth="41.0" text="Week:">
                <font>
                   <Font name="Arial Nova Light" size="14.0" />
                </font>
             </Label>
-            <Label prefHeight="86.0" prefWidth="49.0" text="#">
+            <Label fx:id="lblWeek" prefHeight="86.0" prefWidth="49.0" text="#">
                <font>
                   <Font name="Arial Nova Light" size="15.0" />
                </font>

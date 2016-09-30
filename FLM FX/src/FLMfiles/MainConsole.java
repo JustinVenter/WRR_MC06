@@ -1,10 +1,12 @@
 package FLMfiles;
 
+import java.io.IOException;
+
 /**
  * Created by Michael on 25/08/2016.
  */
 public class MainConsole {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         Database database = new Database();
 
         Calculate calculate = new Calculate();
@@ -14,7 +16,14 @@ public class MainConsole {
 
         database.connectToDB();
 
-        MyTeam myteam = database.loadMyTeam();
+        MyTeam myteam = null;
+        try {
+            myteam = database.loadMyTeam();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
         myteam.CalculateAvgDefence();
         myteam.CalculateAvgAttack();

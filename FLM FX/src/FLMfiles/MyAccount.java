@@ -2,6 +2,7 @@ package FLMfiles;
 
 import javafx.fxml.Initializable;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -49,7 +50,7 @@ public class MyAccount implements Initializable{//money related
         return BankBalance;
     }
     //Get the weekly salaries
-    public double GetWeeklyExpenditure(){
+    public double GetWeeklyExpenditure() throws IOException, ClassNotFoundException {
         WeeklySalaries = 0;
         MyTeam curteam = db.loadMyTeam();
         ArrayList<Player> cur = curteam.getMySquad();
@@ -62,7 +63,7 @@ public class MyAccount implements Initializable{//money related
     }
 
     //Method that will determine how much the user has to spend on more wages. i.e. can the user purchase a new player
-    public double CalculateNet(){
+    public double CalculateNet() throws IOException, ClassNotFoundException {
 
         double WeekSalaries = GetWeeklyExpenditure();
         double debt = CalculateDebt();
