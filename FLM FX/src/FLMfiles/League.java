@@ -21,10 +21,12 @@ public class League implements Serializable {
 
     static Stack<PreFixture> fixtures = new Stack<>(); // All the AI games.
     static Stack<PreFixture> MyFixtures = new Stack<>();// add another stack called myFixtures -- All the games for the human users
-    static int Week = 6;
+    //static int Week = 6;
 
 
     public void loadGames() throws IOException, ClassNotFoundException {
+
+
         //dummy details for demo
         Database database = new Database();
         // database.UpdatePAverage();
@@ -39,6 +41,8 @@ public class League implements Serializable {
         myteam.CalculateAvgAttack();
         myteam.CalculateAvgRating();
 
+        //load dummy team from textfile
+
         MyTeam Dummy = new MyTeam(99, "Dummy", 60, 70,50, "DumCity", 5, 0, 0);
         Player[] botTeam = Dummy.generateTeamPlayers();
 
@@ -47,13 +51,6 @@ public class League implements Serializable {
         PreFixture Game1 = new PreFixture(myteam, Dummy);
         fixtures.push(Game1);
         database.disconnectDB();
-        Week = 1;
-    }
-    public int GetWeek(){
-        return Week;
-    }
-    static void AddWeek(){
-        Week++;
     }
 
     /**

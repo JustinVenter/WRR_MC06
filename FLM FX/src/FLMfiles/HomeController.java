@@ -1,5 +1,6 @@
 package FLMfiles;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import javax.security.auth.RefreshFailedException;
+import javax.security.auth.Refreshable;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collection;
@@ -26,7 +29,6 @@ public class HomeController implements Initializable {
 
     public Label lblWeek;
     public Label lblManager;
-
     public Pane curPane1;
     public HomeController()
     {}
@@ -38,10 +40,8 @@ public class HomeController implements Initializable {
             //set up Username/week etc.
             User user = new User();
             user = user.readUser();
-
             lblManager.setText("Mr. " + user.getUserName());
             lblWeek.setText(String.valueOf(user.Week));
-
             PlayAnchor.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("PrePlay.fxml")));
             manageAnchor.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("ManageScreen.fxml")));
             AccountAnchor.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("AccountScreen.fxml")));

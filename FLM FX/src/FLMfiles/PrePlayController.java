@@ -9,7 +9,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -32,14 +34,34 @@ public class PrePlayController implements Initializable{
     public Label lblAwayAtt;
     public Label lblAwayDef;
 
+    HomeController hc = new HomeController();
+
     public AnchorPane mainAnchor;
     public AnchorPane PlayAnchor;
     public AnchorPane AccountAnchor;
     public Pane curPane1;
 
     public void onPlayClick(Event event) throws InterruptedException {
+
+        //A week passes
+        newWeek();
+
+        //Pay all players (Justin)
+
+        //Let all the games be played that should be played (All)
+
+        //update Post/pre game fixtures and save and check if there are any games remaining.  If not then Start new Season (Ruan)
+
+        //update next team to be played(Michael/Ruan)
+
+        //Change to next fixture (Michael)
+
+        //update player injury and rest stats
+
         //play game
         OpenSimulationWindow();
+
+
     }
 
     public void OpenSimulationWindow()
@@ -98,5 +120,23 @@ public class PrePlayController implements Initializable{
         // Swap screen
 
         curPane.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("Lineup.fxml")));
+    }
+
+    public void newWeek()
+    {
+        try {
+            User user = new User();
+            user = user.readUser();
+            int w = user.getWeek() + 1;
+            user.setWeek(w);
+            user.saveUserDetails();
+            Label lblw = (Label) btnPlayMatch.getParent().getParent().getParent().getParent().getParent().lookup("#lblWeek");
+            System.out.println(lblw.toString());
+            lblw.setText(String.valueOf(w));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

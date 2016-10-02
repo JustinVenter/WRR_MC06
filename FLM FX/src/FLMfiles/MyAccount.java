@@ -127,8 +127,17 @@ public class MyAccount implements Initializable{//money related
 
     //Get the transactions for the past 4 weeks, including current week
     public ArrayList<Transaction> GetTransactions1(){
+        User user = new User();
+        int Week = 0;
+        try {
+            user = user.readUser();
+            Week  = user.Week;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         ArrayList<Transaction> Trans = new ArrayList<>();
-        int Week = League.Week;
         if((Week == 1) || (Week == 2)|| (Week == 3))
             return Trans = transactions;
         else{

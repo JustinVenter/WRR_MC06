@@ -72,7 +72,16 @@ public class AccountController implements Initializable {
 
         CurBankBalance.setText("$" +String.valueOf(account.GetBankBalance()));
 
-        CurWeek.setText(String.valueOf(League.Week));
+        User user = new User();
+        try {
+            user = user.readUser();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        CurWeek.setText(String.valueOf(user.Week));
         try {
             Salaries.setText("$" +String.valueOf(account.GetWeeklyExpenditure()));
         } catch (IOException e) {

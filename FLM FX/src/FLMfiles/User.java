@@ -1,5 +1,8 @@
 package FLMfiles;
 
+import javafx.beans.property.SimpleIntegerProperty;
+
+import javax.naming.Context;
 import java.io.*;
 
 /**
@@ -12,6 +15,15 @@ public class  User implements Serializable{
     String UserName; // Managers name
     String TeamName;
     String City; // Where team originates.
+
+    public int getWeek() {
+        return Week;
+    }
+
+    public void setWeek(int week) {
+        Week = week;
+    }
+
     int Week;
 
     public User(String userName, String teamName, String city) {
@@ -80,11 +92,14 @@ public class  User implements Serializable{
 
         out.close();*/
         try{
+            File file = new File("userDetails.obj");
+            file.delete();
 
             FileOutputStream fout = new FileOutputStream("userDetails.obj");
             ObjectOutputStream oos = new ObjectOutputStream(fout);
-            oos.writeObject(new User(this.UserName, this.TeamName, this.City));
+            oos.writeObject(this);
             oos.close();
+            fout.close();
             System.out.println("Saved");
 
         }catch(Exception ex){
@@ -104,6 +119,7 @@ public class  User implements Serializable{
         FileInputStream fin = new FileInputStream("userDetails.obj");
         ObjectInputStream ois = new ObjectInputStream(fin);
         User user = (User) ois.readObject();
+        fin.close();
         ois.close();
         return user;
     }
