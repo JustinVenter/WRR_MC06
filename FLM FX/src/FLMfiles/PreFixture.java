@@ -33,8 +33,7 @@ public class PreFixture implements Serializable {
 
     @Override
     public String toString() {
-        return "homeTeam=" + homeTeam + " V"+ '\'' +
-                ", awayTeam=" + awayTeam +
-                '}';
+        return   homeTeam.getTName().toUpperCase() + "  VS  " +
+                awayTeam.getTName().toUpperCase();
     }
 }

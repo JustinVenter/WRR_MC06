@@ -44,6 +44,8 @@ public class PlayController implements Initializable{
     public PostFixture LMAlogrithm(PreFixture preFixture){
         MyTeam home = preFixture.getHomeTeam();
         MyTeam away = preFixture.getAwayTeam();
+
+
         return Game(home, away);
     }
 
@@ -95,17 +97,17 @@ public class PlayController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        League league = prePlayController.league;
-        PreFixture preFixture = null;
-        try {
-            preFixture = prePlayController.getLeagueGame(league);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        //Load fixture here
+
+
+        PreFixture preFixture = prePlayController.curGame;
+
+        preFixture.getAwayTeam();
         lblHomeTeam.setText(preFixture.getHomeTeam().getTName());
         lblAwayTeam.setText(preFixture.getAwayTeam().getTName());
+
+        //Load fixture here
+
         PostFixture result = LMAlogrithm(preFixture);
         PostFixture result2 = LMAlogrithm(new PreFixture(preFixture.getAwayTeam(), preFixture.getHomeTeam()));
         lblScore.setText(result.getResult() + " : " + result2.getResult());

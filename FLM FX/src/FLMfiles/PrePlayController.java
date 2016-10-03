@@ -33,6 +33,7 @@ public class PrePlayController implements Initializable{
     public Label lblHomeDef;
     public Label lblAwayAtt;
     public Label lblAwayDef;
+    static PreFixture  curGame;
 
     HomeController hc = new HomeController();
 
@@ -66,6 +67,26 @@ public class PrePlayController implements Initializable{
 
     public void OpenSimulationWindow()
     {
+        PreFixture nextGame = null;
+        PreFixture preFixture = null;
+        try {
+            curGame = getLeagueGame(league);
+            nextGame = league.loadGames();
+            lblHomeTeam.setText(nextGame.getHomeTeam().getTName());
+            lblHomeAvgRating.setText(String.valueOf((int)Math.floor(nextGame.getHomeTeam().getTRating())));
+            lblAwayTeam.setText(nextGame.getAwayTeam().getTName());
+            lblAwayAvgRating.setText(String.valueOf((int)Math.floor(nextGame.getAwayTeam().getTRating())));
+
+            lblHomeAtt.setText(String.valueOf(nextGame.getHomeTeam().getTAttRating()));
+            lblHomeDef.setText(String.valueOf(nextGame.getHomeTeam().getTDefRating()));
+            lblAwayAtt.setText(String.valueOf(nextGame.getAwayTeam().getTAttRating()));
+            lblAwayDef.setText(String.valueOf(nextGame.getAwayTeam().getTDefRating()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
         Parent root = null;
         Stage secondaryStage = new Stage();
         try {
@@ -76,12 +97,13 @@ public class PrePlayController implements Initializable{
         secondaryStage.setTitle("Football League Manager");
         secondaryStage.setScene(new Scene(root, 750, 600));
         secondaryStage.show();
+        curGame = nextGame;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         League league = new League();
-        PreFixture curGame = null;
+
         try {
             curGame = getLeagueGame(league);
         } catch (IOException e) {
@@ -89,6 +111,7 @@ public class PrePlayController implements Initializable{
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+
         MyTeam AwayT =  curGame.getAwayTeam();
         MyTeam HomeT = curGame.getHomeTeam();
         HomeT.CalculateAll();
@@ -107,9 +130,8 @@ public class PrePlayController implements Initializable{
     }
 
     public PreFixture getLeagueGame(League league) throws IOException, ClassNotFoundException {
-        league.loadGames();
-        PreFixture oneGame = league.fixtures.pop();
-
+        PreFixture oneGame = league.loadGames();
+        curGame = oneGame;
         return oneGame;
     }
 

@@ -6,10 +6,7 @@ import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -19,42 +16,37 @@ import java.util.ResourceBundle;
 import java.util.Stack;
 
 /**
- * Created by rjoos on 9/25/2016.
+ * Created by rjoos on 9/29/2016.
  */
-public class CalendarController implements Initializable {
+public class ResultsController implements Initializable {
 
-    public ListView lbxPrefixtures;
-    public Button btnBack;
+
+    public ListView lbxPostFixtures;
+
 
     //Instance of class League
     League league= new League();
     // ArrayList to be wrapped by observable list.
-    private ArrayList PreMatches= new ArrayList<>();
-    private ObservableList observablePreMatches= FXCollections.observableArrayList(PreMatches);
+    private ArrayList PostMatches= new ArrayList<>();
+    private ObservableList observablePostMatches= FXCollections.observableArrayList(PostMatches);
 
     public void PopulateList() throws IOException, ClassNotFoundException {
 
-        // this will generate the PreFixtures. Might have to do this once the game is started by the user.
-      //  league.MyTeamPreFixture();
-       // league.SaveMyPreFixtures();
 
-        Stack<PreFixture> MyTeamPreFixtures = league.LoadMyPreFixtures();
+        Stack<PostFixture> PostFixtures = league.LoadMyPostFixtures();
 
-        while(!MyTeamPreFixtures.isEmpty())
+        while(!PostFixtures.isEmpty())
         {
-            PreFixture popped= MyTeamPreFixtures.pop();
-            PreFixture cur= new PreFixture(popped.getHomeTeam(),popped.getAwayTeam());
-            observablePreMatches.add(cur.toString());
+            PostFixture popped= PostFixtures.pop();
+            PostFixture cur= new PostFixture(popped.getHomeTeamName(),popped.getAwayTeamName(),popped.getResult());
+            observablePostMatches.add(cur.toString());
         }
 
 
 
     }
-    public void setupList() throws IOException, ClassNotFoundException {
 
-        PopulateList();
-        lbxPrefixtures.setItems(observablePreMatches);
-    }
+
 
 
 
@@ -64,6 +56,12 @@ public class CalendarController implements Initializable {
         mainAnchor.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("ManageScreen.fxml")));
     }
 
+    public void setupList() throws IOException, ClassNotFoundException {
+
+        PopulateList();
+        lbxPostFixtures.setItems(observablePostMatches);
+
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -74,5 +72,6 @@ public class CalendarController implements Initializable {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+
     }
 }
