@@ -12,6 +12,9 @@ import java.util.Stack;
  */
 public class League implements Serializable {
 
+    static Stack<PreFixture> fixtures = new Stack<>(); // All the AI games.
+    static Stack<PreFixture> MyFixtures = new Stack<>();// add another stack called myFixtures -- All the games for the human users
+
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
         MyTeamPreFixture();
@@ -19,12 +22,11 @@ public class League implements Serializable {
         LoadMyPreFixtures();
     }
 
-    static Stack<PreFixture> fixtures = new Stack<>(); // All the AI games.
-    static Stack<PreFixture> MyFixtures = new Stack<>();// add another stack called myFixtures -- All the games for the human users
+
     //static int Week = 6;
 
 
-    public void loadGames() throws IOException, ClassNotFoundException {
+    public PreFixture loadGames() throws IOException, ClassNotFoundException {
 
 
         //dummy details for demo
@@ -34,6 +36,7 @@ public class League implements Serializable {
         PlayController playController = new PlayController();
 
         database.connectToDB();
+        LoadMyPreFixtures();
 
         MyTeam myteam = database.loadMyTeam();
 
@@ -43,14 +46,18 @@ public class League implements Serializable {
 
         //load dummy team from textfile
 
-        MyTeam Dummy = new MyTeam(99, "Dummy", 60, 70,50, "DumCity", 5, 0, 0);
-        Player[] botTeam = Dummy.generateTeamPlayers();
+        PreFixture pf= MyFixtures.pop();
+
+        SaveMyPreFixtures();
+        MyTeam Dummy = pf.getAwayTeam();
+        Player[] botTeam = pf.getAwayTeam().generateTeamPlayers();
 
 
         Dummy.setStartingLineUp(botTeam);
         PreFixture Game1 = new PreFixture(myteam, Dummy);
-        fixtures.push(Game1);
         database.disconnectDB();
+
+        return Game1;
     }
 
     /**
@@ -101,7 +108,7 @@ public class League implements Serializable {
                 if (weeksCounter == 0)
                     break;
                 if (i <= 19) {
-                    PreFixture second = new PreFixture(AllTeams.get(i + 1), myTeam);
+                    PreFixture second = new PreFixture(myTeam, AllTeams.get(i + 1));
                     weeksCounter--;
                     MyFixtures.push(second);
                 }

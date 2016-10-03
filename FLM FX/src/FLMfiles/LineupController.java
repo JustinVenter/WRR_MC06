@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -57,6 +58,20 @@ public class LineupController implements Initializable{
     public Label lblDefenceR;
     public Label lblStaff;
     public Label lblConfidence;
+
+    //progressbars
+    public ProgressBar LFPb;
+    public ProgressBar CFPb;
+    public ProgressBar RFPb;
+    public ProgressBar LMPb;
+    public ProgressBar CMPb;
+    public ProgressBar RMPb;
+    public ProgressBar LBPb;
+    public ProgressBar LMBPb;
+    public ProgressBar RBPb;
+    public ProgressBar RMBPb;
+    public ProgressBar GKPb;
+
 
 
     public Button btnCancel;
@@ -120,6 +135,23 @@ public class LineupController implements Initializable{
     }
 
 
+    public void setupFatigueBars()
+    {
+        Player[] myStart = myteam.getStartingLineUp();
+
+        LFPb.setProgress((myStart[0].getPFatigue()/100.0));
+        CFPb.setProgress(myStart[1].getPFatigue()/100.0);
+        RFPb.setProgress(myStart[2].getPFatigue()/100.0);
+        LMPb.setProgress(myStart[3].getPFatigue()/100.0);
+        CMPb.setProgress(myStart[4].getPFatigue()/100.0);
+        RMPb.setProgress(myStart[5].getPFatigue()/100.0);
+        LBPb.setProgress(myStart[6].getPFatigue()/100.0);
+        LMBPb.setProgress(myStart[7].getPFatigue()/100.0);
+        RMBPb.setProgress(myStart[8].getPFatigue()/100.0);
+        RBPb.setProgress(myStart[9].getPFatigue()/100.0);
+        GKPb.setProgress(myStart[10].getPFatigue()/100.0);
+    }
+
 
 
 
@@ -137,6 +169,7 @@ public class LineupController implements Initializable{
 
         oldLineup = myteam.StartingLineup;
         recalc();
+        setupFatigueBars();
     }
 
     public void recalc()
@@ -152,18 +185,26 @@ public class LineupController implements Initializable{
     public void CFaction(ActionEvent actionEvent) {
         Player selected = CFbox.getSelectionModel().getSelectedItem();
         myteam.StartingLineUp[1]= selected;
+
+        CFPb.setProgress(selected.getPFatigue()/100.0);
         recalc();
     }
 
     public void RFaction(ActionEvent actionEvent) {
         Player selected = RFbox.getSelectionModel().getSelectedItem();
         myteam.StartingLineUp[2]= selected;
+
+        RFPb.setProgress(selected.getPFatigue()/100.0);
+
         recalc();
     }
 
     public void LFaction(ActionEvent actionEvent) {
         Player selected = LFbox.getSelectionModel().getSelectedItem();
         myteam.StartingLineUp[0]= selected;
+
+        LFPb.setProgress(selected.getPFatigue()/100.0);
+
         recalc();
     }
 
@@ -171,48 +212,72 @@ public class LineupController implements Initializable{
     public void LMaction(ActionEvent actionEvent) {
         Player selected = LMbox.getSelectionModel().getSelectedItem();
         myteam.StartingLineUp[3]= selected;
+
+        LMPb.setProgress(selected.getPFatigue()/100.0);
+
         recalc();
     }
 
     public void CMaction(ActionEvent actionEvent) {
         Player selected = CMbox.getSelectionModel().getSelectedItem();
         myteam.StartingLineUp[4]= selected;
+
+        CMPb.setProgress(selected.getPFatigue()/100.0);
+
         recalc();
     }
 
     public void RMaction(ActionEvent actionEvent) {
         Player selected = RMbox.getSelectionModel().getSelectedItem();
         myteam.StartingLineUp[5]= selected;
+
+        RMPb.setProgress(selected.getPFatigue()/100.0);
+
         recalc();
     }
 
     public void RBaction(ActionEvent actionEvent) {
         Player selected = RBbox.getSelectionModel().getSelectedItem();
         myteam.StartingLineUp[9]= selected;
+
+        RBPb.setProgress(selected.getPFatigue()/100.0);
+
         recalc();
     }
 
     public void LMBaction(ActionEvent actionEvent) {
         Player selected = LMBbox.getSelectionModel().getSelectedItem();
         myteam.StartingLineUp[7]= selected;
+
+        LMBPb.setProgress(selected.getPFatigue()/100.0);
+
         recalc();
     }
 
     public void LBaction(ActionEvent actionEvent) {
         Player selected = LBbox.getSelectionModel().getSelectedItem();
         myteam.StartingLineUp[6]= selected;
+
+        LBPb.setProgress(selected.getPFatigue()/100.0);
+
         recalc();
     }
 
     public void RMBaction(ActionEvent actionEvent) {
         Player selected = RMBbox.getSelectionModel().getSelectedItem();
         myteam.StartingLineUp[8]= selected;
+
+        RMBPb.setProgress(selected.getPFatigue()/100.0);
+
         recalc();
     }
 
     public void GKaction(ActionEvent actionEvent) {
         Player selected = GKbox.getSelectionModel().getSelectedItem();
         myteam.StartingLineUp[10]= selected;
+
+        GKPb.setProgress(selected.getPFatigue()/100.0);
+
         recalc();
     }
 
