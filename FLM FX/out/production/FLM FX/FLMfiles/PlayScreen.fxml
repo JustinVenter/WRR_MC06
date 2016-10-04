@@ -45,28 +45,28 @@
       </Pane>
       <Pane layoutX="41.0" layoutY="28.0" prefHeight="75.0" prefWidth="318.0" style="-fx-background-color: #1a1a1a;">
          <children>
-            <Label layoutX="13.0" layoutY="9.0" text="Home" textFill="#3c3c3c">
+            <Label layoutX="13.0" layoutY="9.0" text="My Team" textFill="#3c3c3c">
                <font>
                   <Font name="Arial Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="lblHomeTeam" layoutX="112.0" layoutY="23.0" text="Home" textFill="WHITE">
+            <Label fx:id="lblHomeTeam" layoutX="33.0" layoutY="25.0" prefHeight="30.0" prefWidth="274.0" text="Home" textFill="WHITE">
                <font>
-                  <Font name="Arial Bold" size="25.0" />
+                  <Font name="Arial Bold" size="20.0" />
                </font>
             </Label>
          </children>
       </Pane>
       <Pane layoutX="378.0" layoutY="28.0" prefHeight="75.0" prefWidth="318.0" style="-fx-background-color: #1a1a1a;">
          <children>
-            <Label layoutX="13.0" layoutY="9.0" text="Away" textFill="#3c3c3c">
+            <Label layoutX="13.0" layoutY="9.0" text="Opposition" textFill="#3c3c3c">
                <font>
                   <Font name="Arial Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="lblAwayTeam" layoutX="112.0" layoutY="23.0" text="Away" textFill="WHITE">
+            <Label fx:id="lblAwayTeam" layoutX="29.0" layoutY="25.0" prefHeight="30.0" prefWidth="274.0" text="Away" textFill="WHITE">
                <font>
-                  <Font name="Arial Bold" size="25.0" />
+                  <Font name="Arial Bold" size="20.0" />
                </font>
             </Label>
          </children>

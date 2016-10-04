@@ -77,7 +77,7 @@ public class Database implements Serializable{
         this.connectToDB();
         System.out.println("Using database...");
         MyTeam myTeam = null;
-        user = user.readUser();
+        //user = user.readUser();
 
         try {
             String sql = "SELECT * FROM Team WHERE TeamID = 1";
@@ -85,7 +85,7 @@ public class Database implements Serializable{
             if (result.next() ) {
                 // perform query on database and retrieve results
 
-                String TeamName = user.getTeamName();
+                String TeamName = result.getString("TName");
                 int TeamID = result.getInt("TeamID");
                 String TCity = result.getString("TCity");
                 double TRating = result.getDouble("TRating");
@@ -372,10 +372,10 @@ public class Database implements Serializable{
         }
     }
 
-    public void CreateGame(String TeamName, String TeamCity, String ManagerName)
+    public void CreateTeam(String TeamName, String TeamCity)
     {
         try {
-            String sql = "UPDATE Team SET TName = " + TeamName + ", TCity = " + TeamCity + " WHERE TeamID =" + 1;
+            String sql = "UPDATE Team SET Team.TName =  '" + TeamName + "' WHERE Team.TeamID = " + 1;
             stmt.execute(sql);
             } catch (SQLException e1) {
             e1.printStackTrace();
@@ -383,6 +383,7 @@ public class Database implements Serializable{
             //insert manager name code
         }
     }
+
 
     public void UpdateContract(Player player, int Contract)//contract in weeks
     {
@@ -396,6 +397,16 @@ public class Database implements Serializable{
             //insert manager name code
         }
     }
+
+    public void UpdateFatigue(Player player) {
+        try {
+            String sql = "UPDATE Player SET PFatigue =  " + player.getPFatigue() + " WHERE PlayerID = " + player.getPlayerID();
+            stmt.execute(sql);
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+    }
+
 
 
 

@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane prefHeight="691.0" prefWidth="1202.0" style="-fx-background-color: #262626;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FLMfiles.CalendarController">
+<Pane prefHeight="691.0" prefWidth="1202.0" style="-fx-background-color: #262626;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FLMfiles.ResultsController">
    <children>
-      <Label layoutX="510.0" layoutY="36.0" text="CALENDAR" textFill="WHITE">
+      <Label layoutX="510.0" layoutY="36.0" text="RESULTS" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="29.0" />
          </font>
@@ -17,16 +17,16 @@
             <Font name="Arial Bold" size="19.0" />
          </font>
       </Button>
-      <Label layoutX="491.0" layoutY="81.0" prefHeight="21.0" prefWidth="112.0" text="HOME    VS" textFill="WHITE">
+      <Label layoutX="429.0" layoutY="115.0" prefHeight="21.0" prefWidth="112.0" text="Activity" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="629.0" layoutY="80.0" text="AWAY" textFill="WHITE">
+      <Label layoutX="601.0" layoutY="115.0" text="Score" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="20.0" />
          </font>
       </Label>
-      <ListView fx:id="lbxPrefixtures" layoutX="423.0" layoutY="138.0" prefHeight="354.0" prefWidth="295.0" />
+      <ListView fx:id="lbxPostFixtures" layoutX="423.0" layoutY="138.0" prefHeight="354.0" prefWidth="266.0" />
    </children>
 </Pane>

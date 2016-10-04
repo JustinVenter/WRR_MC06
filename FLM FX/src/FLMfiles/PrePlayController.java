@@ -9,9 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -33,7 +31,8 @@ public class PrePlayController implements Initializable{
     public Label lblHomeDef;
     public Label lblAwayAtt;
     public Label lblAwayDef;
-
+    static PreFixture  curGame;
+    static PreFixture DisplayGame = null;
     HomeController hc = new HomeController();
 
     public AnchorPane mainAnchor;
@@ -44,7 +43,7 @@ public class PrePlayController implements Initializable{
     public void onPlayClick(Event event) throws InterruptedException {
 
         //A week passes
-        newWeek();
+
 
         //Pay all players (Justin)
 
@@ -59,6 +58,7 @@ public class PrePlayController implements Initializable{
         //update player injury and rest stats
 
         //play game
+        newWeek();
         OpenSimulationWindow();
 
 
@@ -66,6 +66,26 @@ public class PrePlayController implements Initializable{
 
     public void OpenSimulationWindow()
     {
+        PreFixture preFixture = null;
+
+        try {
+            DisplayGame = getLeagueGame(league);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        lblHomeTeam.setText(DisplayGame.getHomeTeam().getTName());
+        lblHomeAvgRating.setText(String.valueOf((int)Math.floor(DisplayGame.getHomeTeam().getTRating())));
+        lblAwayTeam.setText(DisplayGame.getAwayTeam().getTName());
+        lblAwayAvgRating.setText(String.valueOf((int)Math.floor(DisplayGame.getAwayTeam().getTRating())));
+
+        lblHomeAtt.setText(String.valueOf(DisplayGame.getHomeTeam().getTAttRating()));
+        lblHomeDef.setText(String.valueOf(DisplayGame.getHomeTeam().getTDefRating()));
+        lblAwayAtt.setText(String.valueOf(DisplayGame.getAwayTeam().getTAttRating()));
+        lblAwayDef.setText(String.valueOf(DisplayGame.getAwayTeam().getTDefRating()));
+
+
         Parent root = null;
         Stage secondaryStage = new Stage();
         try {
@@ -81,34 +101,48 @@ public class PrePlayController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         League league = new League();
-        PreFixture curGame = null;
+
         try {
-            curGame = getLeagueGame(league);
+            DisplayGame = getLeagueGame(league);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        MyTeam AwayT =  curGame.getAwayTeam();
-        MyTeam HomeT = curGame.getHomeTeam();
+        MyTeam AwayT = DisplayGame.getAwayTeam();
+        MyTeam HomeT = DisplayGame.getHomeTeam();
         HomeT.CalculateAll();
         AwayT.CalculateAll();
-        lblHomeTeam.setText(curGame.getHomeTeam().getTName());
-        lblHomeAvgRating.setText(String.valueOf((int)Math.floor(curGame.getHomeTeam().getTRating())));
-        lblAwayTeam.setText(curGame.getAwayTeam().getTName());
-        lblAwayAvgRating.setText(String.valueOf((int)Math.floor(curGame.getAwayTeam().getTRating())));
+        lblHomeTeam.setText(DisplayGame.getHomeTeam().getTName());
+        lblHomeAvgRating.setText(String.valueOf((int)Math.floor(DisplayGame.getHomeTeam().getTRating())));
+        lblAwayTeam.setText(DisplayGame.getAwayTeam().getTName());
+        lblAwayAvgRating.setText(String.valueOf((int)Math.floor(DisplayGame.getAwayTeam().getTRating())));
 
-        lblHomeAtt.setText(String.valueOf(curGame.getHomeTeam().getTAttRating()));
-        lblHomeDef.setText(String.valueOf(curGame.getHomeTeam().getTDefRating()));
-        lblAwayAtt.setText(String.valueOf(curGame.getAwayTeam().getTAttRating()));
-        lblAwayDef.setText(String.valueOf(curGame.getAwayTeam().getTDefRating()));
+        lblHomeAtt.setText(String.valueOf(DisplayGame.getHomeTeam().getTAttRating()));
+        lblHomeDef.setText(String.valueOf(DisplayGame.getHomeTeam().getTDefRating()));
+        lblAwayAtt.setText(String.valueOf(DisplayGame.getAwayTeam().getTAttRating()));
+        lblAwayDef.setText(String.valueOf(DisplayGame.getAwayTeam().getTDefRating()));
 
 
     }
 
-    public PreFixture getLeagueGame(League league) throws IOException, ClassNotFoundException {
-        league.loadGames();
-        PreFixture oneGame = league.fixtures.pop();
+    public static PreFixture getLeagueGame(League league) throws IOException, ClassNotFoundException {
+        PreFixture oneGame = league.loadCurGame();
+        curGame = oneGame;
+        return oneGame;
+    }
+
+    public static PreFixture getNextLeagueGame(League league) throws IOException, ClassNotFoundException {
+        PreFixture oneGame = league.loadNextGame();
+        curGame = oneGame;
+
+        try {
+            DisplayGame = getLeagueGame(league);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
         return oneGame;
     }

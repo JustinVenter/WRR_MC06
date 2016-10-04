@@ -1,39 +1,40 @@
 package FLMfiles;
 
 import com.sun.org.apache.xpath.internal.SourceTree;
+import javafx.fxml.Initializable;
 
 import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.ResourceBundle;
 import java.util.Stack;
 
 /**
  * Created by Michael on 09/08/2016.
  */
-public class League implements Serializable {
-
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-
-        MyTeamPreFixture();
-        SaveMyPreFixtures();
-        LoadMyPreFixtures();
-    }
+public class League implements Serializable{
 
     static Stack<PreFixture> fixtures = new Stack<>(); // All the AI games.
     static Stack<PreFixture> MyFixtures = new Stack<>();// add another stack called myFixtures -- All the games for the human users
-    //static int Week = 6;
+    // Stacks which contain all the Post fixtures.
+    static Stack<PostFixture> MyPostFixtures= new Stack();
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
 
 
-    public void loadGames() throws IOException, ClassNotFoundException {
+        MyTeamPreFixture();
+        SaveMyPreFixtures();
+        SaveMyPostFixtures();
+    }
 
 
-        //dummy details for demo
+    public PreFixture loadCurGame() throws IOException, ClassNotFoundException {
         Database database = new Database();
         // database.UpdatePAverage();
 
-        PlayController playController = new PlayController();
-
         database.connectToDB();
+        LoadMyPreFixtures();
 
         MyTeam myteam = database.loadMyTeam();
 
@@ -43,14 +44,53 @@ public class League implements Serializable {
 
         //load dummy team from textfile
 
-        MyTeam Dummy = new MyTeam(99, "Dummy", 60, 70,50, "DumCity", 5, 0, 0);
-        Player[] botTeam = Dummy.generateTeamPlayers();
+        PreFixture pf= MyFixtures.peek();
+
+        MyTeam Dummy = pf.getAwayTeam();
+        Player[] botTeam = pf.getAwayTeam().generateTeamPlayers();
 
 
         Dummy.setStartingLineUp(botTeam);
         PreFixture Game1 = new PreFixture(myteam, Dummy);
-        fixtures.push(Game1);
         database.disconnectDB();
+
+        return Game1;
+    }
+
+
+
+    public PreFixture loadNextGame() throws IOException, ClassNotFoundException {
+
+
+        //dummy details for demo
+        Database database = new Database();
+        // database.UpdatePAverage();
+
+        PlayController playController = new PlayController();
+
+        database.connectToDB();
+        LoadMyPreFixtures();
+
+        MyTeam myteam = database.loadMyTeam();
+
+        myteam.CalculateAvgDefence();
+        myteam.CalculateAvgAttack();
+        myteam.CalculateAvgRating();
+
+        //load dummy team from textfile
+
+        PreFixture pf= MyFixtures.pop();
+
+        SaveMyPreFixtures();
+        MyTeam Dummy = pf.getAwayTeam();
+        Player[] botTeam = pf.getAwayTeam().generateTeamPlayers();
+
+
+        Dummy.setStartingLineUp(botTeam);
+        PreFixture Game1 = new PreFixture(myteam, Dummy);
+        database.disconnectDB();
+
+        return Game1;
     }
 
     /**
@@ -101,7 +141,7 @@ public class League implements Serializable {
                 if (weeksCounter == 0)
                     break;
                 if (i <= 19) {
-                    PreFixture second = new PreFixture(AllTeams.get(i + 1), myTeam);
+                    PreFixture second = new PreFixture(myTeam, AllTeams.get(i + 1));
                     weeksCounter--;
                     MyFixtures.push(second);
                 }
@@ -192,13 +232,14 @@ public class League implements Serializable {
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public static void LoadMyPreFixtures() throws IOException, ClassNotFoundException {
+    public static  Stack<PreFixture> LoadMyPreFixtures() throws IOException, ClassNotFoundException {
 
         ObjectInputStream in = new ObjectInputStream(new FileInputStream("MyFixtures.obj"));
         MyFixtures = (Stack<PreFixture>) in.readObject();
         // display to see if save and load worked.
         System.out.println("Load successful !!!!!!!!!!!");
         System.out.println("After MyFixtures was loaded it has " + MyFixtures.size() + " objects");
+        return MyFixtures;
     }
 
     public static void SaveBotPreFixtures() throws IOException {
@@ -219,6 +260,50 @@ public class League implements Serializable {
         System.out.println("Load successful !!");
         System.out.println("After fixtures was loaded it has " + fixtures.size() + " objects");
     }
+
+    /**
+     * This method takes as input one post fixture and adds it to the stack of post-fixtures which can be viewed in Results.
+     * @param newOne - Postfixture.
+     */
+    public static void addPostFixture(PostFixture newOne){
+
+        try {
+            MyPostFixtures=LoadMyPostFixtures();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        MyPostFixtures.add(newOne);
+
+        try {
+            SaveMyPostFixtures();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void SaveMyPostFixtures() throws IOException {
+
+        //For testing purposes
+        System.out.println("MyFixtures stack currently has " + MyPostFixtures.size() + " objects before being saved !!!!!!!!!!!!");
+        // save the file
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("MyPostFixtures.obj"));
+        out.writeObject(MyPostFixtures);
+        System.out.println("Save successful !!!!!!!!!!!");
+
+    }
+    public static Stack<PostFixture> LoadMyPostFixtures() throws IOException, ClassNotFoundException {
+
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("MyPostFixtures.obj"));
+        MyPostFixtures = (Stack<PostFixture>) in.readObject();
+        // display to see if save and load worked.
+        System.out.println("Load successful !!!!!!!!!!!");
+        System.out.println("After MyPostFixtures was loaded it has " + MyPostFixtures.size() + " objects");
+        return MyPostFixtures;
+
+    }
+
 
 
 }

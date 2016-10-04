@@ -19,6 +19,7 @@ public class Main extends Application {
             primaryStage.setTitle("Football League Manager");
             primaryStage.setScene(new Scene(root, 1200, 750));
             primaryStage.show();
+
         }
         else
         {

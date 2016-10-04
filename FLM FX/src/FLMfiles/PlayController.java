@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
@@ -23,6 +24,8 @@ public class PlayController implements Initializable{
     HomeController homeController = new HomeController();
     PrePlayController prePlayController = new PrePlayController();
 
+    PostFixture pf = new PostFixture();
+
     public Label lblHomeTeam;
     public Label lblAwayTeam;
     public Label lblScore;
@@ -31,9 +34,11 @@ public class PlayController implements Initializable{
     public Button btnOK;
     IntegerProperty TimeProperty = new SimpleIntegerProperty(0);
     ProgressBar Progressbar = new ProgressBar();
-
+    League league = new League();
     //<editor-fold desc="InGame">
-    public void onOKFinishedGame(Event event) {
+    public void onOKFinishedGame(Event event) throws IOException, ClassNotFoundException {
+        PrePlayController.DisplayGame = PrePlayController.getNextLeagueGame(league);
+        League.addPostFixture(pf);
         Stage stage = (Stage) btnOK.getScene().getWindow();
         stage.close();
     }
@@ -44,6 +49,8 @@ public class PlayController implements Initializable{
     public PostFixture LMAlogrithm(PreFixture preFixture){
         MyTeam home = preFixture.getHomeTeam();
         MyTeam away = preFixture.getAwayTeam();
+
+
         return Game(home, away);
     }
 
@@ -90,25 +97,42 @@ public class PlayController implements Initializable{
         }
 
         //teamTree
-        return new PostFixture(AttackTeam, DefendTeam, String.valueOf(MyScore));
+        pf = new PostFixture(AttackTeam, DefendTeam, String.valueOf(MyScore));
+        return pf;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        League league = prePlayController.league;
-        PreFixture preFixture = null;
-        try {
-            preFixture = prePlayController.getLeagueGame(league);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        //Load fixture here
+        Database db = new Database();
+        db.connectToDB();
+
+        PreFixture preFixture = prePlayController.DisplayGame;
+
+        preFixture.getAwayTeam();
         lblHomeTeam.setText(preFixture.getHomeTeam().getTName());
         lblAwayTeam.setText(preFixture.getAwayTeam().getTName());
+
+        //Load fixture here
         PostFixture result = LMAlogrithm(preFixture);
+
+        //DECREASE OR INCREASE FATIGUE
+        MyTeam myTeam = preFixture.getHomeTeam();
+        for(int i = 0; i < myTeam.getMySquad().size(); i++)
+        {
+            Player curPlayer = myTeam.getMySquad().get(i);
+            if(curPlayer.isStartLineUp()==true)
+                curPlayer.DecrFatigue();
+            else
+                curPlayer.RestPlayer();
+            db.UpdateFatigue(curPlayer);
+        }
+
         PostFixture result2 = LMAlogrithm(new PreFixture(preFixture.getAwayTeam(), preFixture.getHomeTeam()));
         lblScore.setText(result.getResult() + " : " + result2.getResult());
+        pf.setResult(result.getResult() + " : " + result2.getResult());
+        pf.setHome(preFixture.getHomeTeam());
+        pf.setAway(preFixture.getAwayTeam());
         Progressbar.progressProperty().bind(TimeProperty);
     }
 

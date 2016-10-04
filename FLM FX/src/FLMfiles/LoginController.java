@@ -32,6 +32,18 @@ public class LoginController implements Initializable{
 
     public void onSubmitClick(Event event) throws IOException {
 
+        Database db = new Database();
+
+
+
+        String TN = edtTeam.getText().toString();
+        String TC = edtCity.getText().toString();
+        League.MyTeamPreFixture();
+        League.SaveMyPreFixtures();
+        League.SaveMyPostFixtures();
+        System.out.println(TN);
+        db.connectToDB();
+        db.CreateTeam(TN, TC);
         String Message = "*Please fill in all the fields";
         if ((edtUsername.getText().trim().isEmpty()) || (edtCity.getText().trim().isEmpty()) || (edtTeam.getText().trim().isEmpty())) {
             lblError.setText(Message);
@@ -40,6 +52,7 @@ public class LoginController implements Initializable{
             User user = new User(edtUsername.getText().toString(), edtTeam.getText().toString(), edtCity.getText().toString());
             user.saveUserDetails();
 
+
             Stage primaryStage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
             primaryStage.setTitle("Football League Manager");
@@ -47,7 +60,9 @@ public class LoginController implements Initializable{
             primaryStage.show();
 
             lblError.setText("");
+
             lblSuccess.setText("Setting up your new account...");
+
             Stage stage = (Stage) btnSubmit.getScene().getWindow();
             stage.close();
         }
