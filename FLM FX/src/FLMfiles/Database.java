@@ -194,7 +194,7 @@ public class Database implements Serializable{
 
         System.out.println("Using database...");
 
-        ArrayList<Player> Lineup = new ArrayList<>();
+        ArrayList<Player> AllPlayers = new ArrayList<>();
         try {
             // perform query on database and retrieve results
             String sql = "SELECT * FROM Player";
@@ -205,6 +205,8 @@ public class Database implements Serializable{
             System.out.println("   LoadAllPlayers (Comment)");
             System.out.println("----------------------------------------------------------------------");
 
+            Player newOne = null;
+
             // while there are tuples in the result set, display them
             while (result.next() ) {
                 System.out.println("   LoadAllPlayers (Comment 2)");
@@ -213,6 +215,8 @@ public class Database implements Serializable{
                 int TeamID = result.getInt("TeamID");
                 String surname = result.getString("PSurname");
                 String name = result.getString("PName");
+                int Age = result.getInt("PAge");
+                double PerformanceBonus = result.getDouble("PperformanceBonus");
                 boolean StartLineUp = result.getBoolean("StartLineUp");
                 double PAvgRating = result.getDouble("PAvgRating");
                 int PAttRating = result.getInt("PAttackRating");
@@ -228,27 +232,36 @@ public class Database implements Serializable{
 
                 System.out.println("   LoadAllPlayers (Comment 3)");
 
-                Player newOne = new Player(PlayerID, TeamID, StartLineUp, name, surname, PAvgRating, PAttRating, PDefRating, PPos, PSkill, PFatigue, PSalary, PValue, PContract, PInjury, PFatigueLvl);
+                newOne = new Player(PlayerID, TeamID, StartLineUp, name, surname,Age, PAvgRating, PAttRating, PDefRating, PPos, PSkill, PFatigue, PSalary, PValue, PContract, PInjury, PFatigueLvl, PerformanceBonus);
 
-                Lineup.add(newOne);
+                /*double AvgRating = calculate.CalcPlayerAvg(newOne);
+                newOne.setPAvgRating(AvgRating);
+                */
+
+                AllPlayers.add(newOne);
+
             }
+
 
             //loadStartingLineUp(MyStartingLineUp);
             System.out.println("Load successful");
             System.out.println("   LoadAllPlayers (Comment 4)");
-            return Lineup;
+
+            //if(newOne.getPAvgRating() == 0){
+               // UpdatePAverage(AllPlayers);
+            //}
+            return AllPlayers;
         } catch (Exception e) {
             System.out.println("   Was not able to query database...");
         }
         System.out.println("   LoadAllPlayers (Comment 5 error)");
         return null;
+
     }
 
     public void UpdatePAverage()
     {
         ArrayList<Player> AllPlayers = LoadAllPlayers();
-
-        ArrayList<Player> Lineup = new ArrayList<>();
         try {
             // perform query on database and retrieve results
             for (int i = 0; i < AllPlayers.size(); i++) {

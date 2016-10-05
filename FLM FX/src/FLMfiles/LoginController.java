@@ -30,7 +30,7 @@ public class LoginController implements Initializable{
 
     }
 
-    public void onSubmitClick(Event event) throws IOException {
+    public void onSubmitClick(Event event) throws IOException, ClassNotFoundException {
 
         Database db = new Database();
 
@@ -51,6 +51,10 @@ public class LoginController implements Initializable{
         } else {
             User user = new User(edtUsername.getText().toString(), edtTeam.getText().toString(), edtCity.getText().toString());
             user.saveUserDetails();
+
+            //Create new instance of MyAccount and Save in object file
+            MyAccount myAccount = new MyAccount();
+            myAccount.saveAccountDetails();
 
 
             Stage primaryStage = new Stage();

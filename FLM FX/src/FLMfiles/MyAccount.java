@@ -1,8 +1,10 @@
 package FLMfiles;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.Initializable;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -10,24 +12,21 @@ import java.util.ResourceBundle;
 /**
  * Created by Michael on 10/08/2016.
  */
-public class MyAccount implements Initializable{//money related
+public class MyAccount implements Serializable{//money related
 
 
     private double BankBalance;
     private ArrayList<Transaction> transactions;
     private double WeeklySalaries;
-    private MyTeam myTeam;
     private int InDebt; //Keep track of how many weeks the user is in debt for
     //In debt for 8 weeks, user is fired!
     private ArrayList<Player> StillOwe; //ArrayList containing the players that the user still owes salaries for
 
     Database db = new Database();
 
-
-    public MyAccount(MyTeam T){
+    public MyAccount() {
         transactions = new ArrayList<>();
         StillOwe = new ArrayList<>();
-        myTeam = T;
         InDebt = 0;
         BankBalance = 500000;
         WeeklySalaries = 0;
@@ -37,7 +36,7 @@ public class MyAccount implements Initializable{//money related
     /*Pass through a transaction to update the bank balance
     transaction can be purchase, sell, win game etc.
      */
-    public void UpdateBank(Transaction T){
+    public void UpdateBank(Transaction T) throws FileNotFoundException {
         if(T.getIncome().equals("Income")){
             BankBalance += T.getAmount();
         }
@@ -45,14 +44,18 @@ public class MyAccount implements Initializable{//money related
             BankBalance -= T.getAmount();
         }
         transactions.add(T);
+        saveAccountDetails();
+        //c.UpdateUI();
     }
     public double GetBankBalance(){
         return BankBalance;
     }
+
     //Get the weekly salaries
     public double GetWeeklyExpenditure() throws IOException, ClassNotFoundException {
-        WeeklySalaries = 0;
         MyTeam curteam = db.loadMyTeam();
+        WeeklySalaries = 0;
+
         ArrayList<Player> cur = curteam.getMySquad();
 
         for(Player P: cur){
@@ -73,7 +76,8 @@ public class MyAccount implements Initializable{//money related
     }
     //Pay the weekly salaries NB WEEKLY!
     //First pay the debt then current salaries
-    public void PaySalaries() {
+    public void PaySalaries() throws IOException, ClassNotFoundException {
+        MyTeam curteam = db.loadMyTeam();
 
         if (StillOwe.size() != 0) {
 
@@ -89,17 +93,24 @@ public class MyAccount implements Initializable{//money related
             }
         }
 
-        ArrayList<Player> cur = myTeam.getMySquad();
+        ArrayList<Player> cur = curteam.getMySquad();
 
         for (Player P : cur) {
             double Salary = P.getPSalary();
             if (BankBalance > Salary) {
-                BankBalance = BankBalance - Salary;
+                BankBalance -= Salary;
             } else {
                 StillOwe.add(P);
                 InDebt++;
             }
         }
+        boolean Fire = DetermineFiring();
+        if(Fire){
+            //user is fired
+        }
+
+        saveAccountDetails();
+        //c.UpdateUI();
     }
     //current debt
     public double CalculateDebt(){
@@ -117,9 +128,11 @@ public class MyAccount implements Initializable{//money related
             return debt;
         }
     }
-    //returns true if the user has been in debt for 8 weeks. Therefore, the user should be fired.
+    //returns true if the user has been in debt for 8 weeks or if the debt total is = 500000. Therefore, the user should be fired.
     public boolean DetermineFiring(){
         if (InDebt == 8)
+            return true;
+        if (CalculateDebt() == 500000)
             return true;
         else
             return false;
@@ -155,7 +168,30 @@ public class MyAccount implements Initializable{//money related
         return transactions;
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void saveAccountDetails() throws FileNotFoundException {
+
+        try{
+            File file = new File("accountDetails.obj");
+            file.delete();
+
+            FileOutputStream fout = new FileOutputStream("accountDetails.obj");
+            ObjectOutputStream oos = new ObjectOutputStream(fout);
+            oos.writeObject(this);
+            oos.close();
+            fout.close();
+            System.out.println("Saved");
+
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+
+    }
+    public MyAccount readAccount() throws IOException, ClassNotFoundException {
+        FileInputStream fin = new FileInputStream("accountDetails.obj");
+        ObjectInputStream ois = new ObjectInputStream(fin);
+        MyAccount myAccount = (MyAccount) ois.readObject();
+        fin.close();
+        ois.close();
+        return myAccount;
     }
 }

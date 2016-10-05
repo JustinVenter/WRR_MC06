@@ -27,12 +27,14 @@ public class MarketController implements Initializable{
      */
 
     public TableView tblPlayers;
-    public TableColumn playerSur;
+   // public TableColumn playerSur;
     public TableColumn playerName;
+    public TableColumn playerAge;
     public TableColumn playerPos;
-    public TableColumn playerAtt;
-    public TableColumn playerDef;
+    //public TableColumn playerAtt;
+    //public TableColumn playerDef;
     public TableColumn playerAvg;
+    public TableColumn playerSkill;
     public TableColumn playerPrice;
     public TableColumn playerSalary;
     public Button btnPurchase;
@@ -56,12 +58,11 @@ public class MarketController implements Initializable{
         for(int i=0;i<MarketPlayers.size();i++){
 
             Player cur= new Player(MarketPlayers.get(i).getPlayerID(),
-                    MarketPlayers.get(i).getPSurname(),
-                    MarketPlayers.get(i).getPName(),
+                    MarketPlayers.get(i).GetFullName(),
+                    MarketPlayers.get(i).getPAge(),
                     MarketPlayers.get(i).getPPos(),
-                    MarketPlayers.get(i).getPAttRating(),
-                    MarketPlayers.get(i).getPDefRating(),
                     MarketPlayers.get(i).getPAvgRating(),
+                    MarketPlayers.get(i).getPSkill(),
                     MarketPlayers.get(i).getPValue(),
                     MarketPlayers.get(i).getPSalary());
 
@@ -80,12 +81,14 @@ public class MarketController implements Initializable{
     public void tableSetup(){
 
         // playerID.setCellValueFactory(new PropertyValueFactory<>("playerNum"));
-        playerSur.setCellValueFactory(new PropertyValueFactory<>("Surname"));
+       //playerSur.setCellValueFactory(new PropertyValueFactory<>("Surname"));
         playerName.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        playerAge.setCellValueFactory(new PropertyValueFactory<>("Age"));
         playerPos.setCellValueFactory(new PropertyValueFactory<>("playerPos"));
-        playerAtt.setCellValueFactory(new PropertyValueFactory<>("playerAtt"));
-        playerDef.setCellValueFactory(new PropertyValueFactory<>("playerDef"));
+       // playerAtt.setCellValueFactory(new PropertyValueFactory<>("playerAtt"));
+        //playerDef.setCellValueFactory(new PropertyValueFactory<>("playerDef"));
         playerAvg.setCellValueFactory(new PropertyValueFactory<>("playerAverage"));
+        playerSkill.setCellValueFactory(new PropertyValueFactory<>("playerSkill"));
         playerPrice.setCellValueFactory(new PropertyValueFactory<>("playerPrice"));
         playerSalary.setCellValueFactory(new PropertyValueFactory<>("playerSalary"));
 

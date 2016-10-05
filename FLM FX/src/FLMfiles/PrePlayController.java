@@ -40,12 +40,21 @@ public class PrePlayController implements Initializable{
     public AnchorPane AccountAnchor;
     public Pane curPane1;
 
-    public void onPlayClick(Event event) throws InterruptedException {
+    public void onPlayClick(Event event) throws InterruptedException, IOException, ClassNotFoundException {
 
         //A week passes
 
 
         //Pay all players (Justin)
+        MyAccount myAccount = new MyAccount();
+        try {
+            myAccount = myAccount.readAccount();
+            myAccount.PaySalaries();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
         //Let all the games be played that should be played (All)
 
