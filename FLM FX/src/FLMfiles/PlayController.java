@@ -3,16 +3,23 @@ package FLMfiles;
 import javafx.application.Application;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
 
 import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -23,8 +30,12 @@ public class PlayController implements Initializable{
 
     HomeController homeController = new HomeController();
     PrePlayController prePlayController = new PrePlayController();
+    ObservableList<liveFeedElement> obsFeed = FXCollections.observableArrayList();;
+
 
     PostFixture pf = new PostFixture();
+
+    public ListView listLivefeed;
 
     public Label lblHomeTeam;
     public Label lblAwayTeam;
@@ -77,18 +88,23 @@ public class PlayController implements Initializable{
                 if(curNode.getMiddle().getValue()==null)//shoot
                 {
                     boolean goal = curNode.shoot(curNode.getDefendervalue());
-
-                    if(goal)
+                    if(goal) {
                         MyScore = MyScore + 1;
+                        obsFeed.add(new liveFeedElement(Time, curPlayer.getPName().toString() +  " has scored a Goal!"));
+                    }
+                    else
+                    if(curNode.getDefendervalue() != null)
+                        obsFeed.add(new liveFeedElement(Time, teamTree.Goalie.getValue().getPName() + " has saved a Goal."));
                     curNode = teamTree.getRoot();
                 }
                 else
-                if( prob < (curPlayer.getPAvgRating() - (curNode.getDefendervalue().getPDefRating()/3)))
+                if( prob < (curPlayer.getPAvgRating() - (curNode.getDefendervalue().getPDefRating())/1.5))
                 {
-                    if(Decisionpass.nextInt(100) < (curPlayer.getPAvgRating()/2))
+                    if(Decisionpass.nextInt(100) < (curPlayer.getPAvgRating()/3)){
                         curNode = curNode.bestPass();
+                    }
                     else
-                        curNode.RandomPass();
+                        curNode = curNode.RandomPass();
                 }
 
                 Time = Time + 1;
@@ -112,7 +128,7 @@ public class PlayController implements Initializable{
         preFixture.getAwayTeam();
         lblHomeTeam.setText(preFixture.getHomeTeam().getTName());
         lblAwayTeam.setText(preFixture.getAwayTeam().getTName());
-
+        lblTime.setText("90:00");
         //Load fixture here
         PostFixture result = LMAlogrithm(preFixture);
 
@@ -126,10 +142,18 @@ public class PlayController implements Initializable{
             else
                 curPlayer.RestPlayer();
             db.UpdateFatigue(curPlayer);
+            db.UpdatePInjury(curPlayer);
         }
 
         PostFixture result2 = LMAlogrithm(new PreFixture(preFixture.getAwayTeam(), preFixture.getHomeTeam()));
         lblScore.setText(result.getResult() + " : " + result2.getResult());
+        Collections.sort(obsFeed, new Comparator<liveFeedElement>() {
+            @Override
+            public int compare(liveFeedElement o1, liveFeedElement o2) {
+                return o1.Time - o2.Time ;
+            }
+        });
+        listLivefeed.setItems(obsFeed);
         pf.setResult(result.getResult() + " : " + result2.getResult());
         pf.setHome(preFixture.getHomeTeam());
         pf.setAway(preFixture.getAwayTeam());

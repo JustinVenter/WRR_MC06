@@ -127,22 +127,22 @@ public class Team implements Serializable {
             if(i < 3) {
                 int AttR = this.getTAttRating() + random.nextInt(10);
                 int DefR = (int)(Math.floor(this.getTDefRating()*.4));
-                botTeam[i] = new Player((((AttR * 1.9)+(DefR * 0.1))/2), AttR, DefR);
+                botTeam[i] = new Player("Opposition", (((AttR * 1.9)+(DefR * 0.1))/2), AttR, DefR);
             }
             if(3<=i && i<6)
             {
                 int AttR = (int)(Math.floor(this.getTRating()));
                 int DefR = (int)(Math.floor(this.getTRating()));
-                botTeam[i] = new Player(this.getTRating(), AttR, DefR);
+                botTeam[i] = new Player("Opposition", this.getTRating(), AttR, DefR);
             }
             if(6<=i && i<=9)
             {
                 int DefR = this.getTDefRating() + random.nextInt(10);
                 int AttR = (int)(Math.floor(this.getTAttRating()*.4));
-                botTeam[i] = new Player((((DefR * 1.9)+(AttR * 0.1))/2), AttR, DefR);
+                botTeam[i] = new Player("Opposition", (((DefR * 1.9)+(AttR * 0.1))/2), AttR, DefR);
             }
             if(i == 10) {
-                botTeam[i] = new Player(this.getTRating(), (int)(Math.floor(this.getTRating())), (int)(Math.floor(this.getTRating())));
+                botTeam[i] = new Player("Opposition", this.getTRating(), (int)(Math.floor(this.getTRating())), (int)(Math.floor(this.getTRating())));
             }
         }
         return botTeam;

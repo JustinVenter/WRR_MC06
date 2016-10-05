@@ -19,6 +19,7 @@ public class Player implements Serializable{
     transient DoubleProperty playerAverage= new SimpleDoubleProperty();
     transient DoubleProperty playerPrice = new SimpleDoubleProperty();
     transient DoubleProperty playerSalary= new SimpleDoubleProperty();
+    transient DoubleProperty playerInjuryPenalty= new SimpleDoubleProperty();
 
     // for MarketController, this is needed
     public Player(int playerNum, String surname, String name, String playerPos, int playerAtt, int playerDef, double playerAverage, double playerPrice, double playerSalary) {
@@ -31,6 +32,7 @@ public class Player implements Serializable{
         this.playerAverage.set(playerAverage);
         this.playerPrice.set(playerPrice);
         this.playerSalary.set(playerSalary);
+        this.PInjury = false;
     }
     // getters for marketController do not remove !!! (used through reflection when adding the data to the table)
     public int getPlayerNum() {
@@ -145,6 +147,13 @@ public class Player implements Serializable{
         this.PFatigueLvl = PFatigueLvl;
     }
 
+    public Player(String PName, double PAvgRating, int PAttRating, int PDefRating)//used for bots
+    {
+        this.PName = PName;
+        this.PAvgRating = PAvgRating;
+        this.PAttRating = PAttRating;
+        this.PDefRating = PDefRating;
+    }
     public Player(double PAvgRating, int PAttRating, int PDefRating)//used for bots
     {
         this.PAvgRating = PAvgRating;
@@ -245,6 +254,8 @@ public class Player implements Serializable{
     {
         if (this.PFatigue > 0) {
             this.setPFatigue(PFatigue - 10);
+            if(this.PFatigue <= 40)
+                this.setPInjury(true);
         }
         else
         {
@@ -373,7 +384,10 @@ public class Player implements Serializable{
     //<editor-fold desc="views (such as display)">
     public String toString()
     {
-        return PName +", " +PSurname + ": " + PAvgRating;
+        String InjuryStatus = "";
+        if(this.PInjury == true)
+            InjuryStatus = "(Injured)";
+        return  PSurname +", " +PName + ": " + PAvgRating + " " + InjuryStatus;
     }
 
     //</editor-fold>

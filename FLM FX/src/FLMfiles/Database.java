@@ -183,11 +183,30 @@ public class Database implements Serializable{
         {
             if(AllPlayers.get(i).getTeamID()==1)
             {
-                MyTeam.add(AllPlayers.get(i));
+                 MyTeam.add(AllPlayers.get(i));
             }
         }
         return MyTeam;
     }
+
+
+    public ArrayList loadMyInjuries()
+    {
+        ArrayList<Player> AllPlayers = LoadAllPlayers();
+        ArrayList<Player> MyTeam = new ArrayList<>();
+
+        for(int i = 0; i < AllPlayers.size(); i++)
+        {
+            if(AllPlayers.get(i).getTeamID()==1)
+            {
+                if(AllPlayers.get(i).PInjury == true)
+                    MyTeam.add(AllPlayers.get(i));
+            }
+        }
+        return MyTeam;
+    }
+
+
 
     public ArrayList<Player> LoadAllPlayers()
     {
@@ -407,7 +426,20 @@ public class Database implements Serializable{
         }
     }
 
+    public void UpdatePInjury(Player curPlayer) {
+        int bValue;
+        if(curPlayer.PInjury==true)
+            bValue = 1;
+        else
+            bValue = 0;
 
+        try {
+            String sql = "UPDATE Player SET PInjury =  " + bValue + " WHERE PlayerID = " + curPlayer.getPlayerID();
+            stmt.execute(sql);
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+    }
 
 
     //update contract
