@@ -126,6 +126,7 @@ public class PlayController implements Initializable{
             else
                 curPlayer.RestPlayer();
             db.UpdateFatigue(curPlayer);
+            db.UpdatePInjury(curPlayer);
         }
 
         PostFixture result2 = LMAlogrithm(new PreFixture(preFixture.getAwayTeam(), preFixture.getHomeTeam()));
