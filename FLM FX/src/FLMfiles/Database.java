@@ -190,22 +190,6 @@ public class Database implements Serializable{
     }
 
 
-    public ArrayList loadMyInjuries()
-    {
-        ArrayList<Player> AllPlayers = LoadAllPlayers();
-        ArrayList<Player> MyTeam = new ArrayList<>();
-
-        for(int i = 0; i < AllPlayers.size(); i++)
-        {
-            if(AllPlayers.get(i).getTeamID()==1)
-            {
-                if(AllPlayers.get(i).PInjury == true)
-                    MyTeam.add(AllPlayers.get(i));
-            }
-        }
-        return MyTeam;
-    }
-
 
 
     public ArrayList<Player> LoadAllPlayers()
@@ -244,10 +228,10 @@ public class Database implements Serializable{
                 int PContract = result.getInt("PContract"); //time remaining in weeks
                 boolean PInjury = result.getBoolean("PInjury");
                 int PFatigueLvl = result.getInt("PFatigueLevel"); //1 being wost and 4 being max*/
-
+                int PInjuryPenalty = result.getInt("PInjuryPenalty");
                 System.out.println("   LoadAllPlayers (Comment 3)");
 
-                Player newOne = new Player(PlayerID, TeamID, StartLineUp, name, surname, PAvgRating, PAttRating, PDefRating, PPos, PSkill, PFatigue, PSalary, PValue, PContract, PInjury, PFatigueLvl);
+                Player newOne = new Player(PlayerID, TeamID, StartLineUp, name, surname, PAvgRating, PAttRating, PDefRating, PPos, PSkill, PFatigue, PSalary, PValue, PContract, PInjury, PFatigueLvl, PInjuryPenalty);
 
                 Lineup.add(newOne);
             }
@@ -319,7 +303,6 @@ public class Database implements Serializable{
                 int TLosses = result.getInt("TLosses");
                 int TStaffLevel = result.getInt("TLosses");
                 int TConfidence = result.getInt("TConfidence");
-
                 MyTeam newOne = new MyTeam(TeamID,TName,TRating,TAttRating,TDefRating,TCity,TRank,TWins,TLosses);
                 Teams.add(newOne);
             }
@@ -419,7 +402,7 @@ public class Database implements Serializable{
 
     public void UpdateFatigue(Player player) {
         try {
-            String sql = "UPDATE Player SET PFatigue =  " + player.getPFatigue() + " WHERE PlayerID = " + player.getPlayerID();
+            String sql = "UPDATE Player SET PFatigue =  " + player.getPFatigue() + ", PInjuryPenalty = " + player.PInjuryPenalty + " WHERE PlayerID = " + player.getPlayerID();
             stmt.execute(sql);
         } catch (SQLException e1) {
             e1.printStackTrace();

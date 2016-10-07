@@ -19,7 +19,7 @@ public class Player implements Serializable{
     transient DoubleProperty playerAverage= new SimpleDoubleProperty();
     transient DoubleProperty playerPrice = new SimpleDoubleProperty();
     transient DoubleProperty playerSalary= new SimpleDoubleProperty();
-    transient DoubleProperty playerInjuryPenalty= new SimpleDoubleProperty();
+
 
     // for MarketController, this is needed
     public Player(int playerNum, String surname, String name, String playerPos, int playerAtt, int playerDef, double playerAverage, double playerPrice, double playerSalary) {
@@ -125,7 +125,9 @@ public class Player implements Serializable{
     int PContract; //time remaining in weeks
     boolean PInjury;
     int PFatigueLvl; //1 being wost and 4 being max
-    //</editor-fold>
+    int PInjuryPenalty;
+
+   //</editor-fold>
 
     //<editor-fold desc="Methods">
     public Player(int playerID, int teamID, boolean startLineUp, String PName, String PSurname, double PAvgRating, int PAttRating, int PDefRating, String PPos, String PSkill, int PFatigue, double PSalary, double PValue, int PContract, boolean PInjury, int PFatigueLvl) {
@@ -145,6 +147,25 @@ public class Player implements Serializable{
         this.PContract = PContract;
         this.PInjury = PInjury;
         this.PFatigueLvl = PFatigueLvl;
+    }
+    public Player(int playerID, int teamID, boolean startLineUp, String PName, String PSurname, double PAvgRating, int PAttRating, int PDefRating, String PPos, String PSkill, int PFatigue, double PSalary, double PValue, int PContract, boolean PInjury, int PFatigueLvl, int PInjuryPenalty) {
+        PlayerID = playerID;
+        TeamID = teamID;
+        StartLineUp = startLineUp;
+        this.PName = PName;
+        this.PSurname = PSurname;
+        this.PAvgRating = PAvgRating;
+        this.PAttRating = PAttRating;
+        this.PDefRating = PDefRating;
+        this.PPos = PPos;
+        this.PSkill = PSkill;
+        this.PFatigue = PFatigue;
+        this.PSalary = PSalary;
+        this.PValue = PValue;
+        this.PContract = PContract;
+        this.PInjury = PInjury;
+        this.PFatigueLvl = PFatigueLvl;
+        this.PInjuryPenalty = PInjuryPenalty;
     }
 
     public Player(String PName, double PAvgRating, int PAttRating, int PDefRating)//used for bots
@@ -183,6 +204,7 @@ public class Player implements Serializable{
             case 2:
                 if (this.PFatigue < 100) {
                     this.setPFatigue(PFatigue + 15);
+                    this.PInjuryPenalty = (int)Math.floor((((100 - this.getPFatigue())/100)*this.getPAvgRating()));
                     if (PFatigue > 100)
                         this.setPFatigue(100);
                 }
@@ -190,6 +212,7 @@ public class Player implements Serializable{
             case 3:
                 if (this.PFatigue < 100) {
                     this.setPFatigue(PFatigue + 20);
+                    this.PInjuryPenalty = (int)Math.floor(((100 - this.getPFatigue())/100)*this.getPAvgRating());
                     if (PFatigue > 100)
                         this.setPFatigue(100);
                 }
@@ -197,6 +220,7 @@ public class Player implements Serializable{
             case 4:
                 if (this.PFatigue < 100) {
                     this.setPFatigue(PFatigue+25);
+                    this.PInjuryPenalty = (int)Math.floor((((100 - this.getPFatigue())/100)*this.getPAvgRating()));
                     if (PFatigue > 100)
                         this.setPFatigue(100);
                 }
@@ -204,13 +228,17 @@ public class Player implements Serializable{
             default:
                 if (this.PFatigue < 100) {
                     this.setPFatigue(PFatigue + 10);
+                    this.PInjuryPenalty = (int)Math.floor((((100 - this.getPFatigue())/100)*this.getPAvgRating()));
                     if (PFatigue > 100)
                         this.setPFatigue(100);
                 }
                 break;
         }
-        if(this.PInjury == true && this.PFatigue >= 60)
+        if(this.PInjury == true && this.PFatigue >= 60){
+            this.PInjuryPenalty = 0;
             this.setPInjury(false);
+        }
+
 
     }
 
@@ -254,13 +282,19 @@ public class Player implements Serializable{
     {
         if (this.PFatigue > 0) {
             this.setPFatigue(PFatigue - 10);
-            if(this.PFatigue <= 40)
+            if(this.PFatigue <= 40) {
                 this.setPInjury(true);
+                double Iloss = 100 - this.PFatigue;
+                double d = ((Iloss/100)*this.PAvgRating)/2;
+                this.PInjuryPenalty = (int)d;
+            }
+            return;
         }
         else
         {
             this.setPInjury(true);
             this.setPFatigue(0);
+            this.PInjuryPenalty = (int)Math.floor((((100 - this.getPFatigue())/100)*this.getPAvgRating()));
         }
     }
 
@@ -385,8 +419,9 @@ public class Player implements Serializable{
     public String toString()
     {
         String InjuryStatus = "";
-        if(this.PInjury == true)
-            InjuryStatus = "(Injured)";
+        if(this.PInjury == true) {
+            InjuryStatus = "(Injured, - " + this.PInjuryPenalty +")";
+        }
         return  PSurname +", " +PName + ": " + PAvgRating + " " + InjuryStatus;
     }
 

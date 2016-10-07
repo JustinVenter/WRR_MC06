@@ -31,9 +31,12 @@ public class PrePlayController implements Initializable{
     public Label lblHomeDef;
     public Label lblAwayAtt;
     public Label lblAwayDef;
+    public Label lblInjury;
+
     static PreFixture  curGame;
     static PreFixture DisplayGame = null;
     HomeController hc = new HomeController();
+
 
     public AnchorPane mainAnchor;
     public AnchorPane PlayAnchor;
@@ -75,6 +78,9 @@ public class PrePlayController implements Initializable{
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+
+
         lblHomeTeam.setText(DisplayGame.getHomeTeam().getTName());
         lblHomeAvgRating.setText(String.valueOf((int)Math.floor(DisplayGame.getHomeTeam().getTRating())));
         lblAwayTeam.setText(DisplayGame.getAwayTeam().getTName());
@@ -84,7 +90,9 @@ public class PrePlayController implements Initializable{
         lblHomeDef.setText(String.valueOf(DisplayGame.getHomeTeam().getTDefRating()));
         lblAwayAtt.setText(String.valueOf(DisplayGame.getAwayTeam().getTAttRating()));
         lblAwayDef.setText(String.valueOf(DisplayGame.getAwayTeam().getTDefRating()));
-
+        int InjScore =  DisplayGame.getHomeTeam().CalcInjuryAvg();
+        if(InjScore > 0)
+            lblInjury.setText("(-" + String.valueOf(InjScore) + ")");
 
         Parent root = null;
         Stage secondaryStage = new Stage();
@@ -113,6 +121,9 @@ public class PrePlayController implements Initializable{
         MyTeam HomeT = DisplayGame.getHomeTeam();
         HomeT.CalculateAll();
         AwayT.CalculateAll();
+        int InjScore =  DisplayGame.getHomeTeam().CalcInjuryAvg();
+        if(InjScore > 0)
+            lblInjury.setText("(-" + String.valueOf(InjScore) + ")");
         lblHomeTeam.setText(DisplayGame.getHomeTeam().getTName());
         lblHomeAvgRating.setText(String.valueOf((int)Math.floor(DisplayGame.getHomeTeam().getTRating())));
         lblAwayTeam.setText(DisplayGame.getAwayTeam().getTName());

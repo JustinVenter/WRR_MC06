@@ -143,7 +143,7 @@ public class PlayerNode {
         Player curPlayer = this.getValue();
         Random probability = new Random();
         int Prob = probability.nextInt(100);
-        if(Prob < (curPlayer.getPAttRating() - opposition.getPDefRating()))
+        if(Prob < (curPlayer.getPAttRating()- curPlayer.PInjuryPenalty - opposition.getPDefRating()))
             return true;
         else
             return false;

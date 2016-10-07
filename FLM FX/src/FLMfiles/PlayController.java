@@ -98,7 +98,7 @@ public class PlayController implements Initializable{
                     curNode = teamTree.getRoot();
                 }
                 else
-                if( prob < (curPlayer.getPAvgRating() - (curNode.getDefendervalue().getPDefRating())/1.5))
+                if( prob < ((curPlayer.getPAvgRating()- curPlayer.PInjuryPenalty) - (curNode.getDefendervalue().getPDefRating())/1.5))
                 {
                     if(Decisionpass.nextInt(100) < (curPlayer.getPAvgRating()/3)){
                         curNode = curNode.bestPass();
@@ -141,6 +141,7 @@ public class PlayController implements Initializable{
                 curPlayer.DecrFatigue();
             else
                 curPlayer.RestPlayer();
+
             db.UpdateFatigue(curPlayer);
             db.UpdatePInjury(curPlayer);
         }
