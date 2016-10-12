@@ -2,16 +2,59 @@ package FLMfiles;
 
 import javafx.beans.property.*;
 
+import java.io.Serializable;
+
 /**
  * Created by Justin on 2016/09/10.
  */
-public class Transaction {
+public class Transaction implements Serializable {
 
 
-    StringProperty description = new SimpleStringProperty();
-    DoubleProperty Amount = new SimpleDoubleProperty();
-    IntegerProperty Week = new SimpleIntegerProperty();
-    StringProperty Income = new SimpleStringProperty(); //true if the transaction is income
+    private String Descrip;
+    private double amnt;
+    private int wk;
+    private String inc;
+
+    public Transaction(double a, String D, boolean I, int W){
+        Descrip = D;
+        amnt = a;
+        wk = W;
+
+        if(I == true)
+            inc = "Income";
+        else
+            inc = "Expense";
+    }
+
+
+    public String getDescrip() {
+        return Descrip;
+    }
+
+    public double getAmnt() {
+        return amnt;
+    }
+
+    public int getWk() {
+        return wk;
+    }
+
+    public String toString()
+    {
+        return Descrip + ", " + amnt + "," + wk;
+    }
+
+    public boolean getInc() {
+        if(inc.equals("Income"))
+            return true;
+        else
+            return false;
+    }
+
+    transient StringProperty description = new SimpleStringProperty();
+    transient DoubleProperty Amount = new SimpleDoubleProperty();
+    transient IntegerProperty Week = new SimpleIntegerProperty();
+    transient StringProperty Income = new SimpleStringProperty(); //true if the transaction is income
 
 
     public Transaction(String d, double a, boolean I, int W){

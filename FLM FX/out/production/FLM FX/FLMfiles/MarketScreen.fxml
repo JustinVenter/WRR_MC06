@@ -9,14 +9,13 @@
    <children>
       <TableView fx:id="tblPlayers" layoutX="175.0" layoutY="99.0" prefHeight="472.0" prefWidth="853.0">
          <columns>
-            <TableColumn id="SurnameId" fx:id="playerSur" prefWidth="107.0" text="Surname" />
-            <TableColumn id="NameID" fx:id="playerName" prefWidth="89.0" text="Name" />
-            <TableColumn id="PosID" fx:id="playerPos" prefWidth="67.0" text="Pos" />
-            <TableColumn id="AttID" fx:id="playerAtt" prefWidth="81.0" text="Att" />
-            <TableColumn id="DefID" fx:id="playerDef" prefWidth="90.0" text="Def" />
-            <TableColumn id="Overallid" fx:id="playerAvg" prefWidth="116.0" text="Overall" />
-            <TableColumn id="PriceID" fx:id="playerPrice" minWidth="0.0" prefWidth="142.0" text="Price" />
-            <TableColumn id="SalaryID" fx:id="playerSalary" prefWidth="160.0" text="Salary" />
+            <TableColumn id="NameID" fx:id="playerName" prefWidth="280.0" text="Name" />
+            <TableColumn fx:id="playerAge" prefWidth="90.0" text="Age" />
+            <TableColumn id="PosID" fx:id="playerPos" minWidth="1.0" prefWidth="1.0" text="Pos" />
+            <TableColumn id="Overallid" fx:id="playerAvg" prefWidth="90.0" text="Rating" />
+            <TableColumn fx:id="playerSkill" prefWidth="150.0" text="Special Skill" />
+            <TableColumn id="PriceID" fx:id="playerPrice" minWidth="0.0" prefWidth="120.0" text="Price ($)" />
+            <TableColumn id="SalaryID" fx:id="playerSalary" prefWidth="120.0" text="Salary ($)" />
          </columns>
       </TableView>
       <Label layoutX="539.0" layoutY="37.0" text="MARKET" textFill="WHITE">

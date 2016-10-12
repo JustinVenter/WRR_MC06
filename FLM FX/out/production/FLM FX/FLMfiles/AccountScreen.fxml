@@ -86,7 +86,6 @@
                   </Label>
                </children>
             </Pane>
-            <Label fx:id="CurWeek" layoutX="1066.0" layoutY="48.0" text="0" textFill="WHITE" />
          </children></Pane>
    </children>
    <columnConstraints>

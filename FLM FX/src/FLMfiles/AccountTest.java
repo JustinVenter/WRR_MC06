@@ -19,7 +19,7 @@ public class AccountTest {
 
     public AccountTest() {
         MyTeam T = new MyTeam();
-        account = new MyAccount(T);
+       /* account = new MyAccount(T);
         //AccountController Controller = new AccountController(Account);
         Transaction T1 = new Transaction("Paid", 100000, false, 6);
         Transaction T2 = new Transaction("Paid", 50000, false, 5);
@@ -38,5 +38,6 @@ public class AccountTest {
         account.UpdateBank(T6);
         account.UpdateBank(T7);
         account.UpdateBank(T8);
+        */
     }
 }
