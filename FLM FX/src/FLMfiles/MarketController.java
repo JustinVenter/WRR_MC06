@@ -6,11 +6,15 @@ import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,12 +31,14 @@ public class MarketController implements Initializable{
      */
 
     public TableView tblPlayers;
-    public TableColumn playerSur;
+   // public TableColumn playerSur;
     public TableColumn playerName;
+    public TableColumn playerAge;
     public TableColumn playerPos;
-    public TableColumn playerAtt;
-    public TableColumn playerDef;
+    //public TableColumn playerAtt;
+    //public TableColumn playerDef;
     public TableColumn playerAvg;
+    public TableColumn playerSkill;
     public TableColumn playerPrice;
     public TableColumn playerSalary;
     public Button btnPurchase;
@@ -40,10 +46,17 @@ public class MarketController implements Initializable{
     // database
     Database db= new Database();
     // ArrayList of players
-    private ArrayList<Player> players = new ArrayList<>();
+    private static ArrayList<Player> players = new ArrayList<>();
     //Arraylist wrapped in observable list
-    private ObservableList<Player> observablePlayers= FXCollections.observableArrayList(players);
+    private static ObservableList<Player> observablePlayers= FXCollections.observableArrayList(players);
 
+    public static ObservableList<Player> get(){
+        return observablePlayers;
+    }
+
+    MyAccount account = new MyAccount();
+
+    public static Player CurPlayer = null; //Keep track of current player to send through to purchasePlayer Controller
 
 
     private void setupPlayers(){
@@ -56,12 +69,11 @@ public class MarketController implements Initializable{
         for(int i=0;i<MarketPlayers.size();i++){
 
             Player cur= new Player(MarketPlayers.get(i).getPlayerID(),
-                    MarketPlayers.get(i).getPSurname(),
-                    MarketPlayers.get(i).getPName(),
+                    MarketPlayers.get(i).GetFullName(),
+                    MarketPlayers.get(i).getPAge(),
                     MarketPlayers.get(i).getPPos(),
-                    MarketPlayers.get(i).getPAttRating(),
-                    MarketPlayers.get(i).getPDefRating(),
                     MarketPlayers.get(i).getPAvgRating(),
+                    MarketPlayers.get(i).getPSkill(),
                     MarketPlayers.get(i).getPValue(),
                     MarketPlayers.get(i).getPSalary());
 
@@ -80,12 +92,14 @@ public class MarketController implements Initializable{
     public void tableSetup(){
 
         // playerID.setCellValueFactory(new PropertyValueFactory<>("playerNum"));
-        playerSur.setCellValueFactory(new PropertyValueFactory<>("Surname"));
+       //playerSur.setCellValueFactory(new PropertyValueFactory<>("Surname"));
         playerName.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        playerAge.setCellValueFactory(new PropertyValueFactory<>("Age"));
         playerPos.setCellValueFactory(new PropertyValueFactory<>("playerPos"));
-        playerAtt.setCellValueFactory(new PropertyValueFactory<>("playerAtt"));
-        playerDef.setCellValueFactory(new PropertyValueFactory<>("playerDef"));
+       // playerAtt.setCellValueFactory(new PropertyValueFactory<>("playerAtt"));
+        //playerDef.setCellValueFactory(new PropertyValueFactory<>("playerDef"));
         playerAvg.setCellValueFactory(new PropertyValueFactory<>("playerAverage"));
+        playerSkill.setCellValueFactory(new PropertyValueFactory<>("playerSkill"));
         playerPrice.setCellValueFactory(new PropertyValueFactory<>("playerPrice"));
         playerSalary.setCellValueFactory(new PropertyValueFactory<>("playerSalary"));
 
@@ -104,12 +118,49 @@ public class MarketController implements Initializable{
 
 
         btnPurchase.setOnMouseClicked(Event ->{
+            try {
+                account.readAccount();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
 
             // Here must still be a section where the users' account is checked to have the sufficient amount of money !!! All else works
+            //Check if user can pay initial value.
 
-            db.UpdatePlayerTeam(observablePlayers.get(tblPlayers.getSelectionModel().getSelectedIndex()),1);
+            double BankBalance = account.GetBankBalance();
+            Player P = observablePlayers.get(tblPlayers.getSelectionModel().getSelectedIndex());
+            double PValue = P.getPValue();
+
+            if(BankBalance < PValue){
+                //user cannot afford to pay initial value.
+                //Popup
+            }
+            else
+            {
+                CurPlayer = observablePlayers.get(tblPlayers.getSelectionModel().getSelectedIndex());
+                //Go to purchasePlayer screen
+
+                Parent root = null;
+                Stage secondaryStage = new Stage();
+                try {
+                    root = FXMLLoader.load(getClass().getResource("PurchasePlayer.fxml"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                secondaryStage.setTitle("Football League Manager");
+                secondaryStage.setScene(new Scene(root, 750, 600));
+                secondaryStage.initModality(Modality.APPLICATION_MODAL); //Cannot interact with any other stage until this stage is closed
+                secondaryStage.show();
+            }
+
+
+
+            //db.UpdatePlayerTeam(observablePlayers.get(tblPlayers.getSelectionModel().getSelectedIndex()),1);
             //refresh the list after the player has been purchased :)
-            observablePlayers.remove(observablePlayers.get(tblPlayers.getSelectionModel().getSelectedIndex()));
+            //observablePlayers.remove(observablePlayers.get(tblPlayers.getSelectionModel().getSelectedIndex()));
             //tblPlayers.refresh();
         } );
     }

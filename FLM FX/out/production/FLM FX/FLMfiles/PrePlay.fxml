@@ -7,7 +7,7 @@
 
 <Pane prefHeight="690.0" prefWidth="1202.0" style="-fx-background-color: #262626;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FLMfiles.PrePlayController">
    <children>
-      <Button id="btnPlayMatch" fx:id="btnPlayMatch" layoutX="418.0" layoutY="443.0" mnemonicParsing="false" onMouseClicked="#onPlayClick" prefHeight="48.0" prefWidth="366.0" style="-fx-background-color: linear-gradient(#00bfff,#1a8cff);" text="PLAY MATCH" textFill="WHITE">
+      <Button id="btnPlayMatch" fx:id="btnPlayMatch" layoutX="418.0" layoutY="443.0" mnemonicParsing="false" onMouseClicked="#onPlayClick" prefHeight="48.0" prefWidth="366.0" style="-fx-background-color: linear-gradient(#00bfff,#1a8cff);" text="PLAY MATCH" textFill="WHITE" >
          <font>
             <Font name="Arial Bold" size="19.0" />
          </font>
@@ -92,10 +92,5 @@
             <Font name="Arial Bold" size="19.0" />
          </font>
       </Button>
-      <Label fx:id="lblInjury" alignment="CENTER_RIGHT" layoutX="340.0" layoutY="223.0" prefHeight="35.0" prefWidth="121.0" textFill="#ff4a4a">
-         <font>
-            <Font name="Arial Bold" size="24.0" />
-         </font>
-      </Label>
    </children>
 </Pane>

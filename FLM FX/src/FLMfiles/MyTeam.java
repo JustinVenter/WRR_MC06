@@ -225,18 +225,6 @@ public class MyTeam extends Team implements Serializable{
             return;
     }
 
-    public int CalcInjuryAvg()//remember to use use the starting lineup ratings
-    {
-        double total = 0;
-        for(int i = 0; i < 11; i++)
-        {
-            Player player = StartingLineUp[i];
-            total = total + player.PInjuryPenalty;
-        }
-        return (int)total/11;
-    }
-
-
     public Player[] getStartingLineUp()
     {
         return StartingLineUp;
