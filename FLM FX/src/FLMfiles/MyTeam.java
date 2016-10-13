@@ -224,7 +224,6 @@ public class MyTeam extends Team implements Serializable{
         else
             return;
     }
-
     public int CalcInjuryAvg()//remember to use use the starting lineup ratings
     {
         double total = 0;
@@ -235,7 +234,6 @@ public class MyTeam extends Team implements Serializable{
         }
         return (int)total/11;
     }
-
 
     public Player[] getStartingLineUp()
     {

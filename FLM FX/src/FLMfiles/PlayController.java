@@ -28,10 +28,12 @@ import java.util.ResourceBundle;
  */
 public class PlayController implements Initializable{
 
+    public static Transaction T;
+    public static boolean Result; //True if win, otherwise false
+
     HomeController homeController = new HomeController();
     PrePlayController prePlayController = new PrePlayController();
-    ObservableList<liveFeedElement> obsFeed = FXCollections.observableArrayList();;
-
+    ObservableList<liveFeedElement> obsFeed = FXCollections.observableArrayList();
 
     PostFixture pf = new PostFixture();
 
@@ -88,6 +90,7 @@ public class PlayController implements Initializable{
                 if(curNode.getMiddle().getValue()==null)//shoot
                 {
                     boolean goal = curNode.shoot(curNode.getDefendervalue());
+
                     if(goal) {
                         MyScore = MyScore + 1;
                         obsFeed.add(new liveFeedElement(Time, curPlayer.getPName().toString() +  " has scored a Goal!"));
@@ -119,6 +122,7 @@ public class PlayController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         //Load fixture here
         Database db = new Database();
         db.connectToDB();
@@ -129,6 +133,7 @@ public class PlayController implements Initializable{
         lblHomeTeam.setText(preFixture.getHomeTeam().getTName());
         lblAwayTeam.setText(preFixture.getAwayTeam().getTName());
         lblTime.setText("90:00");
+
         //Load fixture here
         PostFixture result = LMAlogrithm(preFixture);
 
@@ -159,6 +164,48 @@ public class PlayController implements Initializable{
         pf.setHome(preFixture.getHomeTeam());
         pf.setAway(preFixture.getAwayTeam());
         Progressbar.progressProperty().bind(TimeProperty);
+
+
+
+
+        //Determine win/loss and create transaction
+
+        String Score = pf.getResult();
+        User user = new User();
+        try {
+            user = user.readUser();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        String[] parts = Score.split(":");
+        String part1 = parts[0];
+        String part2 = parts[1];
+
+        part1 = part1.replaceAll("\\s+","");
+        part2 = part2.replaceAll("\\s+","");
+
+
+        if (part1.equals(part2)) { //Draw
+
+            T = new Transaction(100000, "Draw", true,user.getWeek());
+            Result = false;
+            //myAccount.UpdateBank(T);
+
+        } else if (part1.compareTo(part2)>0) { //Win
+
+            T = new Transaction(300000, "Win", true,user.getWeek());
+            Result = true;
+            //myAccount.UpdateBank(T);
+
+        } else //Lose
+        {
+            T = new Transaction(20000, "Loss", true,user.getWeek());
+            Result = false;
+            //myAccount.UpdateBank(T);
+        }
     }
 
 

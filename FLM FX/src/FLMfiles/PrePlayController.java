@@ -15,6 +15,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Stack;
+
+import static FLMfiles.League.LoadMyPostFixtures;
 
 /**
  * Created by Michael on 27/09/2016.
@@ -37,18 +40,24 @@ public class PrePlayController implements Initializable{
     static PreFixture DisplayGame = null;
     HomeController hc = new HomeController();
 
-
     public AnchorPane mainAnchor;
     public AnchorPane PlayAnchor;
     public AnchorPane AccountAnchor;
     public Pane curPane1;
 
-    public void onPlayClick(Event event) throws InterruptedException {
+    public void onPlayClick(Event event) throws InterruptedException, IOException, ClassNotFoundException {
 
         //A week passes
 
+        MyAccount myAccount = new MyAccount();
+        try {
+            myAccount = myAccount.readAccount();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
-        //Pay all players (Justin)
 
         //Let all the games be played that should be played (All)
 
@@ -61,9 +70,68 @@ public class PrePlayController implements Initializable{
         //update player injury and rest stats
 
         //play game
-        newWeek();
+
         OpenSimulationWindow();
 
+
+        //Determine if win or loss
+        myAccount.UpdateBank(PlayController.T);
+
+
+       /* Stack<PostFixture> PostFixtures = LoadMyPostFixtures();
+        Stack<PostFixture> temp = PostFixtures;
+        PostFixture popped = temp.pop();
+        PostFixture cur = new PostFixture(popped.getHomeTeamName(), popped.getAwayTeamName(), popped.getResult());
+        */
+
+        /*String result = cur.getResult();
+
+        User user = new User();
+
+        user = user.readUser();
+
+        String[] parts = result.split(":");
+        String part1 = parts[0];
+        String part2 = parts[1];
+
+        part1 = part1.replaceAll("\\s+","");
+        part2 = part2.replaceAll("\\s+","");
+
+
+        if (part1.equals(part2)) { //Draw
+
+            Transaction T = new Transaction(100000, "Draw", true,user.getWeek());
+            myAccount.UpdateBank(T);
+
+        } else if (part1.compareTo(part2)>0) { //Win
+
+            Transaction T = new Transaction(300000, "Win", true,user.getWeek());
+            myAccount.UpdateBank(T);
+
+        } else //Lose
+        {
+            Transaction T = new Transaction(20000, "Lose", true,user.getWeek());
+            myAccount.UpdateBank(T);
+        }
+        */
+
+        //Pay all players (Justin)
+
+
+        myAccount.PaySalaries(PlayController.Result);
+
+        //Check for any responses from pending players (market stuff!)
+        Market market = new Market();
+        market = market.readMarket();
+
+        market.AddWeek();
+        market.DetermineAccepted();
+        market.DetermineRejected();
+        market.DetermineSold();
+
+        market.saveMarketDetails();
+
+        newWeek();
 
     }
 
@@ -78,9 +146,6 @@ public class PrePlayController implements Initializable{
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-
-
         lblHomeTeam.setText(DisplayGame.getHomeTeam().getTName());
         lblHomeAvgRating.setText(String.valueOf((int)Math.floor(DisplayGame.getHomeTeam().getTRating())));
         lblAwayTeam.setText(DisplayGame.getAwayTeam().getTName());
@@ -90,6 +155,7 @@ public class PrePlayController implements Initializable{
         lblHomeDef.setText(String.valueOf(DisplayGame.getHomeTeam().getTDefRating()));
         lblAwayAtt.setText(String.valueOf(DisplayGame.getAwayTeam().getTAttRating()));
         lblAwayDef.setText(String.valueOf(DisplayGame.getAwayTeam().getTDefRating()));
+
         int InjScore =  DisplayGame.getHomeTeam().CalcInjuryAvg();
         if(InjScore > 0)
             lblInjury.setText("(-" + String.valueOf(InjScore) + ")");
@@ -124,6 +190,7 @@ public class PrePlayController implements Initializable{
         int InjScore =  DisplayGame.getHomeTeam().CalcInjuryAvg();
         if(InjScore > 0)
             lblInjury.setText("(-" + String.valueOf(InjScore) + ")");
+
         lblHomeTeam.setText(DisplayGame.getHomeTeam().getTName());
         lblHomeAvgRating.setText(String.valueOf((int)Math.floor(DisplayGame.getHomeTeam().getTRating())));
         lblAwayTeam.setText(DisplayGame.getAwayTeam().getTName());
