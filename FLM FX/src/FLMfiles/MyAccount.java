@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 public class MyAccount implements Serializable{//money related
 
 
-    private double BankBalance;
+   static  private double BankBalance;
     private ArrayList<Transaction> transactions;
     private double WeeklySalaries;
     private int InDebt; //Keep track of how many weeks the user is in debt for
@@ -33,6 +33,7 @@ public class MyAccount implements Serializable{//money related
     }
 
 
+
     /*Pass through a transaction to update the bank balance
     transaction can be purchase, sell, win game etc.
      */
@@ -47,7 +48,7 @@ public class MyAccount implements Serializable{//money related
         saveAccountDetails();
         //c.UpdateUI();
     }
-    public double GetBankBalance(){
+   static public double GetBankBalance(){
         return BankBalance;
     }
 

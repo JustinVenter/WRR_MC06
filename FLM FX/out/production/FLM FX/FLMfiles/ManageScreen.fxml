@@ -26,7 +26,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </GridPane.margin>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="138.0" prefWidth="537.0" style="-fx-background-color: linear-gradient(#bfbfbf,#d9d9d9);" text="STAFF" GridPane.columnIndex="1" GridPane.columnSpan="2">
+            <Button fx:id="btnStaff" mnemonicParsing="false" onAction="#onStaffClicked" prefHeight="138.0" prefWidth="537.0" style="-fx-background-color: linear-gradient(#bfbfbf,#d9d9d9);" text="STAFF" GridPane.columnIndex="1" GridPane.columnSpan="2">
                <font>
                   <Font name="Arial Bold" size="22.0" />
                </font>
