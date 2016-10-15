@@ -100,7 +100,7 @@
                      </children></AnchorPane>
               </content>
             </Tab>
-            <Tab text="ACCOUNT">
+            <Tab fx:id="AccTab" onSelectionChanged="#onAccClicked" text="ACCOUNT">
               <content>
                 <AnchorPane fx:id="AccountAnchor" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

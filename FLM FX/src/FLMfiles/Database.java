@@ -69,6 +69,13 @@ public class Database implements Serializable{
             e.printStackTrace();
         }
     }
+    public void Close(){
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
     Load your team's squad
@@ -183,21 +190,18 @@ public class Database implements Serializable{
         {
             if(AllPlayers.get(i).getTeamID()==1)
             {
-                 MyTeam.add(AllPlayers.get(i));
+                MyTeam.add(AllPlayers.get(i));
             }
         }
         return MyTeam;
     }
-
-
-
 
     public ArrayList<Player> LoadAllPlayers()
     {
 
         System.out.println("Using database...");
 
-        ArrayList<Player> Lineup = new ArrayList<>();
+        ArrayList<Player> AllPlayers = new ArrayList<>();
         try {
             // perform query on database and retrieve results
             String sql = "SELECT * FROM Player";
@@ -208,6 +212,8 @@ public class Database implements Serializable{
             System.out.println("   LoadAllPlayers (Comment)");
             System.out.println("----------------------------------------------------------------------");
 
+            Player newOne = null;
+
             // while there are tuples in the result set, display them
             while (result.next() ) {
                 System.out.println("   LoadAllPlayers (Comment 2)");
@@ -216,6 +222,8 @@ public class Database implements Serializable{
                 int TeamID = result.getInt("TeamID");
                 String surname = result.getString("PSurname");
                 String name = result.getString("PName");
+                int Age = result.getInt("PAge");
+                double PerformanceBonus = result.getDouble("PperformanceBonus");
                 boolean StartLineUp = result.getBoolean("StartLineUp");
                 double PAvgRating = result.getDouble("PAvgRating");
                 int PAttRating = result.getInt("PAttackRating");
@@ -229,29 +237,39 @@ public class Database implements Serializable{
                 boolean PInjury = result.getBoolean("PInjury");
                 int PFatigueLvl = result.getInt("PFatigueLevel"); //1 being wost and 4 being max*/
                 int PInjuryPenalty = result.getInt("PInjuryPenalty");
+
                 System.out.println("   LoadAllPlayers (Comment 3)");
 
-                Player newOne = new Player(PlayerID, TeamID, StartLineUp, name, surname, PAvgRating, PAttRating, PDefRating, PPos, PSkill, PFatigue, PSalary, PValue, PContract, PInjury, PFatigueLvl, PInjuryPenalty);
+                newOne = new Player(PlayerID, TeamID, StartLineUp, name, surname,Age, PAvgRating, PAttRating, PDefRating, PPos, PSkill, PFatigue, PSalary, PValue, PContract, PInjury, PFatigueLvl, PerformanceBonus, PInjuryPenalty);
 
-                Lineup.add(newOne);
+                /*double AvgRating = calculate.CalcPlayerAvg(newOne);
+                newOne.setPAvgRating(AvgRating);
+                */
+
+                AllPlayers.add(newOne);
+
             }
+
 
             //loadStartingLineUp(MyStartingLineUp);
             System.out.println("Load successful");
             System.out.println("   LoadAllPlayers (Comment 4)");
-            return Lineup;
+
+            //if(newOne.getPAvgRating() == 0){
+               // UpdatePAverage(AllPlayers);
+            //}
+            return AllPlayers;
         } catch (Exception e) {
             System.out.println("   Was not able to query database...");
         }
         System.out.println("   LoadAllPlayers (Comment 5 error)");
         return null;
+
     }
 
     public void UpdatePAverage()
     {
         ArrayList<Player> AllPlayers = LoadAllPlayers();
-
-        ArrayList<Player> Lineup = new ArrayList<>();
         try {
             // perform query on database and retrieve results
             for (int i = 0; i < AllPlayers.size(); i++) {
@@ -303,6 +321,7 @@ public class Database implements Serializable{
                 int TLosses = result.getInt("TLosses");
                 int TStaffLevel = result.getInt("TLosses");
                 int TConfidence = result.getInt("TConfidence");
+
                 MyTeam newOne = new MyTeam(TeamID,TName,TRating,TAttRating,TDefRating,TCity,TRank,TWins,TLosses);
                 Teams.add(newOne);
             }
@@ -335,6 +354,19 @@ public class Database implements Serializable{
             // perform query on database and retrieve results
                 String sql = "UPDATE Team SET TStaffLevel = " + i + " WHERE TeamID = " + 1;
                 stmt.execute(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setMatchWinnerLoser(int win, int loser)
+    {
+
+        String sql = "UPDATE Team SET TWins = TWins + 1 WHERE TeamID = " + win;
+        String sql2 = "UPDATE Team SET TLosses = TLosses + 1  WHERE TeamID = " + loser;
+        try {
+            stmt.execute(sql);
+            stmt.execute(sql2);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -373,6 +405,18 @@ public class Database implements Serializable{
             e.printStackTrace();
         }
     }
+    public void UpdatePlayerTeam2(Player player, int i)
+    {
+
+        try {
+            // perform query on database and retrieve results
+            String sql = "UPDATE Player SET TeamID = " + i + " WHERE PlayerID = " + player.getPlayerID();
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void CreateTeam(String TeamName, String TeamCity)
     {
@@ -401,12 +445,12 @@ public class Database implements Serializable{
     }
 
     public void UpdateFatigue(Player player) {
-        try {
-            String sql = "UPDATE Player SET PFatigue =  " + player.getPFatigue() + ", PInjuryPenalty = " + player.PInjuryPenalty + " WHERE PlayerID = " + player.getPlayerID();
-            stmt.execute(sql);
-        } catch (SQLException e1) {
-            e1.printStackTrace();
-        }
+            try {
+                String sql = "UPDATE Player SET PFatigue =  " + player.getPFatigue() + ", PInjuryPenalty = " + player.PInjuryPenalty + " WHERE PlayerID = " + player.getPlayerID();
+                stmt.execute(sql);
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
     }
 
     public void UpdatePInjury(Player curPlayer) {
@@ -423,6 +467,26 @@ public class Database implements Serializable{
             e1.printStackTrace();
         }
     }
+
+
+    public void UpdatePlayerSalary(Player player, double Salary){
+        try {
+            String sql = "UPDATE Player SET PSalary =  " + Salary  + " WHERE PlayerID = " + player.getPlayerNum();
+            stmt.execute(sql);
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+    }
+    public void UpdatePlayerBonus(Player player, double Bonus){
+        try {
+            String sql = "UPDATE Player SET PperformanceBonus =  " + Bonus  + " WHERE PlayerID = " + player.getPlayerNum();
+            stmt.execute(sql);
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+
 
 
     //update contract

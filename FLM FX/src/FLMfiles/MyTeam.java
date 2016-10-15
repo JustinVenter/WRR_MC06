@@ -21,7 +21,7 @@ public class MyTeam extends Team implements Serializable{
     int StaffRating;
     double MyAccount;
 
-    private int[] StaffCost = {0, 1000, 5000, 10000, 20000, 50000, 100000, 150000, 200000, 300000, 500000}; //cost for upgrades
+    public int[] StaffCost = {0, 1000, 5000, 10000, 20000, 50000, 100000, 150000, 200000, 300000, 500000}; //cost for upgrades
 
     public MyTeam(int teamID, String TName, double TRating, int TAttRating, int TDefRating, String TCity, int TRank, int TWins, int TLosses) {
         super(teamID, TName, TRating, TAttRating, TDefRating, TCity, TRank, TWins, TLosses);
@@ -69,76 +69,76 @@ public class MyTeam extends Team implements Serializable{
                 if(isValidBuy(MyAccount, StaffCost[1]) == true){
                     this.MyAccount = this.MyAccount - StaffCost[1];
                     this.StaffRating = this.StaffRating + 1;
-                    Success = true;
+                    return Success = true;
                 }else
-                    Success = false;
+                    return Success = false;
             case 1:
                 if(isValidBuy(MyAccount, StaffCost[2]) == true){
                     this.MyAccount = this.MyAccount - StaffCost[2];
                     this.StaffRating = this.StaffRating + 1;
-                    Success = true;
+                    return Success = true;
                 }else
-                    Success = false;
+                    return Success = false;
             case 2:
                 if(isValidBuy(MyAccount, StaffCost[3]) == true){
                     this.MyAccount = this.MyAccount - StaffCost[3];
                     this.StaffRating = this.StaffRating + 1;
-                    Success = true;
+                    return Success = true;
                 }else
-                    Success = false;
+                    return Success = false;
             case 3:
                 if(isValidBuy(MyAccount, StaffCost[4]) == true){
                     this.MyAccount = this.MyAccount - StaffCost[4];
                     this.StaffRating = this.StaffRating + 1;
-                    Success = true ;
+                    return Success = true ;
                 }else
-                    Success = false;
+                    return Success = false;
             case 4:
                 if(isValidBuy(MyAccount, StaffCost[5]) == true){
                     this.MyAccount = this.MyAccount - StaffCost[5];
                     this.StaffRating = this.StaffRating + 1;
-                    Success = true;
+                    return Success = true;
                 }else
-                    Success = false;
+                    return Success = false;
             case 5:
                 if(isValidBuy(MyAccount, StaffCost[6]) == true){
                     this.MyAccount = this.MyAccount - StaffCost[6];
                     this.StaffRating = this.StaffRating + 1;
-                    Success = true;
+                    return Success = true;
                 }else
-                    Success = false;
+                    return Success = false;
             case 6:
                 if(isValidBuy(MyAccount, StaffCost[7]) == true){
                     this.MyAccount = this.MyAccount - StaffCost[7];
                     this.StaffRating = this.StaffRating + 1;
-                    Success = true;
+                    return Success = true;
                 }else
-                    Success = false;
+                    return  Success = false;
             case 7:
                 if(isValidBuy(MyAccount, StaffCost[8]) == true){
                     this.MyAccount = this.MyAccount - StaffCost[8];
                     this.StaffRating = this.StaffRating + 1;
-                    return true;
+                    return Success= true;
                 }else
-                    Success = false;
+                    return Success = false;
             case 8:
                 if(isValidBuy(MyAccount, StaffCost[9]) == true){
                     this.MyAccount = this.MyAccount - StaffCost[9];
                     this.StaffRating = this.StaffRating + 1;
-                    Success = true;
+                    return Success = true;
                 }else
-                    Success = false;
+                    return  Success = false;
             case 9:
                 if(isValidBuy(MyAccount, StaffCost[10]) == true){
                     this.MyAccount = this.MyAccount - StaffCost[10];
                     this.StaffRating = this.StaffRating + 1;
-                    Success = true;
+                    return Success = true;
                 }else
-                    Success = false;
+                    return Success = false;
 
             default: Success = false;
 
-                db.UpdateStaff(this.StaffRating);
+                //db.UpdateStaff(this.StaffRating);
 
                 return Success;
         }
@@ -224,7 +224,6 @@ public class MyTeam extends Team implements Serializable{
         else
             return;
     }
-
     public int CalcInjuryAvg()//remember to use use the starting lineup ratings
     {
         double total = 0;
@@ -235,7 +234,6 @@ public class MyTeam extends Team implements Serializable{
         }
         return (int)total/11;
     }
-
 
     public Player[] getStartingLineUp()
     {

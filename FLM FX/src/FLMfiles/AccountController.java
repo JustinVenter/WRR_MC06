@@ -15,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.converter.NumberStringConverter;
 
 import java.io.IOException;
 import java.net.URL;
@@ -26,13 +27,13 @@ import java.util.ResourceBundle;
  */
 
 
-public class AccountController implements Initializable {
+public class AccountController implements Initializable  {
 
     public Label CurBankBalance;
-    public Label CurWeek;
+    //public Label CurWeek;
     public Label Salaries;
     public Label Debt;
-
+    
     public TableView tblTransactions;
     public TableColumn transactionWeek;
     public TableColumn transactionType;
@@ -43,8 +44,6 @@ public class AccountController implements Initializable {
 
     public Button ViewTransactions;
 
-
-
     // ArrayList of transactions
     private ArrayList<Transaction> transactions1;
     //Arraylist wrapped in observable list
@@ -52,36 +51,31 @@ public class AccountController implements Initializable {
 
     public AccountController(){
 
-
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        AccountTest AT = new AccountTest();
-        MyAccount account = null;
+        //AccountTest AT = new AccountTest();
+
+        MyAccount account = new MyAccount();
+
         try {
-            account = new MyAccount(db.loadMyTeam());
+            account = account.readAccount();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+        //AccountProperties AC = new AccountProperties(account);
         transactions1 = account.GetTransactions1();
 
         observableTransactions1 =  FXCollections.observableArrayList(transactions1);
 
         CurBankBalance.setText("$" +String.valueOf(account.GetBankBalance()));
 
-        User user = new User();
-        try {
-            user = user.readUser();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        //CurBankBalance.textProperty().bindBidirectional(account.bankBalanceProperty(),new NumberStringConverter());
 
-        CurWeek.setText(String.valueOf(user.Week));
         try {
             Salaries.setText("$" +String.valueOf(account.GetWeeklyExpenditure()));
         } catch (IOException e) {
@@ -96,6 +90,39 @@ public class AccountController implements Initializable {
 
 
     }
+    public void ReInitialize(){
+
+       /* MyAccount account = new MyAccount();
+        try {
+            account = account.readAccount();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        transactions1 = account.GetTransactions1();
+
+        //observableTransactions1 =  FXCollections.observableArrayList(transactions1);
+
+        CurBankBalance.setText("$" +String.valueOf(account.GetBankBalance()));
+
+        //CurBankBalance.textProperty().bindBidirectional(account.bankProperty(),new NumberStringConverter());
+
+        try {
+            Salaries.setText("$" +String.valueOf(account.GetWeeklyExpenditure()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        Debt.setText("$" +String.valueOf(account.CalculateDebt()));
+
+        //tableSetup();
+        tblTransactions.setItems(observableTransactions1);
+        */
+
+    }
+
     private void tableSetup(){
 
         transactionWeek.setCellValueFactory(new PropertyValueFactory<>("Week"));
@@ -104,11 +131,12 @@ public class AccountController implements Initializable {
         transactionDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
 
     }
+
     public void onTransactionsClick(Event event) throws InterruptedException {
-        OpenSimulationWindow();
+        OpenTransactionWindow();
     }
 
-    public void OpenSimulationWindow()
+    public void OpenTransactionWindow()
     {
         Parent root = null;
         Stage secondaryStage = new Stage();

@@ -16,6 +16,7 @@ import java.util.Stack;
 public class League implements Serializable{
 
     static Stack<PreFixture> fixtures = new Stack<>(); // All the AI games.
+    static Stack<PostFixture> postfixtures = new Stack<>(); // All the AI games.
     static Stack<PreFixture> MyFixtures = new Stack<>();// add another stack called myFixtures -- All the games for the human users
     // Stacks which contain all the Post fixtures.
     static Stack<PostFixture> MyPostFixtures= new Stack();
@@ -248,6 +249,16 @@ public class League implements Serializable{
         // save the file
         ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("fixtures.obj"));
         out.writeObject(fixtures);
+        System.out.println("Save successful !!!!!!!!!");
+
+    }
+
+
+    public static void SaveBotPostFixtures() throws IOException {
+        //For testing purposes
+        // save the file
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("postfixtures.obj"));
+        out.writeObject(postfixtures);
         System.out.println("Save successful !!!!!!!!!");
 
     }

@@ -11,28 +11,43 @@ public class Player implements Serializable{
 
     // The following is the String and int properties needed to display information in a table
     transient IntegerProperty playerNum= new SimpleIntegerProperty();
-    transient StringProperty Surname = new SimpleStringProperty();
+    //transient StringProperty Surname = new SimpleStringProperty();
     transient StringProperty Name= new SimpleStringProperty();
+    transient IntegerProperty Age = new SimpleIntegerProperty();
     transient StringProperty playerPos= new SimpleStringProperty();
     transient IntegerProperty playerAtt= new SimpleIntegerProperty();
-    transient  IntegerProperty playerDef= new SimpleIntegerProperty();
-    transient DoubleProperty playerAverage= new SimpleDoubleProperty();
-    transient DoubleProperty playerPrice = new SimpleDoubleProperty();
-    transient DoubleProperty playerSalary= new SimpleDoubleProperty();
+    transient IntegerProperty playerDef= new SimpleIntegerProperty();
+    transient IntegerProperty playerAverage= new SimpleIntegerProperty();
+    transient StringProperty playerSkill = new SimpleStringProperty();
+    transient IntegerProperty playerPrice = new SimpleIntegerProperty();
+    transient IntegerProperty playerSalary= new SimpleIntegerProperty();
 
+    public int getPendingWeeks() {
+        return PendingWeeks.get();
+    }
+
+    public IntegerProperty pendingWeeksProperty() {
+        return PendingWeeks;
+    }
+
+    public void setPendingWeeks(int pendingWeeks) {
+        this.PendingWeeks.set(pendingWeeks);
+    }
+
+    transient IntegerProperty PendingWeeks = new SimpleIntegerProperty(); //Keep track of purchased players. Players respond to offer after a few weeks.
 
     // for MarketController, this is needed
-    public Player(int playerNum, String surname, String name, String playerPos, int playerAtt, int playerDef, double playerAverage, double playerPrice, double playerSalary) {
+    public Player(int playerNum, String name,int playerAge, String playerPos, double playerAverage,String skill, double playerPrice, double playerSalary) {
         this.playerNum.set(playerNum) ;
-        Surname.set(surname);
+        //Surname.set(surname);
         Name.set(name);
+        Age.set(playerAge);
         this.playerPos.set(playerPos);
-        this.playerAtt.set(playerAtt);
-        this.playerDef.set(playerDef);
-        this.playerAverage.set(playerAverage);
-        this.playerPrice.set(playerPrice);
-        this.playerSalary.set(playerSalary);
-        this.PInjury = false;
+        this.playerAverage.set((int) playerAverage);
+        playerSkill.set(skill);
+        this.playerPrice.set((int) playerPrice);
+        this.playerSalary.set((int) playerSalary);
+        PendingWeeks.set(0);
     }
     // getters for marketController do not remove !!! (used through reflection when adding the data to the table)
     public int getPlayerNum() {
@@ -43,13 +58,14 @@ public class Player implements Serializable{
         return playerNum;
     }
 
-    public String getSurname() {
+    /*public String getSurname() {
         return Surname.get();
     }
 
     public StringProperty surnameProperty() {
         return Surname;
     }
+    */
 
     public String getName() {
         return Name.get();
@@ -87,7 +103,7 @@ public class Player implements Serializable{
         return playerAverage.get();
     }
 
-    public DoubleProperty playerAverageProperty() {
+    public IntegerProperty playerAverageProperty() {
         return playerAverage;
     }
 
@@ -95,7 +111,7 @@ public class Player implements Serializable{
         return playerPrice.get();
     }
 
-    public DoubleProperty playerPriceProperty() {
+    public IntegerProperty playerPriceProperty() {
         return playerPrice;
     }
 
@@ -103,8 +119,24 @@ public class Player implements Serializable{
         return playerSalary.get();
     }
 
-    public DoubleProperty playerSalaryProperty() {
+    public IntegerProperty playerSalaryProperty() {
         return playerSalary;
+    }
+
+    public int getAge() {
+        return Age.get();
+    }
+
+    public IntegerProperty ageProperty() {
+        return Age;
+    }
+
+    public String getPlayerSkill() {
+        return playerSkill.get();
+    }
+
+    public StringProperty playerSkillProperty() {
+        return playerSkill;
     }
 
     Database db = new Database();
@@ -114,28 +146,41 @@ public class Player implements Serializable{
     boolean StartLineUp;
     String PName;
     String PSurname;
+    int PAge;
     double PAvgRating;
     int PAttRating;
     int PDefRating;
     String PPos;
-    String PSkill;  //actual name of the skill [Normal(default)/Striker(attack)/Playmaker(midfield)/PowerDefender(defense)]
+    String PSkill;  //actual name of the skill [Normal(default)/Shooting(attack)/Playmaker(midfield)/Tackling(defense)]
     int PFatigue; //his current fatigue level, with 100 being max and, 0 meaning injury.
     double PSalary;
     double PValue; //the player's buy and sell value
     int PContract; //time remaining in weeks
     boolean PInjury;
     int PFatigueLvl; //1 being wost and 4 being max
+    double PerformanceBonus; //Additional implementation. Should your team win, you have to pay a bonus to a player with a performance bonus
     int PInjuryPenalty;
 
-   //</editor-fold>
+    public int getWeeksPending() {
+        return WeeksPending;
+    }
+
+    public void setWeeksPending(int weeksPending) {
+        WeeksPending = weeksPending;
+    }
+
+    int WeeksPending;
+    //</editor-fold>
+
 
     //<editor-fold desc="Methods">
-    public Player(int playerID, int teamID, boolean startLineUp, String PName, String PSurname, double PAvgRating, int PAttRating, int PDefRating, String PPos, String PSkill, int PFatigue, double PSalary, double PValue, int PContract, boolean PInjury, int PFatigueLvl) {
+    public Player(int playerID, int teamID, boolean startLineUp, String PName, String PSurname,int Age, double PAvgRating, int PAttRating, int PDefRating, String PPos, String PSkill, int PFatigue, double PSalary, double PValue, int PContract, boolean PInjury, int PFatigueLvl, double PerformanceBonus, int PInjuryPenalty) {
         PlayerID = playerID;
         TeamID = teamID;
         StartLineUp = startLineUp;
         this.PName = PName;
         this.PSurname = PSurname;
+        PAge = Age;
         this.PAvgRating = PAvgRating;
         this.PAttRating = PAttRating;
         this.PDefRating = PDefRating;
@@ -147,6 +192,11 @@ public class Player implements Serializable{
         this.PContract = PContract;
         this.PInjury = PInjury;
         this.PFatigueLvl = PFatigueLvl;
+        this.PerformanceBonus = PerformanceBonus;
+        this.PInjuryPenalty = PInjuryPenalty;
+
+        WeeksPending = 0;
+
     }
     public Player(int playerID, int teamID, boolean startLineUp, String PName, String PSurname, double PAvgRating, int PAttRating, int PDefRating, String PPos, String PSkill, int PFatigue, double PSalary, double PValue, int PContract, boolean PInjury, int PFatigueLvl, int PInjuryPenalty) {
         PlayerID = playerID;
@@ -168,6 +218,12 @@ public class Player implements Serializable{
         this.PInjuryPenalty = PInjuryPenalty;
     }
 
+    public Player(int PlayerID, int Weeks, double Value){
+        this.PlayerID = PlayerID;
+        WeeksPending = Weeks;
+        PValue = Value;
+    }
+
     public Player(String PName, double PAvgRating, int PAttRating, int PDefRating)//used for bots
     {
         this.PName = PName;
@@ -175,6 +231,7 @@ public class Player implements Serializable{
         this.PAttRating = PAttRating;
         this.PDefRating = PDefRating;
     }
+
     public Player(double PAvgRating, int PAttRating, int PDefRating)//used for bots
     {
         this.PAvgRating = PAvgRating;
@@ -277,6 +334,7 @@ public class Player implements Serializable{
             return MyAccount - PSalary;
         }
     }
+
 
     public void DecrFatigue()
     {
@@ -385,6 +443,10 @@ public class Player implements Serializable{
         return PValue;
     }
 
+    public int getPAge() {
+        return PAge;
+    }
+
     public int getPContract() {
         if(PContract == 0)
         {
@@ -413,6 +475,11 @@ public class Player implements Serializable{
     public void setPFatigueLvl(int PFatigueLvl) {
         this.PFatigueLvl = PFatigueLvl;
     }
+
+    public double getPerformanceBonus(){return PerformanceBonus;}
+
+    public void setPerformanceBonus(double Bonus){this.PerformanceBonus = Bonus;}
+
 //</editor-fold>
 
     //<editor-fold desc="views (such as display)">
@@ -422,7 +489,18 @@ public class Player implements Serializable{
         if(this.PInjury == true) {
             InjuryStatus = "(Injured, - " + this.PInjuryPenalty +")";
         }
-        return  PSurname +", " +PName + ": " + PAvgRating + " " + InjuryStatus;
+
+        if(PSurname != null) {
+            return PName + ", " + PSurname + ": " + (int)PAvgRating+ " " + InjuryStatus;
+        }
+        else
+            return PName + ":" + (int)PAvgRating+ " " + InjuryStatus;
+    }
+    public String GetFullName(){
+        if(PSurname == null)
+            return PName;
+        else
+            return (PName + " " + PSurname);
     }
 
     //</editor-fold>
