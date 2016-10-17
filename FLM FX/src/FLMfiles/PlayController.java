@@ -28,10 +28,12 @@ import java.util.ResourceBundle;
  */
 public class PlayController implements Initializable{
 
+    public static Transaction T;
+    public static boolean Result; //True if win, otherwise false
+
     HomeController homeController = new HomeController();
     PrePlayController prePlayController = new PrePlayController();
-    ObservableList<liveFeedElement> obsFeed = FXCollections.observableArrayList();;
-
+    ObservableList<liveFeedElement> obsFeed = FXCollections.observableArrayList();
 
     PostFixture pf = new PostFixture();
 
@@ -88,19 +90,22 @@ public class PlayController implements Initializable{
                 if(curNode.getMiddle().getValue()==null)//shoot
                 {
                     boolean goal = curNode.shoot(curNode.getDefendervalue());
+
                     if(goal) {
                         MyScore = MyScore + 1;
-                        obsFeed.add(new liveFeedElement(Time, curPlayer.getPName().toString() +  " has scored a Goal!"));
+                        if(AttackTeam.getTeamID() == 1||DefendTeam.getTeamID()==1)
+                            obsFeed.add(new liveFeedElement(Time, curPlayer.getPName().toString() +  " has scored a Goal!"));
                     }
                     else
                     if(curNode.getDefendervalue() != null)
-                        obsFeed.add(new liveFeedElement(Time, teamTree.Goalie.getValue().getPName() + " has saved a Goal."));
+                        if(AttackTeam.getTeamID() == 1||DefendTeam.getTeamID()==1)
+                            obsFeed.add(new liveFeedElement(Time, teamTree.Goalie.getValue().getPName() + " has saved a Goal."));
                     curNode = teamTree.getRoot();
                 }
                 else
-                if( prob < ((curPlayer.getPAvgRating()- curPlayer.PInjuryPenalty) - (curNode.getDefendervalue().getPDefRating())/1.5))
+                if( prob < ((curPlayer.getPAvgRating()- curPlayer.PInjuryPenalty) - (curNode.getDefendervalue().getPDefRating() - curNode.getDefendervalue().PInjuryPenalty)/1.5))
                 {
-                    if(Decisionpass.nextInt(100) < (curPlayer.getPAvgRating()/3)){
+                    if(Decisionpass.nextInt(100) < ((curPlayer.getPAvgRating()-curPlayer.PInjuryPenalty)/3)){
                         curNode = curNode.bestPass();
                     }
                     else
@@ -119,6 +124,7 @@ public class PlayController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         //Load fixture here
         Database db = new Database();
         db.connectToDB();
@@ -129,6 +135,7 @@ public class PlayController implements Initializable{
         lblHomeTeam.setText(preFixture.getHomeTeam().getTName());
         lblAwayTeam.setText(preFixture.getAwayTeam().getTName());
         lblTime.setText("90:00");
+
         //Load fixture here
         PostFixture result = LMAlogrithm(preFixture);
 
@@ -159,6 +166,118 @@ public class PlayController implements Initializable{
         pf.setHome(preFixture.getHomeTeam());
         pf.setAway(preFixture.getAwayTeam());
         Progressbar.progressProperty().bind(TimeProperty);
+
+
+
+
+        //Determine win/loss and create transaction
+
+        String Score = pf.getResult();
+        User user = new User();
+        try {
+            user = user.readUser();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        String[] parts = Score.split(":");
+        String part1 = parts[0];
+        String part2 = parts[1];
+
+        part1 = part1.replaceAll("\\s+","");
+        part2 = part2.replaceAll("\\s+","");
+
+
+        if (part1.equals(part2)) { //Draw
+
+            T = new Transaction(100000, "Draw", true,user.getWeek());
+            Result = false;
+            //myAccount.UpdateBank(T);
+
+        } else if (part1.compareTo(part2)>0) { //Win
+
+            T = new Transaction(300000, "Win", true,user.getWeek());
+            Result = true;
+            db.setMatchWinnerLoser(1, preFixture.getAwayTeam().getTeamID());
+            //myAccount.UpdateBank(T);
+            //update in DB
+
+        } else //Lose
+        {
+            T = new Transaction(20000, "Loss", true,user.getWeek());
+            Result = false;
+            db.setMatchWinnerLoser(preFixture.getAwayTeam().getTeamID(),1);
+            //myAccount.UpdateBank(T);
+        }
+
+
+        //AI vs AI
+        try {
+            league.LoadBotPreFixtures();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        //load existing results
+
+
+        //save results in memory
+        for(int i = 0; i < 10; i++)
+        {
+            PreFixture preFixture1 = league.fixtures.pop();
+            Player[] playersAway = preFixture1.getAwayTeam().generateTeamPlayers();
+            preFixture1.getAwayTeam().setStartingLineUp(playersAway);
+            Player[] playersHome = preFixture1.getHomeTeam().generateTeamPlayers();
+            preFixture1.getHomeTeam().setStartingLineUp(playersHome);
+
+            //play fixture
+            PostFixture postFixture1 = LMAlogrithm(preFixture1);
+            //save result in txtfile
+            PostFixture postFixture2 = LMAlogrithm(new PreFixture(preFixture1.getAwayTeam(), preFixture1.getHomeTeam()));
+            postFixture1.setResult(postFixture1.getResult() + " : " + postFixture2.getResult());
+            league.postfixtures.push(postFixture1);
+
+            String[] scorep = postFixture1.getResult().split(":");
+            String scorep1 = parts[0];
+            String scorep2 = parts[1];
+
+            scorep1 = scorep1.replaceAll("\\s+","");
+            scorep2 = scorep2.replaceAll("\\s+","");
+
+
+            int tID1 = preFixture1.getHomeTeam().getTeamID();
+            int tID2 = preFixture1.getAwayTeam().getTeamID();
+            //update database
+
+            if (scorep1.compareTo(scorep2)>0)
+            {
+                //win team/losing team
+                db.setMatchWinnerLoser(tID1, tID2);
+            }
+            if (scorep1.compareTo(scorep2)<0)
+            {
+                //win team/losing team
+                db.setMatchWinnerLoser(tID2, tID1);
+            }
+        }
+
+        //save results in textfile and database
+        try {
+            league.SaveBotPostFixtures();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //Get ruan's fixtures
+
+        //let them play and get result.
+
+        //place results in new textfile
+
     }
 
 

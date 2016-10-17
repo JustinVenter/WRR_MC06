@@ -15,6 +15,7 @@ public class  User implements Serializable{
     String UserName; // Managers name
     String TeamName;
     String City; // Where team originates.
+    int StaffLevel;
 
     public int getWeek() {
         return Week;
@@ -31,10 +32,26 @@ public class  User implements Serializable{
         TeamName = teamName;
         City = city;
         Week = 0;
+        StaffLevel=0;
+
     }
 
     public User(){}
     // getters and setters
+
+
+    public int getStaffLevel() {
+        return StaffLevel;
+    }
+
+    public void setStaffLevel(int staffLevel) {
+        StaffLevel = staffLevel;
+    }
+
+    public void IncreaseStaffLevel(){
+
+        StaffLevel++;
+    }
 
     public int getUserID() {
         return UserID;
@@ -123,8 +140,5 @@ public class  User implements Serializable{
         ois.close();
         return user;
     }
-
-
-
 
 }

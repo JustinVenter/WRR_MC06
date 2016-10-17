@@ -27,7 +27,7 @@ public class TeamTree {
         Player[] StartingLineup = myTeam.StartingLineUp;
         Player[] DefStartingLineup = defTeam.StartingLineUp;
 
-        Goalie = new PlayerNode(StartingLineup[10], new Player(0, 0, 0));
+        Goalie = new PlayerNode(StartingLineup[10], new Player(0.0, 0, 0));
 
         FB = new PlayerNode(StartingLineup[9], DefStartingLineup[8]);
         CB = new PlayerNode(StartingLineup[8], DefStartingLineup[1]);

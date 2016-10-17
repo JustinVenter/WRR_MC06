@@ -33,17 +33,17 @@
       <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
    </rowConstraints>
    <children>
-      <TextField fx:id="Salary" text="\$" GridPane.columnIndex="1" GridPane.rowIndex="4">
+      <TextField fx:id="Salary" GridPane.columnIndex="1" GridPane.rowIndex="4">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <TextField fx:id="PerformanceBonus" alignment="CENTER_RIGHT" text="\%" GridPane.columnIndex="1" GridPane.rowIndex="7">
+      <TextField fx:id="PerformanceBonus" alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="7">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <Label alignment="CENTER" prefHeight="27.0" prefWidth="244.0" text="Enter Player Salary" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="4">
+      <Label alignment="CENTER" prefHeight="27.0" prefWidth="244.0" text="Enter Player Salary ($)" textAlignment="CENTER" textFill="WHITE" GridPane.rowIndex="4">
          <font>
             <Font size="18.0" />
          </font>
@@ -53,7 +53,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="PurchasePlayer" mnemonicParsing="false" text="Make Offer" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+      <Button fx:id="PurchasePlayer" mnemonicParsing="false" onAction="#onPurchaseClick" text="Make Offer" GridPane.columnIndex="2" GridPane.rowIndex="9" />
       <Label prefHeight="85.0" prefWidth="256.0" text="This reflects a percentage of the player's salary that he will be paid for each match won." textFill="WHITE" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="7">
          <font>
             <Font size="14.0" />

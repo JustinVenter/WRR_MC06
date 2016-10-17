@@ -22,7 +22,7 @@ public class Calculate implements Serializable{
 
         double playerAvgRating=0;
         // For players that are in a forward position
-        if((P.PPos.contains("W")||(P.PPos.contains("CF"))))
+        if(P.PPos.contains("F"))
         {
             playerAvgRating=(P.getPAttRating()*0.9)+(P.getPDefRating()*0.1);
         }

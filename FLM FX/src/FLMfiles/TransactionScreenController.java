@@ -32,7 +32,7 @@ public class TransactionScreenController implements Initializable {
     public TableColumn transactionAmount;
     public TableColumn transactionDescription;
 
-    private MyAccount account;
+    private MyAccount account = new MyAccount();
 
     // ArrayList of transactions
     private ArrayList<Transaction> transactions2;
@@ -40,8 +40,8 @@ public class TransactionScreenController implements Initializable {
     //Arraylist wrapped in observable list
     private ObservableList<Transaction>observableTransactions2;
 
-    public TransactionScreenController(){
-        account = AccountTest.account;
+    public TransactionScreenController() throws IOException, ClassNotFoundException {
+        account = account.readAccount();
         transactions2 = account.GetTransactions2();
         observableTransactions2 =  FXCollections.observableArrayList(transactions2);
 

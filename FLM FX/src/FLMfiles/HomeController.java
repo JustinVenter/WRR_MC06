@@ -1,6 +1,7 @@
 package FLMfiles;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +11,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -26,12 +29,15 @@ public class HomeController implements Initializable {
     public AnchorPane manageAnchor;
     public AnchorPane PlayAnchor;
     public AnchorPane AccountAnchor;
+    AccountController AC = new AccountController();
 
     public Label lblWeek;
     public Label lblManager;
     public Pane curPane1;
+    public Tab AccTab;
     public HomeController()
     {}
+
 
 
     @Override
@@ -52,6 +58,10 @@ public class HomeController implements Initializable {
         }
 
 
+    }
+
+    public void onAccClicked(Event event) throws IOException {
+        AccountAnchor.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("AccountScreen.fxml")));
     }
 
 
