@@ -50,6 +50,8 @@ public class Player implements Serializable{
         PendingWeeks.set(0);
     }
     // getters for marketController do not remove !!! (used through reflection when adding the data to the table)
+
+
     public int getPlayerNum() {
         return playerNum.get();
     }
@@ -161,6 +163,8 @@ public class Player implements Serializable{
     double PerformanceBonus; //Additional implementation. Should your team win, you have to pay a bonus to a player with a performance bonus
     int PInjuryPenalty;
 
+    String Fullname;
+
     public int getWeeksPending() {
         return WeeksPending;
     }
@@ -218,10 +222,11 @@ public class Player implements Serializable{
         this.PInjuryPenalty = PInjuryPenalty;
     }
 
-    public Player(int PlayerID, int Weeks, double Value){
+    public Player(int PlayerID, int Weeks, double Value, String Name){
         this.PlayerID = PlayerID;
         WeeksPending = Weeks;
         PValue = Value;
+        Fullname = Name;
     }
 
     public Player(String PName, double PAvgRating, int PAttRating, int PDefRating)//used for bots
@@ -366,6 +371,10 @@ public class Player implements Serializable{
     //</editor-fold>
 
     //<editor-fold desc="getters and setters">
+    public String GetPlayerFullName(){
+        return Fullname;
+    }
+
     public int getPlayerID () {
         return PlayerID;
     }

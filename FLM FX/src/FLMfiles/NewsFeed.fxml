@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane prefHeight="691.0" prefWidth="1202.0" style="-fx-background-color: #262626;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FLMfiles.NewsFeedController">
+   <children>
+      <TableView fx:id="tblNews" layoutX="175.0" layoutY="99.0" prefHeight="472.0" prefWidth="853.0">
+         <columns>
+            <TableColumn id="NameID" fx:id="NewsWeek" prefWidth="111.0" text="Week" />
+            <TableColumn fx:id="NewsDescription" minWidth="80.0" prefWidth="741.0" text="Activity" />
+         </columns>
+      </TableView>
+      <Label layoutX="539.0" layoutY="37.0" text="Newsfeed" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="29.0" />
+         </font>
+      </Label>
+      <CheckBox fx:id="ResultsOnly" layoutX="175.0" layoutY="573.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="160.0" text="Match Results Only" textFill="WHITE" />
+   </children>
+</Pane>

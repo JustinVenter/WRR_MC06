@@ -31,7 +31,7 @@ public class  User implements Serializable{
         UserName = userName;
         TeamName = teamName;
         City = city;
-        Week = 0;
+        Week = 1;
         StaffLevel=0;
 
     }

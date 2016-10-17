@@ -73,30 +73,11 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab text="NEWSFEED">
+            <Tab fx:id="NewsTab" onSelectionChanged="#onNewsClicked" text="NEWSFEED">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <AnchorPane fx:id="NewsFeedAnchor" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Pane prefHeight="691.0" prefWidth="1202.0" style="-fx-background-color: #262626;">
-                           <children>
-                              <TableView layoutX="175.0" layoutY="108.0" prefHeight="472.0" prefWidth="853.0">
-                                <columns>
-                                  <TableColumn prefWidth="122.0" text="Week" />
-                                  <TableColumn prefWidth="730.0" text="ACTIVITY" />
-                                </columns>
-                              </TableView>
-                              <CheckBox layoutX="175.0" layoutY="605.0" mnemonicParsing="false" text="Match results only" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial Bold" size="15.0" />
-                                 </font>
-                              </CheckBox>
-                              <Label layoutX="519.0" layoutY="39.0" text="NEWSFEED" textFill="WHITE">
-                                 <font>
-                                    <Font name="Arial Bold" size="29.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </Pane>
+                        <Pane prefHeight="691.0" prefWidth="1202.0" style="-fx-background-color: #262626;" />
                      </children></AnchorPane>
               </content>
             </Tab>

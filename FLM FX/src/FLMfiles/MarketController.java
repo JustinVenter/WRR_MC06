@@ -34,7 +34,7 @@ public class MarketController implements Initializable{
    // public TableColumn playerSur;
     public TableColumn playerName;
     public TableColumn playerAge;
-    public TableColumn playerPos;
+    public TableColumn playerPosition;
     //public TableColumn playerAtt;
     //public TableColumn playerDef;
     public TableColumn playerAvg;
@@ -95,7 +95,7 @@ public class MarketController implements Initializable{
        //playerSur.setCellValueFactory(new PropertyValueFactory<>("Surname"));
         playerName.setCellValueFactory(new PropertyValueFactory<>("Name"));
         playerAge.setCellValueFactory(new PropertyValueFactory<>("Age"));
-        playerPos.setCellValueFactory(new PropertyValueFactory<>("playerPos"));
+        playerPosition.setCellValueFactory(new PropertyValueFactory<>("playerPos"));
        // playerAtt.setCellValueFactory(new PropertyValueFactory<>("playerAtt"));
         //playerDef.setCellValueFactory(new PropertyValueFactory<>("playerDef"));
         playerAvg.setCellValueFactory(new PropertyValueFactory<>("playerAverage"));

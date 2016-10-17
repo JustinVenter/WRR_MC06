@@ -42,6 +42,11 @@ public class PurchasePController implements Initializable {
 
     private MyAccount account = new MyAccount();
 
+    private User user = new User();
+
+    private MyNewsFeed myNewsFeed = new MyNewsFeed();
+
+
     Database DB = new Database();
 
     private boolean purchased;
@@ -89,11 +94,16 @@ public class PurchasePController implements Initializable {
 
             Optional<ButtonType> result = alert.showAndWait();
 
+            user = user.readUser();
+            myNewsFeed = myNewsFeed.readNews();
+
 
             if (result.get() == ButtonType.OK) {
 
                 DeterminePurchase(SalOffer, BonusOffer);
                 OpenConfirmationWindow("Offer has been placed. The player will respond within the next few weeks");
+                NewsFeedElement N = new NewsFeedElement(user.getWeek(), "Offer placed for the purchase of player: "+ CurPlayer.getName(), false);
+                myNewsFeed.AddNews(N);
                 //OpenTransferWindow();
 
 
@@ -234,7 +244,7 @@ public class PurchasePController implements Initializable {
         if(purchased == true){
 
             int weeks = SetPendingWeeks();
-            Player P = new Player(CurPlayer.getPlayerNum(),weeks,CurPlayer.getPlayerPrice());
+            Player P = new Player(CurPlayer.getPlayerNum(),weeks,CurPlayer.getPlayerPrice(), CurPlayer.getName());
             market.AddAcceptedPlayer(P);
 
             market.saveMarketDetails(); //N.B. Save the new market details!
@@ -245,7 +255,7 @@ public class PurchasePController implements Initializable {
         }
         else{
             int weeks = SetPendingWeeks();
-            Player P = new Player(CurPlayer.getPlayerNum(),weeks, CurPlayer.getPlayerPrice());
+            Player P = new Player(CurPlayer.getPlayerNum(),weeks, CurPlayer.getPlayerPrice(), CurPlayer.getName());
             market.AddRejectedPlayer(P);
 
             market.saveMarketDetails(); //N.B. Save the new market details!

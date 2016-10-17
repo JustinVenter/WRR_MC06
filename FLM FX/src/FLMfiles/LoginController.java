@@ -61,6 +61,9 @@ public class LoginController implements Initializable{
             Market market = new Market();
             market.saveMarketDetails();
 
+            MyNewsFeed myNewsFeed = new MyNewsFeed();
+            myNewsFeed.saveNewsDetails();
+
 
             Stage primaryStage = new Stage();
             Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));

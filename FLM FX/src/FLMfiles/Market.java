@@ -52,16 +52,21 @@ public class Market implements Serializable {
                     MyAccount account = new MyAccount();
                     account = account.readAccount();
 
+                    MyNewsFeed myNewsFeed = new MyNewsFeed();
+                    myNewsFeed = myNewsFeed.readNews();
+
                     Transaction T = new Transaction(P.getPValue(), "Purchased player", false, user.getWeek());
                     account.UpdateBank(T);
 
-                    //Adjust Bank
+                    NewsFeedElement N = new NewsFeedElement(user.getWeek(), "Player accepted offer: " + P.GetPlayerFullName(), false);
+                    myNewsFeed.AddNews(N);
+
                     //Show confirmation
                 }
             }
         }
     }
-    public void DetermineRejected(){
+    public void DetermineRejected() throws IOException, ClassNotFoundException {
         if(PendingRejectedOffers.size()>0) {
             System.out.println("Determining Rejected");
             for (int x = 0; x < PendingRejectedOffers.size(); x++) {
@@ -70,6 +75,15 @@ public class Market implements Serializable {
                     PendingRejectedOffers.remove(P);
                     db.connectToDB();
                     db.UpdatePlayerTeam2(P, 0);
+
+                    User user = new User();
+                    user = user.readUser();
+
+                    MyNewsFeed myNewsFeed = new MyNewsFeed();
+                    myNewsFeed = myNewsFeed.readNews();
+
+                    NewsFeedElement N = new NewsFeedElement(user.getWeek(), "Player rejected offer: " + P.GetPlayerFullName(), false);
+                    myNewsFeed.AddNews(N);
                     //Adjust Bank
                     //Show confirmation
                 }
