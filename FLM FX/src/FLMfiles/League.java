@@ -276,7 +276,7 @@ public class League implements Serializable{
      * This method takes as input one post fixture and adds it to the stack of post-fixtures which can be viewed in Results.
      * @param newOne - Postfixture.
      */
-    public static void addPostFixture(PostFixture newOne){
+    public void addMyPostFixture(PostFixture newOne){
 
         try {
             MyPostFixtures=LoadMyPostFixtures();

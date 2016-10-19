@@ -1,10 +1,7 @@
 package FLMfiles;
 
-import javafx.application.Application;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -15,7 +12,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
@@ -51,7 +47,6 @@ public class PlayController implements Initializable{
     //<editor-fold desc="InGame">
     public void onOKFinishedGame(Event event) throws IOException, ClassNotFoundException {
         PrePlayController.DisplayGame = PrePlayController.getNextLeagueGame(league);
-        League.addPostFixture(pf);
         Stage stage = (Stage) btnOK.getScene().getWindow();
         stage.close();
     }
@@ -165,7 +160,8 @@ public class PlayController implements Initializable{
         pf.setResult(result.getResult() + " : " + result2.getResult());
         pf.setHome(preFixture.getHomeTeam());
         pf.setAway(preFixture.getAwayTeam());
-        Progressbar.progressProperty().bind(TimeProperty);
+        league.addMyPostFixture(pf);
+        //Progressbar.progressProperty().bind(TimeProperty);
 
 
 
