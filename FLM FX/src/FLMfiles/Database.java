@@ -486,6 +486,26 @@ public class Database implements Serializable{
         }
     }
 
+    public void ClearTeamWinsAndLosses(){
+
+        ArrayList<MyTeam> AllTeams= loadTeams();
+
+
+        try {
+            for (int i = 0; i < AllTeams.size(); i++){
+
+                MyTeam cur=AllTeams.get(i);
+
+                String sql= "UPDATE Team SET TWins = "+ 0 +", TLosses = "+ 0 + "WHERE TeamID =" + cur.getTeamID();
+                stmt.execute(sql);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
 
 
 

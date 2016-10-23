@@ -23,12 +23,30 @@ public class League implements Serializable{
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
+         if(!FixturesExists()){
+         MyTeamPreFixture();
+         SaveMyPreFixtures();
+         SaveMyPostFixtures();
+         }
 
-        MyTeamPreFixture();
-        SaveMyPreFixtures();
-        SaveMyPostFixtures();
+
+        /**
+         *  Database db = new Database();
+         db.connectToDB();
+         db.ClearTeamWinsAndLosses();
+          */
+
+
     }
 
+    public static boolean FixturesExists(){
+
+        File file= new File("MyFixtures.obj");
+        File file2= new File("fixtures.obj");
+        if((file.exists()) && (file2.exists()))
+            return  true;
+        return false;
+    }
 
     public PreFixture loadCurGame() throws IOException, ClassNotFoundException {
         Database database = new Database();
@@ -276,7 +294,7 @@ public class League implements Serializable{
      * This method takes as input one post fixture and adds it to the stack of post-fixtures which can be viewed in Results.
      * @param newOne - Postfixture.
      */
-    public static void addPostFixture(PostFixture newOne){
+    public void addMyPostFixture(PostFixture newOne){
 
         try {
             MyPostFixtures=LoadMyPostFixtures();
@@ -313,6 +331,35 @@ public class League implements Serializable{
         System.out.println("After MyPostFixtures was loaded it has " + MyPostFixtures.size() + " objects");
         return MyPostFixtures;
 
+    }
+
+    public static   ArrayList<MyTeam> insertionSort() {
+
+        Database db = new Database();
+        db.connectToDB();
+
+        // load all the teams
+        ArrayList<MyTeam> AllTeams = db.loadTeams();
+        ArrayList<MyTeam> temp = AllTeams;
+        int i, j;
+
+
+        for (i = 1; i < temp.size(); i++) {
+            MyTeam key = new MyTeam();
+            key.TWins = temp.get(i).getTWins();
+            key.TeamID = temp.get(i).getTeamID();
+            key.TName = temp.get(i).getTName();
+            key.TRating = temp.get(i).getTRating();
+            key.TLosses = temp.get(i).getTLosses();
+            j = i;
+            while ((j > 0) && (temp.get(j - 1).getTWins() < key.TWins)) {
+                temp.set(j, temp.get(j - 1));
+                j--;
+            }
+            temp.set(j, key);
+        }
+
+        return temp;
     }
 
 

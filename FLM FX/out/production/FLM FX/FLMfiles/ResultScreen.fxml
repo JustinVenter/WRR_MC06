@@ -7,26 +7,26 @@
 
 <Pane prefHeight="691.0" prefWidth="1202.0" style="-fx-background-color: #262626;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FLMfiles.ResultsController">
    <children>
-      <Label layoutX="510.0" layoutY="36.0" text="RESULTS" textFill="WHITE">
+      <Label layoutX="510.0" layoutY="60.0" text="RESULTS" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="29.0" />
          </font>
       </Label>
-      <Button id="btnPurchasePlayer" fx:id="btnBack" layoutX="727.0" layoutY="593.0" mnemonicParsing="false" onMouseClicked="#onBackClicked" prefHeight="48.0" prefWidth="266.0" style="-fx-background-color: linear-gradient(#00bfff,#1a8cff);" text="BACK" textFill="WHITE">
+      <Button id="btnPurchasePlayer" fx:id="btnBack" layoutX="884.0" layoutY="593.0" mnemonicParsing="false" onMouseClicked="#onBackClicked" prefHeight="48.0" prefWidth="266.0" style="-fx-background-color: linear-gradient(#00bfff,#1a8cff);" text="BACK" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="19.0" />
          </font>
       </Button>
-      <Label layoutX="429.0" layoutY="115.0" prefHeight="21.0" prefWidth="112.0" text="Activity" textFill="WHITE">
+      <Label layoutX="429.0" layoutY="137.0" prefHeight="21.0" prefWidth="112.0" text="Activity" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="601.0" layoutY="115.0" text="Score" textFill="WHITE">
+      <Label layoutX="662.0" layoutY="137.0" text="Score" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="20.0" />
          </font>
       </Label>
-      <ListView fx:id="lbxPostFixtures" layoutX="423.0" layoutY="138.0" prefHeight="354.0" prefWidth="266.0" />
+      <ListView fx:id="lbxPostFixtures" layoutX="343.0" layoutY="165.0" prefHeight="406.0" prefWidth="469.0" />
    </children>
 </Pane>

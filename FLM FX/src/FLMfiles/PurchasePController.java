@@ -273,4 +273,6 @@ public class PurchasePController implements Initializable {
         return X;
     }
 
+    public void onUpgradeClicked(Event event) {
+    }
 }

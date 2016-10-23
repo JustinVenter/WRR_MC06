@@ -18,7 +18,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </GridPane.margin>
             </Button>
-            <Button layoutX="10.0" layoutY="14.0" mnemonicParsing="false" prefHeight="280.0" prefWidth="548.0" style="-fx-background-color: linear-gradient(#4dff4d, #66ff33);;" text="LEAGUE" GridPane.rowIndex="2" GridPane.rowSpan="2">
+            <Button fx:id="btnLeague" layoutX="10.0" layoutY="14.0" mnemonicParsing="false" onAction="#onLeagueClicked" prefHeight="280.0" prefWidth="548.0" style="-fx-background-color: linear-gradient(#4dff4d, #66ff33);;" text="LEAGUE" GridPane.rowIndex="2" GridPane.rowSpan="2">
                <font>
                   <Font name="Arial Bold" size="28.0" />
                </font>
