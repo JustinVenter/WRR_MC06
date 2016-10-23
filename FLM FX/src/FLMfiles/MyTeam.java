@@ -1,5 +1,8 @@
 package FLMfiles;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 import java.io.Serializable;
 import java.sql.Array;
 import java.util.ArrayList;
@@ -8,6 +11,71 @@ import java.util.ArrayList;
  * Created by Michael on 09/08/2016.
  */
 public class MyTeam extends Team implements Serializable{
+
+    //Properties used in the League table.
+    transient SimpleIntegerProperty TPos = new SimpleIntegerProperty();
+    transient SimpleStringProperty PtyTName = new SimpleStringProperty();
+    transient SimpleIntegerProperty PtyTWins = new SimpleIntegerProperty();
+    transient SimpleIntegerProperty PtyTLosses = new SimpleIntegerProperty();
+
+    public MyTeam(int Pos,String Tname,int Wins, int Losses ){
+
+        TPos.set(Pos);
+        PtyTName.set(Tname);
+        PtyTWins.set(Wins);
+        PtyTLosses.set(Losses);
+
+    }
+
+
+    public int getTPos() {
+        return TPos.get();
+    }
+
+    public SimpleIntegerProperty TPosProperty() {
+        return TPos;
+    }
+
+    public void setTPos(int TPos) {
+        this.TPos.set(TPos);
+    }
+
+    public String getPtyTName() {
+        return PtyTName.get();
+    }
+
+    public SimpleStringProperty ptyTNameProperty() {
+        return PtyTName;
+    }
+
+    public void setPtyTName(String ptyTName) {
+        this.PtyTName.set(ptyTName);
+    }
+
+    public int getPtyTWins() {
+        return PtyTWins.get();
+    }
+
+    public SimpleIntegerProperty ptyTWinsProperty() {
+        return PtyTWins;
+    }
+
+    public void setPtyTWins(int ptyTWins) {
+        this.PtyTWins.set(ptyTWins);
+    }
+
+    public int getPtyTLosses() {
+        return PtyTLosses.get();
+    }
+
+    public SimpleIntegerProperty ptyTLossesProperty() {
+        return PtyTLosses;
+    }
+
+    public void setPtyTLosses(int ptyTLosses) {
+        this.PtyTLosses.set(ptyTLosses);
+    }
+
     //Custom attributes, data structures
     ArrayList<Player> MySquad;
 
@@ -40,6 +108,7 @@ public class MyTeam extends Team implements Serializable{
     public void loadSquad()
     {
         //method from DB
+        db.connectToDB();
         MySquad = db.loadMyTeamSquad();
     }
 

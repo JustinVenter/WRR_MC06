@@ -29,12 +29,14 @@ public class HomeController implements Initializable {
     public AnchorPane manageAnchor;
     public AnchorPane PlayAnchor;
     public AnchorPane AccountAnchor;
+    public AnchorPane NewsFeedAnchor;
     AccountController AC = new AccountController();
 
     public Label lblWeek;
     public Label lblManager;
     public Pane curPane1;
     public Tab AccTab;
+    public Tab NewsTab;
     public HomeController()
     {}
 
@@ -51,6 +53,7 @@ public class HomeController implements Initializable {
             PlayAnchor.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("PrePlay.fxml")));
             manageAnchor.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("ManageScreen.fxml")));
             AccountAnchor.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("AccountScreen.fxml")));
+            NewsFeedAnchor.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("NewsFeed.fxml")));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -63,6 +66,12 @@ public class HomeController implements Initializable {
     public void onAccClicked(Event event) throws IOException {
         AccountAnchor.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("AccountScreen.fxml")));
     }
+
+    public void onNewsClicked(Event event) throws IOException {
+        NewsFeedAnchor.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("NewsFeed.fxml")));
+    }
+
+
 
 
    /* public void onMarketClick(ActionEvent actionEvent) throws IOException {

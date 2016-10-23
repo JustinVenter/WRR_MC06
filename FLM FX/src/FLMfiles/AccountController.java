@@ -90,38 +90,6 @@ public class AccountController implements Initializable  {
 
 
     }
-    public void ReInitialize(){
-
-       /* MyAccount account = new MyAccount();
-        try {
-            account = account.readAccount();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        transactions1 = account.GetTransactions1();
-
-        //observableTransactions1 =  FXCollections.observableArrayList(transactions1);
-
-        CurBankBalance.setText("$" +String.valueOf(account.GetBankBalance()));
-
-        //CurBankBalance.textProperty().bindBidirectional(account.bankProperty(),new NumberStringConverter());
-
-        try {
-            Salaries.setText("$" +String.valueOf(account.GetWeeklyExpenditure()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        Debt.setText("$" +String.valueOf(account.CalculateDebt()));
-
-        //tableSetup();
-        tblTransactions.setItems(observableTransactions1);
-        */
-
-    }
 
     private void tableSetup(){
 

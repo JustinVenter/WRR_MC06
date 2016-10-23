@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javax.xml.crypto.Data;
@@ -51,7 +52,7 @@ public class PlayController implements Initializable{
     //<editor-fold desc="InGame">
     public void onOKFinishedGame(Event event) throws IOException, ClassNotFoundException {
         PrePlayController.DisplayGame = PrePlayController.getNextLeagueGame(league);
-        League.addPostFixture(pf);
+        //League.addPostFixture(pf);
         Stage stage = (Stage) btnOK.getScene().getWindow();
         stage.close();
     }
@@ -62,7 +63,6 @@ public class PlayController implements Initializable{
     public PostFixture LMAlogrithm(PreFixture preFixture){
         MyTeam home = preFixture.getHomeTeam();
         MyTeam away = preFixture.getAwayTeam();
-
 
         return Game(home, away);
     }
@@ -129,7 +129,32 @@ public class PlayController implements Initializable{
         Database db = new Database();
         db.connectToDB();
 
+        User u = new User();
         PreFixture preFixture = prePlayController.DisplayGame;
+        try {
+            u = u.readUser();
+            if(u.Week == 52)
+            {
+                u.setWeek(0);
+                u.saveUserDetails();
+                League.MyTeamPreFixture();
+                League.SaveMyPreFixtures();
+                League.SaveMyPostFixtures();
+                League.BotTeamPreFixture();
+                League.SaveBotPreFixtures();
+                int divider = preFixture.getHomeTeam().getTPos();
+
+                //add money to account and give popup message
+
+
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
 
         preFixture.getAwayTeam();
         lblHomeTeam.setText(preFixture.getHomeTeam().getTName());
@@ -165,7 +190,8 @@ public class PlayController implements Initializable{
         pf.setResult(result.getResult() + " : " + result2.getResult());
         pf.setHome(preFixture.getHomeTeam());
         pf.setAway(preFixture.getAwayTeam());
-        Progressbar.progressProperty().bind(TimeProperty);
+        league.addMyPostFixture(pf);
+        //Progressbar.progressProperty().bind(TimeProperty);
 
 
 
@@ -182,6 +208,15 @@ public class PlayController implements Initializable{
             e.printStackTrace();
         }
 
+        MyNewsFeed myNewsFeed = new MyNewsFeed();
+        try {
+            myNewsFeed = myNewsFeed.readNews();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
         String[] parts = Score.split(":");
         String part1 = parts[0];
         String part2 = parts[1];
@@ -192,8 +227,11 @@ public class PlayController implements Initializable{
 
         if (part1.equals(part2)) { //Draw
 
-            T = new Transaction(100000, "Draw", true,user.getWeek());
+            T = new Transaction(150000, "Draw", true,user.getWeek());
             Result = false;
+            NewsFeedElement newsFeedElement = new NewsFeedElement(user.getWeek(), "Draw against "+ result.getAwayTeamName()+ "     Score: "+ Score, true);
+            myNewsFeed.AddNews(newsFeedElement);
+
             //myAccount.UpdateBank(T);
 
         } else if (part1.compareTo(part2)>0) { //Win
@@ -201,14 +239,20 @@ public class PlayController implements Initializable{
             T = new Transaction(300000, "Win", true,user.getWeek());
             Result = true;
             db.setMatchWinnerLoser(1, preFixture.getAwayTeam().getTeamID());
+
+            NewsFeedElement newsFeedElement = new NewsFeedElement(user.getWeek(), "Win against "+ result.getAwayTeamName()+ "     Score: "+ Score, true);
+            myNewsFeed.AddNews(newsFeedElement);
             //myAccount.UpdateBank(T);
             //update in DB
 
         } else //Lose
         {
-            T = new Transaction(20000, "Loss", true,user.getWeek());
+            T = new Transaction(50000, "Loss", true,user.getWeek());
             Result = false;
             db.setMatchWinnerLoser(preFixture.getAwayTeam().getTeamID(),1);
+
+            NewsFeedElement newsFeedElement = new NewsFeedElement(user.getWeek(), "Loss against "+ result.getAwayTeamName()+ "     Score: "+ Score, true);;
+            myNewsFeed.AddNews(newsFeedElement);
             //myAccount.UpdateBank(T);
         }
 

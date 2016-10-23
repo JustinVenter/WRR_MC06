@@ -238,9 +238,11 @@ public class Database implements Serializable{
                 int PFatigueLvl = result.getInt("PFatigueLevel"); //1 being wost and 4 being max*/
                 int PInjuryPenalty = result.getInt("PInjuryPenalty");
 
+                boolean PonSale = result.getBoolean("PonSale");
+
                 System.out.println("   LoadAllPlayers (Comment 3)");
 
-                newOne = new Player(PlayerID, TeamID, StartLineUp, name, surname,Age, PAvgRating, PAttRating, PDefRating, PPos, PSkill, PFatigue, PSalary, PValue, PContract, PInjury, PFatigueLvl, PerformanceBonus, PInjuryPenalty);
+                newOne = new Player(PlayerID, TeamID, StartLineUp, name, surname,Age, PAvgRating, PAttRating, PDefRating, PPos, PSkill, PFatigue, PSalary, PValue, PContract, PInjury, PFatigueLvl, PerformanceBonus, PInjuryPenalty, PonSale);
 
                 /*double AvgRating = calculate.CalcPlayerAvg(newOne);
                 newOne.setPAvgRating(AvgRating);
@@ -387,6 +389,21 @@ public class Database implements Serializable{
         }
     }
 
+    public void UpdateStartingLineUp0(Player P) throws SQLException {
+        //set all other players to false
+        connectToDB();
+        String sql = "UPDATE Player SET StartLineUp = " + 0 + " WHERE PlayerID = " + P.getPlayerID();
+        stmt.execute(sql);
+    }
+
+    public void UpdateStartingLineUp1(Player P) throws SQLException {
+        //set all other players to false
+        connectToDB();
+        String sql = "UPDATE Player SET StartLineUp = " + 1 + " WHERE PlayerID = " + P.getPlayerID();
+        stmt.execute(sql);
+    }
+
+
     /**
      *
      * @param player whose team has changed
@@ -485,6 +502,72 @@ public class Database implements Serializable{
             e1.printStackTrace();
         }
     }
+    public void UpdatePlayerBonus2(Player player, double Bonus)
+    {
+
+        try {
+            // perform query on database and retrieve results
+            String sql = "UPDATE Player SET PperformanceBonus =  " + Bonus  + " WHERE PlayerID = " + player.getPlayerID();
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void UpdateLineup(Player player, int LineUp)
+    {
+
+        try {
+            // perform query on database and retrieve results
+            String sql = "UPDATE Player SET StartLineUp =  " + LineUp  + " WHERE PlayerID = " + player.getPlayerID();
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void UpdateOnSale1(Player player) //CurPlayer is on Sale
+    {
+
+        try {
+            // perform query on database and retrieve results
+            String sql = "UPDATE Player SET PonSale = 1  WHERE PlayerID = " + player.getPlayerID();
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void UpdateOnSale2(Player player) //CurPlayer is no longer on sale
+    {
+
+        try {
+            // perform query on database and retrieve results
+            String sql = "UPDATE Player SET PonSale = 0  WHERE PlayerID = " + player.getPlayerID();
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void ClearTeamWinsAndLosses() {
+
+        ArrayList<MyTeam> AllTeams = loadTeams();
+
+
+        try {
+            for (int i = 0; i < AllTeams.size(); i++) {
+
+                MyTeam cur = AllTeams.get(i);
+                String sql = "UPDATE Team SET TWins = " + 0 + ", TLosses = " + 0 + "WHERE TeamID =" + cur.getTeamID();
+                stmt.execute(sql);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
 
 
 
