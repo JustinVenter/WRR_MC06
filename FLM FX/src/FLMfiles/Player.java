@@ -22,6 +22,30 @@ public class Player implements Serializable{
     transient IntegerProperty playerPrice = new SimpleIntegerProperty();
     transient IntegerProperty playerSalary= new SimpleIntegerProperty();
 
+    public boolean isSold() {
+        return Sold.get();
+    }
+
+    public BooleanProperty soldProperty() {
+        return Sold;
+    }
+
+    public void setSold(boolean sold) {
+        this.Sold.set(sold);
+    }
+
+    transient BooleanProperty Sold = new SimpleBooleanProperty();
+
+    public double getPlayerBonus() {
+        return playerBonus.get();
+    }
+
+    public DoubleProperty playerBonusProperty() {
+        return playerBonus;
+    }
+
+    transient DoubleProperty playerBonus = new SimpleDoubleProperty();
+
     public int getPendingWeeks() {
         return PendingWeeks.get();
     }
@@ -37,7 +61,7 @@ public class Player implements Serializable{
     transient IntegerProperty PendingWeeks = new SimpleIntegerProperty(); //Keep track of purchased players. Players respond to offer after a few weeks.
 
     // for MarketController, this is needed
-    public Player(int playerNum, String name,int playerAge, String playerPos, double playerAverage,String skill, double playerPrice, double playerSalary) {
+    public Player(int playerNum, String name,int playerAge, String playerPos, double playerAverage,String skill, double playerPrice, double playerSalary, double Bonus) {
         this.playerNum.set(playerNum) ;
         //Surname.set(surname);
         Name.set(name);
@@ -48,8 +72,29 @@ public class Player implements Serializable{
         this.playerPrice.set((int) playerPrice);
         this.playerSalary.set((int) playerSalary);
         PendingWeeks.set(0);
+        playerBonus.set(Bonus);
+
+        //Sold.set(false);
+    }
+
+    public Player(int playerNum, String name,int playerAge, String playerPos, double playerAverage,String skill, double playerPrice, double playerSalary, double Bonus, boolean OnSale) {
+        this.playerNum.set(playerNum) ;
+        //Surname.set(surname);
+        Name.set(name);
+        Age.set(playerAge);
+        this.playerPos.set(playerPos);
+        this.playerAverage.set((int) playerAverage);
+        playerSkill.set(skill);
+        this.playerPrice.set((int) playerPrice);
+        this.playerSalary.set((int) playerSalary);
+        PendingWeeks.set(0);
+        playerBonus.set(Bonus);
+
+        Sold.set(OnSale);
     }
     // getters for marketController do not remove !!! (used through reflection when adding the data to the table)
+
+
     public int getPlayerNum() {
         return playerNum.get();
     }
@@ -161,6 +206,8 @@ public class Player implements Serializable{
     double PerformanceBonus; //Additional implementation. Should your team win, you have to pay a bonus to a player with a performance bonus
     int PInjuryPenalty;
 
+    String Fullname;
+
     public int getWeeksPending() {
         return WeeksPending;
     }
@@ -170,11 +217,21 @@ public class Player implements Serializable{
     }
 
     int WeeksPending;
-    //</editor-fold>
+
+    boolean OnSale;
+
+    public boolean isOnSale() {
+        return OnSale;
+    }
+
+    public void setOnSale(boolean onSale) {
+        OnSale = onSale;
+    }
+//</editor-fold>
 
 
     //<editor-fold desc="Methods">
-    public Player(int playerID, int teamID, boolean startLineUp, String PName, String PSurname,int Age, double PAvgRating, int PAttRating, int PDefRating, String PPos, String PSkill, int PFatigue, double PSalary, double PValue, int PContract, boolean PInjury, int PFatigueLvl, double PerformanceBonus, int PInjuryPenalty) {
+    public Player(int playerID, int teamID, boolean startLineUp, String PName, String PSurname,int Age, double PAvgRating, int PAttRating, int PDefRating, String PPos, String PSkill, int PFatigue, double PSalary, double PValue, int PContract, boolean PInjury, int PFatigueLvl, double PerformanceBonus, int PInjuryPenalty, boolean OnSale) {
         PlayerID = playerID;
         TeamID = teamID;
         StartLineUp = startLineUp;
@@ -194,6 +251,8 @@ public class Player implements Serializable{
         this.PFatigueLvl = PFatigueLvl;
         this.PerformanceBonus = PerformanceBonus;
         this.PInjuryPenalty = PInjuryPenalty;
+
+        this.OnSale = OnSale;
 
         WeeksPending = 0;
 
@@ -218,10 +277,25 @@ public class Player implements Serializable{
         this.PInjuryPenalty = PInjuryPenalty;
     }
 
-    public Player(int PlayerID, int Weeks, double Value){
+    public Player(int PlayerID, int Weeks, double Value, String Name, String PPos){
         this.PlayerID = PlayerID;
         WeeksPending = Weeks;
         PValue = Value;
+        Fullname = Name;
+        this.PPos = PPos;
+
+        setOnSale(true);
+    }
+    public Player(int PlayerID, int Weeks, double Value, String Name){
+        this.PlayerID = PlayerID;
+        WeeksPending = Weeks;
+        PValue = Value;
+        Fullname = Name;
+    }
+
+    public Player(int PlayerID, String PPos){
+        this.PlayerID = PlayerID;
+        this.PPos = PPos;
     }
 
     public Player(String PName, double PAvgRating, int PAttRating, int PDefRating)//used for bots
@@ -366,6 +440,10 @@ public class Player implements Serializable{
     //</editor-fold>
 
     //<editor-fold desc="getters and setters">
+    public String GetPlayerFullName(){
+        return Fullname;
+    }
+
     public int getPlayerID () {
         return PlayerID;
     }

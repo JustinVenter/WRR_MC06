@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane prefHeight="691.0" prefWidth="1202.0" style="-fx-background-color: #262626;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FLMfiles.SquadController">
+   <children>
+      <TableView fx:id="tblPlayers" layoutX="175.0" layoutY="99.0" prefHeight="472.0" prefWidth="853.0">
+         <columns>
+            <TableColumn id="NameID" fx:id="playerName" prefWidth="200.0" text="Name" />
+            <TableColumn fx:id="playerAge" minWidth="70.0" prefWidth="70.0" text="Age" />
+            <TableColumn fx:id="playerPosition" minWidth="70.0" prefWidth="70.0" text="Position" />
+            <TableColumn id="PosID" fx:id="playerPos" minWidth="0.0" prefWidth="0.0" text="Pos" />
+            <TableColumn id="Overallid" fx:id="playerAvg" minWidth="70.0" prefWidth="70.0" text="Rating" />
+            <TableColumn fx:id="playerSkill" prefWidth="120.0" text="Special Skill" />
+            <TableColumn id="PriceID" fx:id="playerPrice" minWidth="0.0" prefWidth="115.0" text="Price ($)" />
+            <TableColumn id="SalaryID" fx:id="playerSalary" prefWidth="115.0" text="Salary ($)" />
+            <TableColumn fx:id="playerBonus" prefWidth="100.0" text="Bonus (%)" />
+         </columns>
+      </TableView>
+      <Label layoutX="539.0" layoutY="37.0" text="MY SQUAD" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="29.0" />
+         </font>
+      </Label>
+      <Button id="btnPurchasePlayer" fx:id="btnSell" layoutX="175.0" layoutY="592.0" mnemonicParsing="false" onAction="#onSaleClicked" onMouseClicked="#onSaleClicked" prefHeight="48.0" prefWidth="266.0" style="-fx-background-color: linear-gradient(#00bfff,#1a8cff);" text="Sell Player" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="19.0" />
+         </font>
+      </Button>
+      <Button id="btnPurchasePlayer" fx:id="btnBack" layoutX="449.0" layoutY="592.0" mnemonicParsing="false" onAction="#onBackClicked" onMouseClicked="#onBackClicked" prefHeight="48.0" prefWidth="266.0" style="-fx-background-color: linear-gradient(#00bfff,#1a8cff);" text="BACK" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="19.0" />
+         </font>
+      </Button>
+      <Label layoutX="566.0" layoutY="660.0" text="Bonus refelcts the percentage of the player's salary that will be paid for each game won" textFill="WHITE" />
+   </children>
+</Pane>

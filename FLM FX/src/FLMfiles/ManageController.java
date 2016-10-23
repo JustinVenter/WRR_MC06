@@ -35,5 +35,10 @@ public class ManageController {
         mainAnchorResults = (AnchorPane) ((Node)actionEvent.getSource()).getParent().getParent();
         mainAnchorResults.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("UpgradeStaffScreen.fxml")));
     }
+    public void onSquadClicked(ActionEvent actionEvent) throws IOException {
+
+        mainAnchorResults = (AnchorPane) ((Node)actionEvent.getSource()).getParent().getParent();
+        mainAnchorResults.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("SquadScreen.fxml")));
+    }
 
 }

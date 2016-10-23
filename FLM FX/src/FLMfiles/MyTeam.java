@@ -40,6 +40,7 @@ public class MyTeam extends Team implements Serializable{
     public void loadSquad()
     {
         //method from DB
+        db.connectToDB();
         MySquad = db.loadMyTeamSquad();
     }
 

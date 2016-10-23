@@ -34,7 +34,7 @@ public class MarketController implements Initializable{
    // public TableColumn playerSur;
     public TableColumn playerName;
     public TableColumn playerAge;
-    public TableColumn playerPos;
+    public TableColumn playerPosition;
     //public TableColumn playerAtt;
     //public TableColumn playerDef;
     public TableColumn playerAvg;
@@ -46,9 +46,9 @@ public class MarketController implements Initializable{
     // database
     Database db= new Database();
     // ArrayList of players
-    private static ArrayList<Player> players = new ArrayList<>();
+    private static ArrayList<Player> players;
     //Arraylist wrapped in observable list
-    private static ObservableList<Player> observablePlayers= FXCollections.observableArrayList(players);
+    private static ObservableList<Player> observablePlayers;
 
     public static ObservableList<Player> get(){
         return observablePlayers;
@@ -75,7 +75,8 @@ public class MarketController implements Initializable{
                     MarketPlayers.get(i).getPAvgRating(),
                     MarketPlayers.get(i).getPSkill(),
                     MarketPlayers.get(i).getPValue(),
-                    MarketPlayers.get(i).getPSalary());
+                    MarketPlayers.get(i).getPSalary(),
+                    0);
 
             observablePlayers.add(cur);
 
@@ -95,7 +96,7 @@ public class MarketController implements Initializable{
        //playerSur.setCellValueFactory(new PropertyValueFactory<>("Surname"));
         playerName.setCellValueFactory(new PropertyValueFactory<>("Name"));
         playerAge.setCellValueFactory(new PropertyValueFactory<>("Age"));
-        playerPos.setCellValueFactory(new PropertyValueFactory<>("playerPos"));
+        playerPosition.setCellValueFactory(new PropertyValueFactory<>("playerPos"));
        // playerAtt.setCellValueFactory(new PropertyValueFactory<>("playerAtt"));
         //playerDef.setCellValueFactory(new PropertyValueFactory<>("playerDef"));
         playerAvg.setCellValueFactory(new PropertyValueFactory<>("playerAverage"));
@@ -110,6 +111,8 @@ public class MarketController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        players = new ArrayList<>();
+        observablePlayers = FXCollections.observableArrayList(players);
         setupPlayers();
     }
 

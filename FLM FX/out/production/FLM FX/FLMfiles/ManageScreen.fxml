@@ -10,7 +10,7 @@
    <children>
       <GridPane layoutX="80.0" layoutY="61.0" prefHeight="534.0" prefWidth="1024.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="282.0" prefWidth="548.0" style="-fx-background-color: linear-gradient(#00bfff,#1a8cff);;" text="SQUAD" GridPane.rowSpan="2">
+            <Button mnemonicParsing="false" onAction="#onSquadClicked" prefHeight="282.0" prefWidth="548.0" style="-fx-background-color: linear-gradient(#00bfff,#1a8cff);;" text="SQUAD" GridPane.rowSpan="2">
                <font>
                   <Font name="Arial Bold" size="28.0" />
                </font>

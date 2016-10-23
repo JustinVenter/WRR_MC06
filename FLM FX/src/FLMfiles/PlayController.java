@@ -63,7 +63,6 @@ public class PlayController implements Initializable{
         MyTeam home = preFixture.getHomeTeam();
         MyTeam away = preFixture.getAwayTeam();
 
-
         return Game(home, away);
     }
 
@@ -182,6 +181,15 @@ public class PlayController implements Initializable{
             e.printStackTrace();
         }
 
+        MyNewsFeed myNewsFeed = new MyNewsFeed();
+        try {
+            myNewsFeed = myNewsFeed.readNews();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
         String[] parts = Score.split(":");
         String part1 = parts[0];
         String part2 = parts[1];
@@ -194,6 +202,9 @@ public class PlayController implements Initializable{
 
             T = new Transaction(100000, "Draw", true,user.getWeek());
             Result = false;
+            NewsFeedElement newsFeedElement = new NewsFeedElement(user.getWeek(), "Draw against "+ result.getAwayTeamName()+ "     Score: "+ Score, true);
+            myNewsFeed.AddNews(newsFeedElement);
+
             //myAccount.UpdateBank(T);
 
         } else if (part1.compareTo(part2)>0) { //Win
@@ -201,6 +212,9 @@ public class PlayController implements Initializable{
             T = new Transaction(300000, "Win", true,user.getWeek());
             Result = true;
             db.setMatchWinnerLoser(1, preFixture.getAwayTeam().getTeamID());
+
+            NewsFeedElement newsFeedElement = new NewsFeedElement(user.getWeek(), "Win against "+ result.getAwayTeamName()+ "     Score: "+ Score, true);
+            myNewsFeed.AddNews(newsFeedElement);
             //myAccount.UpdateBank(T);
             //update in DB
 
@@ -209,6 +223,9 @@ public class PlayController implements Initializable{
             T = new Transaction(20000, "Loss", true,user.getWeek());
             Result = false;
             db.setMatchWinnerLoser(preFixture.getAwayTeam().getTeamID(),1);
+
+            NewsFeedElement newsFeedElement = new NewsFeedElement(user.getWeek(), "Loss against "+ result.getAwayTeamName()+ "     Score: "+ Score, true);;
+            myNewsFeed.AddNews(newsFeedElement);
             //myAccount.UpdateBank(T);
         }
 
