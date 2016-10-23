@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="707.0" prefWidth="1202.0" style="-fx-background-color: #262626;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FLMfiles.ManageController">
+   <children>
+      <GridPane layoutX="80.0" layoutY="61.0" prefHeight="534.0" prefWidth="1024.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#onSquadClicked" prefHeight="282.0" prefWidth="548.0" style="-fx-background-color: linear-gradient(#00bfff,#1a8cff);;" text="SQUAD" GridPane.rowSpan="2">
+               <font>
+                  <Font name="Arial Bold" size="28.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="btnLeague" layoutX="10.0" layoutY="14.0" mnemonicParsing="false" onAction="#onLeagueClicked" prefHeight="280.0" prefWidth="548.0" style="-fx-background-color: linear-gradient(#4dff4d, #66ff33);;" text="LEAGUE" GridPane.rowIndex="2" GridPane.rowSpan="2">
+               <font>
+                  <Font name="Arial Bold" size="28.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="btnStaff" mnemonicParsing="false" onAction="#onStaffClicked" prefHeight="138.0" prefWidth="537.0" style="-fx-background-color: linear-gradient(#bfbfbf,#d9d9d9);" text="STAFF" GridPane.columnIndex="1" GridPane.columnSpan="2">
+               <font>
+                  <Font name="Arial Bold" size="22.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </Button>
+            <Button layoutX="563.0" layoutY="15.0" mnemonicParsing="false" prefHeight="138.0" prefWidth="537.0" style="-fx-background-color: linear-gradient(#bfbfbf,#d9d9d9);" text="BUDGET" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="btnMarket" layoutX="558.0" layoutY="279.0" mnemonicParsing="false" onAction="#onMarketClick" prefHeight="138.0" prefWidth="537.0" style="-fx-background-color: linear-gradient(#bfbfbf,#d9d9d9);" text="MARKET" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="btnResults" layoutX="563.0" layoutY="145.0" mnemonicParsing="false" onAction="#onResultsClicked" prefHeight="138.0" prefWidth="537.0" style="-fx-background-color: linear-gradient(#bfbfbf,#d9d9d9);" text="RESULTS" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="btnCalendar" layoutX="806.0" layoutY="145.0" mnemonicParsing="false" onAction="#onCalendarClicked" prefHeight="138.0" prefWidth="537.0" style="-fx-background-color: linear-gradient(#bfbfbf,#d9d9d9);" text="CALENDAR" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </Button>
+            <Button layoutX="558.0" layoutY="277.0" mnemonicParsing="false" prefHeight="138.0" prefWidth="537.0" style="-fx-background-color: linear-gradient(#bfbfbf,#d9d9d9);" text="TOURNAMENT" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </Button>
+         </children>
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="668.0" minWidth="10.0" prefWidth="547.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="332.0" minWidth="6.0" prefWidth="224.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="286.0" minWidth="10.0" prefWidth="214.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="209.0" minHeight="10.0" prefHeight="130.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="173.0" minHeight="10.0" prefHeight="137.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="173.0" minHeight="10.0" prefHeight="129.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="147.0" minHeight="10.0" prefHeight="138.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+      </GridPane>
+   </children>
+</AnchorPane>

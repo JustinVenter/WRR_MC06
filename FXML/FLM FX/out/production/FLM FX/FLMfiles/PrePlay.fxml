@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane prefHeight="690.0" prefWidth="1202.0" style="-fx-background-color: #262626;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FLMfiles.PrePlayController">
+   <children>
+      <Button id="btnPlayMatch" fx:id="btnPlayMatch" layoutX="418.0" layoutY="443.0" mnemonicParsing="false" onMouseClicked="#onPlayClick" prefHeight="48.0" prefWidth="366.0" style="-fx-background-color: linear-gradient(#00bfff,#1a8cff);" text="PLAY MATCH" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="19.0" />
+         </font>
+      </Button>
+      <Label id="lblHomeTeam" fx:id="lblHomeTeam" alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="100.0" layoutY="111.0" prefHeight="49.0" prefWidth="357.0" text="MyTeam1" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
+         <font>
+            <Font name="Arial Bold" size="43.0" />
+         </font>
+      </Label>
+      <Label id="lblAwayTeam" fx:id="lblAwayTeam" layoutX="756.0" layoutY="113.0" text="MyTeam2" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="43.0" />
+         </font>
+      </Label>
+      <Label layoutX="528.0" layoutY="96.0" text="VS" textFill="#ff3030">
+         <font>
+            <Font name="Arial Bold" size="110.0" />
+         </font>
+      </Label>
+      <Label layoutX="332.0" layoutY="170.0" text="OVR" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="287.0" layoutY="273.0" text="Attack" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="287.0" layoutY="298.0" text="Defence" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="757.0" layoutY="301.0" text="Defence" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="757.0" layoutY="276.0" text="Attack" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="756.0" layoutY="172.0" text="OVR" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="17.0" />
+         </font>
+      </Label>
+      <Label id="lblAwayAvgRating" fx:id="lblAwayAvgRating" layoutX="802.0" layoutY="161.0" text="80" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="65.0" />
+         </font>
+      </Label>
+      <Label id="lblHomeAvgRating" fx:id="lblHomeAvgRating" layoutX="382.0" layoutY="159.0" text="80" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="65.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblHomeAtt" layoutX="431.0" layoutY="270.0" text="80" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblHomeDef" layoutX="431.0" layoutY="296.0" text="80" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblAwayDef" layoutX="902.0" layoutY="297.0" text="80" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblAwayAtt" layoutX="902.0" layoutY="271.0" text="80" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnEdtLineup" layoutX="417.0" layoutY="515.0" mnemonicParsing="false" onMouseClicked="#onLineupClicked" prefHeight="48.0" prefWidth="368.0" style="-fx-background-color: linear-gradient(#00bfff,#1a8cff);" text="LINE UP" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="19.0" />
+         </font>
+      </Button>
+      <Label fx:id="lblInjury" alignment="CENTER_RIGHT" layoutX="340.0" layoutY="223.0" prefHeight="35.0" prefWidth="121.0" textFill="#ff4a4a">
+         <font>
+            <Font name="Arial Bold" size="24.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

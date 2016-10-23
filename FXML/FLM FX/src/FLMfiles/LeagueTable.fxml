@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane prefHeight="691.0" prefWidth="1202.0" style="-fx-background-color: #262626;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FLMfiles.LeagueTableController">
+   <children>
+      <TableView fx:id="tblTeams" layoutX="360.0" layoutY="96.0" prefHeight="472.0" prefWidth="539.0">
+         <columns>
+            <TableColumn id="NameID" fx:id="teamPos" prefWidth="94.0" text="Pos" />
+            <TableColumn fx:id="teamName" minWidth="80.0" prefWidth="205.0" text="Team Name" />
+            <TableColumn fx:id="teamWins" minWidth="80.0" prefWidth="118.0" text="Wins" />
+            <TableColumn id="Overallid" fx:id="teamLosses" minWidth="48.0" prefWidth="121.0" text="Losses" />
+         </columns>
+      </TableView>
+      <Label layoutX="560.0" layoutY="40.0" prefHeight="33.0" prefWidth="140.0" text="LEAGUE" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="29.0" />
+         </font>
+      </Label>
+      <Button id="btnPurchasePlayer" fx:id="btnBack" layoutX="623.0" layoutY="596.0" mnemonicParsing="false" onAction="#btnBackClicked" prefHeight="48.0" prefWidth="266.0" style="-fx-background-color: linear-gradient(#00bfff,#1a8cff);" text="BACK" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="19.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>
