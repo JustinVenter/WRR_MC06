@@ -71,6 +71,16 @@ public class HomeController implements Initializable {
         NewsFeedAnchor.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("NewsFeed.fxml")));
     }
 
+    public void onManageClicked(Event event) {
+        try {
+            manageAnchor.getChildren().setAll((Node) FXMLLoader.load(getClass().getResource("ManageScreen.fxml")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 
 
 

@@ -13,7 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javax.xml.crypto.Data;
@@ -96,10 +95,10 @@ public class PlayController implements Initializable{
                         if(AttackTeam.getTeamID() == 1||DefendTeam.getTeamID()==1)
                             obsFeed.add(new liveFeedElement(Time, curPlayer.getPName().toString() +  " has scored a Goal!"));
                     }
-                    else
-                    if(curNode.getDefendervalue() != null)
-                        if(AttackTeam.getTeamID() == 1||DefendTeam.getTeamID()==1)
-                            obsFeed.add(new liveFeedElement(Time, teamTree.Goalie.getValue().getPName() + " has saved a Goal."));
+                   // else
+                    //if(curNode.getDefendervalue() != null)
+                        //if(AttackTeam.getTeamID() == 1||DefendTeam.getTeamID()==1)
+                            //obsFeed.add(new liveFeedElement(Time, teamTree.Goalie.getValue().getPName() + " has saved a Goal."));
                     curNode = teamTree.getRoot();
                 }
                 else
@@ -128,33 +127,8 @@ public class PlayController implements Initializable{
         //Load fixture here
         Database db = new Database();
         db.connectToDB();
-
-        User u = new User();
+        db.DecreaseContract();
         PreFixture preFixture = prePlayController.DisplayGame;
-        try {
-            u = u.readUser();
-            if(u.Week == 52)
-            {
-                u.setWeek(0);
-                u.saveUserDetails();
-                League.MyTeamPreFixture();
-                League.SaveMyPreFixtures();
-                League.SaveMyPostFixtures();
-                League.BotTeamPreFixture();
-                League.SaveBotPreFixtures();
-                int divider = preFixture.getHomeTeam().getTPos();
-
-                //add money to account and give popup message
-
-
-
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
 
         preFixture.getAwayTeam();
         lblHomeTeam.setText(preFixture.getHomeTeam().getTName());
@@ -202,6 +176,11 @@ public class PlayController implements Initializable{
         User user = new User();
         try {
             user = user.readUser();
+
+            if(user.Week == 52 )
+            {
+                db.UpdatePAge();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -227,7 +206,7 @@ public class PlayController implements Initializable{
 
         if (part1.equals(part2)) { //Draw
 
-            T = new Transaction(150000, "Draw", true,user.getWeek());
+            T = new Transaction(100000, "Draw", true,user.getWeek());
             Result = false;
             NewsFeedElement newsFeedElement = new NewsFeedElement(user.getWeek(), "Draw against "+ result.getAwayTeamName()+ "     Score: "+ Score, true);
             myNewsFeed.AddNews(newsFeedElement);
@@ -247,7 +226,7 @@ public class PlayController implements Initializable{
 
         } else //Lose
         {
-            T = new Transaction(50000, "Loss", true,user.getWeek());
+            T = new Transaction(20000, "Loss", true,user.getWeek());
             Result = false;
             db.setMatchWinnerLoser(preFixture.getAwayTeam().getTeamID(),1);
 

@@ -209,14 +209,12 @@ public class Database implements Serializable{
             ResultSet result = stmt.executeQuery(sql);
 
             System.out.println();
-            System.out.println("   LoadAllPlayers (Comment)");
             System.out.println("----------------------------------------------------------------------");
 
             Player newOne = null;
 
             // while there are tuples in the result set, display them
             while (result.next() ) {
-                System.out.println("   LoadAllPlayers (Comment 2)");
                 // get values from current tuple
                 int PlayerID = result.getInt("PlayerID");
                 int TeamID = result.getInt("TeamID");
@@ -240,7 +238,6 @@ public class Database implements Serializable{
 
                 boolean PonSale = result.getBoolean("PonSale");
 
-                System.out.println("   LoadAllPlayers (Comment 3)");
 
                 newOne = new Player(PlayerID, TeamID, StartLineUp, name, surname,Age, PAvgRating, PAttRating, PDefRating, PPos, PSkill, PFatigue, PSalary, PValue, PContract, PInjury, PFatigueLvl, PerformanceBonus, PInjuryPenalty, PonSale);
 
@@ -255,7 +252,6 @@ public class Database implements Serializable{
 
             //loadStartingLineUp(MyStartingLineUp);
             System.out.println("Load successful");
-            System.out.println("   LoadAllPlayers (Comment 4)");
 
             //if(newOne.getPAvgRating() == 0){
                // UpdatePAverage(AllPlayers);
@@ -264,7 +260,6 @@ public class Database implements Serializable{
         } catch (Exception e) {
             System.out.println("   Was not able to query database...");
         }
-        System.out.println("   LoadAllPlayers (Comment 5 error)");
         return null;
 
     }
@@ -485,6 +480,14 @@ public class Database implements Serializable{
         }
     }
 
+    public void UpdatePAge() {
+        try {
+            String sql = "UPDATE Player SET  + PAge = PAge + 1";
+            stmt.execute(sql);
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+    }
 
     public void UpdatePlayerSalary(Player player, double Salary){
         try {
@@ -568,6 +571,21 @@ public class Database implements Serializable{
     }
 
 
+    public void DecreaseContract()
+    {
+        try {
+            // perform query on database and retrieve results
+            String sql = "UPDATE Player SET PContract = PContract - 1 WHERE TeamID = 1";
+            stmt.execute(sql);
+            String sql1 = "UPDATE Player SET TeamID = 0 WHERE PContract = 0 AND TeamID = 1";
+            stmt.execute(sql1);
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+    }
+}
+
+
 
 
 
@@ -580,4 +598,3 @@ public class Database implements Serializable{
     //getters and setters
 
     //views (such as display)
-}

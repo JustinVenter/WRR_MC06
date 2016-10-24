@@ -2,7 +2,16 @@ package FLMfiles;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.URL;
@@ -22,6 +31,7 @@ public class MyAccount implements Serializable{//money related
     //In debt for 8 weeks, user is fired!
     private ArrayList<Player> StillOwe; //ArrayList containing the players that the user still owes salaries for
 
+    static boolean fired = false;
 
 
     public MyAccount() {
@@ -82,19 +92,51 @@ public class MyAccount implements Serializable{//money related
         Database db = new Database();
         MyTeam curteam = db.loadMyTeam();
 
+        User user = new User();
+        user = user.readUser();
+
+        MyNewsFeed myNewsFeed = new MyNewsFeed();
+        myNewsFeed = myNewsFeed.readNews();
+
+        //readAccount();
+
         if (StillOwe.size() != 0) {
+
+            double AmountPaid = 0;
+            double tempBank = BankBalance;
+
+            ArrayList<Player> temp = StillOwe;
 
             for (int x = 0; x < StillOwe.size(); x++) {
                 Player P = StillOwe.get(x);
                 double Salary = P.getPSalary();
-                if (BankBalance > Salary) {
-                    BankBalance -= Salary;
-                    StillOwe.remove(x);
+                Salary += (P.getPerformanceBonus() *Salary);
+                if (tempBank > Salary) {
+                    tempBank -= Salary;
+                    temp.add(P);
+                    AmountPaid += Salary;
+
                 }
-                if (StillOwe.size() == 0)
-                    InDebt = 0;
+            }
+
+            for (int x = 0; x < temp.size(); x++) {
+                StillOwe.remove(temp.get(x));
+            }
+
+            if (StillOwe.size() == 0)
+                InDebt = 0;
+
+            if(AmountPaid > 0) {
+                Transaction T = new Transaction(AmountPaid, "Debt paid", false, user.getWeek());
+                UpdateBank(T);
+
+                NewsFeedElement N = new NewsFeedElement(user.getWeek(), "Debt paid", false);
+                myNewsFeed.AddNews(N);
             }
         }
+
+        double amountPaid = 0;
+        double tempBank = BankBalance;
 
         ArrayList<Player> cur = curteam.getMySquad();
 
@@ -102,24 +144,50 @@ public class MyAccount implements Serializable{//money related
             Player P = cur.get(x);
             double Salary = P.getPSalary();
             if(Win == true){
-                Salary += P.getPerformanceBonus();
+                Salary += (P.getPerformanceBonus() *Salary);
             }
-            if (BankBalance > Salary) {
-                BankBalance -= Salary;
+            if (tempBank > Salary) {
+                tempBank -= Salary;
+                amountPaid += Salary;
             } else {
                 StillOwe.add(P);
                 InDebt++;
             }
         }
+
+        if(amountPaid > 0) {
+            Transaction T = new Transaction(amountPaid, "Salaries paid", false, user.getWeek());
+            UpdateBank(T);
+
+            NewsFeedElement N = new NewsFeedElement(user.getWeek(), "Salaries paid", false);
+            myNewsFeed.AddNews(N);
+        }
+
         boolean Fire = DetermineFiring();
         if(Fire){
+            Stage primaryStage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("StartScreen.fxml"));
+            primaryStage.setTitle("Football League Manager");
+            primaryStage.setScene(new Scene(root, 483, 448));
+            primaryStage.show();
+
+            Calculate.OpenConfirmationWindow("The board has decided that your management skills are inadequate and due to your recent performance we have decided to fire you.");
             //user is fired
         }
+        fired = Fire;
 
         saveAccountDetails();
         //c.UpdateUI();
     }
     //current debt
+
+    public static boolean DetermineFireBool()
+    {
+        return fired;
+    }
+
+
+
     public double CalculateDebt(){
 
         if(StillOwe.size() == 0)
@@ -139,7 +207,7 @@ public class MyAccount implements Serializable{//money related
     public boolean DetermineFiring(){
         if (InDebt == 8)
             return true;
-        if (CalculateDebt() == 500000)
+        if (CalculateDebt() == 1000000)
             return true;
         else
             return false;

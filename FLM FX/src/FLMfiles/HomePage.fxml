@@ -52,7 +52,7 @@
                      </children></AnchorPane>
             </content>
           </Tab>
-          <Tab closable="false" text="MANAGE">
+          <Tab fx:id="ManageTab" closable="false" onSelectionChanged="#onManageClicked" text="MANAGE">
             <content>
               <AnchorPane fx:id="manageAnchor" minHeight="0.0" minWidth="0.0" prefHeight="707.0" prefWidth="1202.0" style="-fx-background-color: #262626;">
                      <children>
@@ -75,8 +75,7 @@
           </Tab>
        <Tab fx:id="NewsTab" onSelectionChanged="#onNewsClicked" text="NEWSFEED">
        <content>
-       <AnchorPane fx:id="NewsFeedAnchor" minHeight="0.0" minWidth="0.0"
-                   prefHeight="180.0" prefWidth="200.0">
+       <AnchorPane fx:id="NewsFeedAnchor" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
            <children>
            <Pane prefHeight="691.0" prefWidth="1202.0" style="-fx-background-color: #262626;" />
                      </children></AnchorPane>

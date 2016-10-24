@@ -9,7 +9,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-
 <Pane prefHeight="540.0" prefWidth="720.0" style="-fx-background-color: #262626;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FLMfiles.PurchasePController">
    <children>
       <Label layoutX="112.0" layoutY="432.0" prefHeight="85.0" prefWidth="475.0" text="*This reflects a percentage of the player's salary that he will be paid for each match won." textFill="#b5b5b5" wrapText="true">
@@ -66,5 +65,6 @@
             </Label>
          </children>
       </Pane>
+      <Label fx:id="lblError" layoutX="91.0" layoutY="324.0" prefHeight="17.0" prefWidth="267.0" textFill="#ff4d4d" />
    </children>
 </Pane>

@@ -1,5 +1,14 @@
 package FLMfiles;
 
+import javafx.event.EventHandler;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
 import java.io.Serializable;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -43,6 +52,30 @@ public class Calculate implements Serializable{
         }
 
         return  playerAvgRating;
+    }
+
+    public static void OpenConfirmationWindow(String m){
+        Parent root = null;
+        Stage newStage = new Stage();
+
+        VBox comp = new VBox();
+        Label message = new Label(m);
+        //TextField message = new TextField(m);
+        Button OK = new Button("OK");
+        comp.getChildren().add(message);
+        comp.getChildren().add(OK);
+
+        OK.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent t) {
+                newStage.close();
+            }
+        });
+
+        Scene stageScene = new Scene(comp, 100, 100);
+        newStage.setScene(stageScene);
+        newStage.show();
     }
     //getters and setters
     //views (such as display)

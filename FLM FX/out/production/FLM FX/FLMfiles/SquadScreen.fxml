@@ -25,12 +25,12 @@
             <Font name="Arial Bold" size="29.0" />
          </font>
       </Label>
-      <Button id="btnPurchasePlayer" fx:id="btnSell" layoutX="175.0" layoutY="592.0" mnemonicParsing="false" onAction="#onSaleClicked" onMouseClicked="#onSaleClicked" prefHeight="48.0" prefWidth="428.0" style="-fx-background-color: linear-gradient(#00bfff,#1a8cff);" text="Sell Player" textFill="WHITE">
+      <Button id="btnPurchasePlayer" fx:id="btnSell" layoutX="175.0" layoutY="592.0" mnemonicParsing="false" onAction="#onSaleClicked" onMouseClicked="#onSaleClicked" prefHeight="48.0" prefWidth="266.0" style="-fx-background-color: linear-gradient(#00bfff,#1a8cff);" text="Sell Player" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="19.0" />
          </font>
       </Button>
-      <Button id="btnPurchasePlayer" fx:id="btnBack" layoutX="635.0" layoutY="592.0" mnemonicParsing="false" onAction="#onBackClicked" onMouseClicked="#onBackClicked" prefHeight="48.0" prefWidth="393.0" style="-fx-background-color: linear-gradient(#00bfff,#1a8cff);" text="BACK" textFill="WHITE">
+      <Button id="btnPurchasePlayer" fx:id="btnBack" layoutX="449.0" layoutY="592.0" mnemonicParsing="false" onAction="#onBackClicked" onMouseClicked="#onBackClicked" prefHeight="48.0" prefWidth="266.0" style="-fx-background-color: linear-gradient(#00bfff,#1a8cff);" text="BACK" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="19.0" />
          </font>

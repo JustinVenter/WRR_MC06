@@ -247,7 +247,7 @@ public class MyTeam extends Team implements Serializable{
         }
 
         double averageAttack = ((attacktotal*1.9) + (midfieldtotal) + (defencetotal * 0.1))/10;
-        this.setTAttRating((int)(Math.floor(averageAttack))); //might cause issues
+        this.setTAttRating((int)(Math.floor(averageAttack)));
     }
 
     public void CalculateAll()//remember to use use the starting lineup ratings

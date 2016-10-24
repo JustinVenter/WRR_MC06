@@ -56,7 +56,7 @@ public class Market implements Serializable {
                     temp.add(P);
                     db.connectToDB();
                     db.UpdatePlayerTeam2(P, 1);
-
+                    db.UpdateContract(P, 52);
                     User user = new User();
                     user = user.readUser();
 
@@ -75,6 +75,7 @@ public class Market implements Serializable {
                     //Show confirmation
                 }
             }
+            if(temp.size() > 0)
             for(int x = 0; x< temp.size(); x++) {
                 Player P = temp.get(x);
                 PendingAcceptedOffers.remove(P);
@@ -105,6 +106,7 @@ public class Market implements Serializable {
                     //Show confirmation
                 }
             }
+            if(temp.size() > 0)
             for(int x = 0; x< temp.size(); x++) {
                 Player P = temp.get(x);
                 PendingRejectedOffers.remove(P);
@@ -153,12 +155,13 @@ public class Market implements Serializable {
                     db.UpdatePlayerBonus2(P, 0);
                     //PendingSales.remove(P);
                     temp.add(P);
-                    db.connectToDB();
+                    P.setPFatigue(100);
                     db.UpdatePlayerTeam2(P, 0);
-                    db.connectToDB();
                     db.UpdateLineup(P, 0);
-                    db.connectToDB();
                     db.UpdateOnSale2(P);
+                    db.UpdateContract(P, 0);
+                    db.UpdateFatigue(P);
+
 
                     User user = new User();
                     user = user.readUser();
@@ -182,6 +185,7 @@ public class Market implements Serializable {
                     //Show confirmation
                 }
             }
+            if(temp.size() > 0)
             for(int x = 0; x< temp.size(); x++){
                 Player P = temp.get(x);
                 PendingSales.remove(P);
